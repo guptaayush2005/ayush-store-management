@@ -232,41 +232,70 @@ export async function initCategoriesPage() {
   const categories = await fetchCategories();
   const allProducts = await fetchProducts();
 
+  const subItemsMap = {
+    steel: ["प्रेशर कुकर", "थाली सेट", "पतीला", "कढ़ाई", "चम्मच"],
+    plastic: ["मजबूत बाल्टी", "नहाने का मग", "स्टूल / पटला", "किचन डिब्बा", "डस्टबिन"],
+    mobile: ["Type-C केबल", "फास्ट चार्जर", "नेकबैंड", "टेम्पर्ड ग्लास", "बैक कवर"],
+    colddrink: ["थम्स अप", "स्प्राइट", "कोका-कोला", "माज़ा", "मिनरल वाटर"],
+    cosmetics: ["फेस वॉश", "फेयरनेस क्रीम", "नारियल तेल", "बॉडी लोशन", "साबुन"],
+    "dona-pattal": ["सिल्वर दोना", "बफर प्लेट", "पत्तल", "चाय कप", "एल्युमिनियम फॉइल"],
+    gas: ["2-बर्नर चूल्हा", "ISI रेगुलेटर", "स्टील वायर पाइप", "पीतल बर्नर", "लाइटर"],
+    autobooking: ["माल ढुलाई लोडर", "सवारी ऑटो", "शादी स्पेशल", "स्टेशन ड्राप"]
+  };
+
   let html = "";
   categories.forEach(cat => {
+    const isAuto = (cat.slug === "autobooking" || cat.name.toLowerCase().includes("auto"));
+    const targetUrl = isAuto ? "autobooking.html" : `shop.html?category=${encodeURIComponent(cat.name)}`;
     const count = allProducts.filter(p => 
       (p.category && p.category.toLowerCase() === cat.name.toLowerCase()) ||
       (p.categorySlug && p.categorySlug.toLowerCase() === cat.slug.toLowerCase())
     ).length;
 
+    const tags = subItemsMap[cat.slug] || ["Verified Items", "Honest Pricing", "Store Stock"];
+
     html += `
-      <div class="category-card-premium" onclick="window.location.href='shop.html?category=${encodeURIComponent(cat.name)}'" style="cursor: pointer;">
-        <div class="category-card-img-wrapper">
+      <div class="category-card-premium" style="display: flex; flex-direction: column;">
+        <div class="category-card-img-wrapper" onclick="window.location.href='${targetUrl}'" style="cursor: pointer;">
           <img src="${cat.image || 'images/poster.jpg'}" alt="${cat.name}" loading="lazy" onerror="this.onerror=null; this.src='images/poster.jpg';">
-          <div style="position: absolute; top: 12px; right: 12px; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(4px); color: #FFF; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 9999px;">
-            ${count} Items
+          <div style="position: absolute; top: 12px; right: 12px; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(4px); color: #FFF; font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 9999px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+            ${isAuto ? `${count || 20} Services` : `${count || 25} Products`}
+          </div>
+          <div style="position: absolute; bottom: 10px; left: 12px; background: rgba(22, 163, 74, 0.9); color: #FFF; font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: 6px;">
+            ✓ Store Stock Ready
           </div>
         </div>
         <div class="category-card-body-premium">
-          <div style="display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-bottom: 4px;">
-            <h3 style="font-size: 1.25rem; font-weight: 800; color: #0F172A; margin: 0;">${cat.name}</h3>
-            ${cat.nameHindi ? `<span style="font-size: 0.9rem; color: #2563EB; font-weight: 700;">${cat.nameHindi}</span>` : ""}
+          <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 4px;">
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #0F172A; margin: 0;">
+              <a href="${targetUrl}" style="color: inherit; text-decoration: none;">${cat.name}</a>
+            </h3>
+            ${cat.nameHindi ? `<span style="font-size: 0.95rem; color: #2563EB; font-weight: 700;">${cat.nameHindi}</span>` : ""}
           </div>
-          <p style="font-size: 0.88rem; color: #64748B; margin: 6px 0 16px; line-height: 1.5; flex: 1;">
+          <p style="font-size: 0.88rem; color: #64748B; margin: 6px 0 12px; line-height: 1.5; flex: 1;">
             ${cat.description || 'Quality retail and wholesale items available at best local rates.'}
           </p>
-          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid #F1F5F9;">
-            <span style="font-size: 0.82rem; font-weight: 700; color: #16A34A; background: #DCFCE7; padding: 3px 8px; border-radius: 6px;">
-              ✓ In Stock
-            </span>
-            <span style="font-size: 0.9rem; font-weight: 700; color: #2563EB; display: flex; align-items: center; gap: 4px;">
-              Explore Category →
-            </span>
+
+          <!-- Popular Tags Pill -->
+          <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px;">
+            ${tags.map(t => `<span style="font-size: 0.72rem; background: #F1F5F9; color: #334155; padding: 2px 8px; border-radius: 4px; font-weight: 600;">#${t}</span>`).join("")}
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding-top: 14px; border-top: 1px solid #F1F5F9;">
+            <a href="${targetUrl}" class="btn btn-primary btn-sm" style="font-weight: 700; text-align: center; font-size: 0.82rem; padding: 9px 8px;">
+              🛍️ ${isAuto ? 'Book Service' : 'View Catalog'}
+            </a>
+            <a href="https://wa.me/919616932589?text=Hello%20Ayush%20Service%20Center,%20I%20am%20interested%20in%20${encodeURIComponent(cat.name)}" target="_blank" class="btn btn-whatsapp btn-sm" style="font-weight: 700; text-align: center; font-size: 0.82rem; padding: 9px 8px;">
+              💬 WhatsApp
+            </a>
           </div>
         </div>
       </div>
     `;
   });
+
+  container.innerHTML = html;
+}
 
   container.innerHTML = html;
 }
