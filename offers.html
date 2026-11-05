@@ -164,9 +164,11 @@
   <script type="module" src="js/app.js"></script>
   <script type="module">
     import { initOffersPage } from "./js/catalog.js";
-    document.addEventListener("DOMContentLoaded", () => {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initOffersPage);
+    } else {
       initOffersPage();
-    });
+    }
   </script>
 </body>
 </html>

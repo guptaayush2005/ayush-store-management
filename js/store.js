@@ -314,35 +314,64 @@ export async function saveStoreSettings(newSettings) {
 }
 
 // ==========================================
+// CATEGORY NORMALIZATION HELPER
+// ==========================================
+export function normalizeCategory(cat) {
+  if (!cat) return "";
+  const c = String(cat).toLowerCase().replace(/[^a-z0-9]/g, "");
+  if (c.includes("steel") || c.includes("bartan") || c.includes("utensil")) return "steel";
+  if (c.includes("plastic")) return "plastic";
+  if (c.includes("mobile") || c.includes("phone")) return "mobile";
+  if (c.includes("cold") || c.includes("drink") || c.includes("beverage")) return "colddrink";
+  if (c.includes("cosmetic") || c.includes("skin") || c.includes("beauty")) return "cosmetics";
+  if (c.includes("dona") || c.includes("pattal") || c.includes("disposable")) return "dona-pattal";
+  if (c.includes("gas") || c.includes("chulha") || c.includes("stove")) return "gas";
+  if (c.includes("auto")) return "autobooking";
+  return c;
+}
+
+// ==========================================
 // DATABASE QUERY & FETCH HELPERS
 // ==========================================
 export async function fetchProducts(options = {}) {
   const { category, search, minPrice, maxPrice, inStockOnly, sortBy } = options;
-  let products = [];
+  
+  // Start with the verified seed catalog of 190 items
+  const productsMap = new Map();
+  INITIAL_PRODUCTS.forEach(p => productsMap.set(p.id, { ...p }));
 
+  // Safely query remote Firestore with a 1500ms timeout
   try {
-    const qSnapshot = await getDocs(collection(db, "products"));
-    if (!qSnapshot.empty) {
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error("Firestore timeout")), 1500)
+    );
+    const fetchPromise = getDocs(collection(db, "products"));
+    const qSnapshot = await Promise.race([fetchPromise, timeoutPromise]);
+
+    if (qSnapshot && !qSnapshot.empty) {
       qSnapshot.forEach(docSnap => {
-        products.push({ id: docSnap.id, ...docSnap.data() });
+        const remoteData = { id: docSnap.id, ...docSnap.data() };
+        if (productsMap.has(remoteData.id)) {
+          productsMap.set(remoteData.id, { ...productsMap.get(remoteData.id), ...remoteData });
+        } else {
+          productsMap.set(remoteData.id, remoteData);
+        }
       });
     }
   } catch (err) {
-    console.warn("Using initial product catalog fallback:", err.message);
+    console.warn("Using local catalog data:", err.message);
   }
 
-  // If remote has no products yet, use seed catalog
-  if (products.length === 0) {
-    products = [...INITIAL_PRODUCTS];
-  }
+  let products = Array.from(productsMap.values());
 
-  // Apply filters
+  // Apply category filter with robust normalization
   if (category && category !== "all") {
-    const catLower = category.toLowerCase();
-    products = products.filter(p => 
-      (p.category && p.category.toLowerCase() === catLower) ||
-      (p.categorySlug && p.categorySlug.toLowerCase() === catLower)
-    );
+    const targetNorm = normalizeCategory(category);
+    products = products.filter(p => {
+      const pCatNorm = normalizeCategory(p.category);
+      const pSlugNorm = normalizeCategory(p.categorySlug);
+      return pCatNorm === targetNorm || pSlugNorm === targetNorm;
+    });
   }
 
   if (search && search.trim()) {
@@ -353,7 +382,7 @@ export async function fetchProducts(options = {}) {
       (p.description && p.description.toLowerCase().includes(term)) ||
       (p.category && p.category.toLowerCase().includes(term)) ||
       (p.sku && p.sku.toLowerCase().includes(term)) ||
-      (p.barcode && p.barcode.includes(term))
+      (p.barcode && String(p.barcode).includes(term))
     );
   }
 
@@ -388,22 +417,29 @@ export async function fetchProducts(options = {}) {
 
 export async function fetchProductById(id) {
   if (!id) return null;
+  const localMatch = INITIAL_PRODUCTS.find(p => p.id === id);
   try {
-    const docSnap = await getDoc(doc(db, "products", id));
-    if (docSnap.exists()) {
-      return { id: docSnap.id, ...docSnap.data() };
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error("Timeout")), 1200)
+    );
+    const docSnap = await Promise.race([getDoc(doc(db, "products", id)), timeoutPromise]);
+    if (docSnap && docSnap.exists()) {
+      return { ...(localMatch || {}), id: docSnap.id, ...docSnap.data() };
     }
   } catch (e) {
     console.warn("Product doc lookup fallback:", e.message);
   }
-  return INITIAL_PRODUCTS.find(p => p.id === id) || null;
+  return localMatch || null;
 }
 
 export async function fetchCategories() {
-  let categories = [];
   try {
-    const qSnapshot = await getDocs(collection(db, "categories"));
-    if (!qSnapshot.empty) {
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error("Timeout")), 1200)
+    );
+    const qSnapshot = await Promise.race([getDocs(collection(db, "categories")), timeoutPromise]);
+    if (qSnapshot && !qSnapshot.empty) {
+      const categories = [];
       qSnapshot.forEach(docSnap => {
         categories.push({ id: docSnap.id, ...docSnap.data() });
       });

@@ -7,7 +7,8 @@ import {
   addToCart, 
   showToast,
   getWhatsAppProductInquiryUrl,
-  getCachedSettings 
+  getCachedSettings,
+  normalizeCategory
 } from "./store.js";
 
 // Helper to render standard product card HTML (Inspired by SG Stores clean retail presentation)
@@ -106,18 +107,24 @@ export async function initShopPage() {
 
   // Load and render category filter chips
   const categories = await fetchCategories();
+  const normInitial = initialCategory === 'all' ? 'all' : normalizeCategory(initialCategory);
+
   if (categoryChipsContainer) {
     let chipsHtml = `
-      <button class="btn btn-sm ${initialCategory === 'all' ? 'btn-primary' : 'btn-outline'} cat-filter-btn" data-category="all">
+      <button class="btn btn-sm ${normInitial === 'all' ? 'btn-primary' : 'btn-outline'} cat-filter-btn" data-category="all">
         All Items
       </button>
     `;
     categories.forEach(cat => {
-      const activeClass = (initialCategory.toLowerCase() === cat.name.toLowerCase() || initialCategory.toLowerCase() === cat.slug.toLowerCase()) 
-        ? "btn-primary" 
-        : "btn-outline";
+      const isAuto = (cat.slug === "autobooking" || cat.name.toLowerCase().includes("auto"));
+      const isCatActive = normInitial !== 'all' && (
+        normInitial === normalizeCategory(cat.name) || 
+        normInitial === normalizeCategory(cat.slug)
+      );
+      const activeClass = isCatActive ? "btn-primary" : "btn-outline";
+      const filterVal = isAuto ? "autobooking" : (cat.slug || cat.name);
       chipsHtml += `
-        <button class="btn btn-sm ${activeClass} cat-filter-btn" data-category="${cat.name}">
+        <button class="btn btn-sm ${activeClass} cat-filter-btn" data-category="${filterVal}">
           ${cat.name}
         </button>
       `;
@@ -189,11 +196,16 @@ export async function initShopPage() {
     categoryChipsContainer.addEventListener("click", (e) => {
       const btn = e.target.closest(".cat-filter-btn");
       if (!btn) return;
+      const selectedCat = btn.dataset.category;
+      if (selectedCat === "autobooking") {
+        window.location.href = "autobooking.html";
+        return;
+      }
       document.querySelectorAll(".cat-filter-btn").forEach(b => {
         b.className = "btn btn-sm btn-outline cat-filter-btn";
       });
       btn.className = "btn btn-sm btn-primary cat-filter-btn";
-      currentCategory = btn.dataset.category;
+      currentCategory = selectedCat;
       loadAndRender();
     });
   }
@@ -246,17 +258,19 @@ export async function initCategoriesPage() {
   let html = "";
   categories.forEach(cat => {
     const isAuto = (cat.slug === "autobooking" || cat.name.toLowerCase().includes("auto"));
-    const targetUrl = isAuto ? "autobooking.html" : `shop.html?category=${encodeURIComponent(cat.name)}`;
-    const count = allProducts.filter(p => 
-      (p.category && p.category.toLowerCase() === cat.name.toLowerCase()) ||
-      (p.categorySlug && p.categorySlug.toLowerCase() === cat.slug.toLowerCase())
-    ).length;
+    const targetUrl = isAuto ? "autobooking.html" : `shop.html?category=${encodeURIComponent(cat.slug || cat.name)}`;
+    const catNorm = normalizeCategory(cat.slug || cat.name);
+    const count = allProducts.filter(p => {
+      const pCatNorm = normalizeCategory(p.category);
+      const pSlugNorm = normalizeCategory(p.categorySlug);
+      return pCatNorm === catNorm || pSlugNorm === catNorm;
+    }).length;
 
     const tags = subItemsMap[cat.slug] || ["Verified Items", "Honest Pricing", "Store Stock"];
 
     html += `
-      <div class="category-card-premium" style="display: flex; flex-direction: column;">
-        <div class="category-card-img-wrapper" onclick="window.location.href='${targetUrl}'" style="cursor: pointer;">
+      <div class="category-card-premium" style="display: flex; flex-direction: column; cursor: pointer;" onclick="if (!event.target.closest('a')) window.location.href='${targetUrl}'">
+        <div class="category-card-img-wrapper">
           <img src="${cat.image || 'images/poster.jpg'}" alt="${cat.name}" loading="lazy" onerror="this.onerror=null; this.src='images/poster.jpg';">
           <div style="position: absolute; top: 12px; right: 12px; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(4px); color: #FFF; font-size: 0.75rem; font-weight: 700; padding: 4px 12px; border-radius: 9999px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
             ${isAuto ? `${count || 20} Services` : `${count || 25} Products`}
@@ -293,9 +307,6 @@ export async function initCategoriesPage() {
       </div>
     `;
   });
-
-  container.innerHTML = html;
-}
 
   container.innerHTML = html;
 }
