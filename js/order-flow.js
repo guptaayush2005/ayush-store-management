@@ -62,371 +62,12 @@ export function clearCustomerAuth() {
   window.dispatchEvent(new CustomEvent("asc-customer-auth-changed", { detail: null }));
 }
 
-let activeConfirmationResult = null;
-let activeOtpPhone = null;
-let resendTimer = null;
-let resendSecondsRemaining = 0;
-
-function stopResendCooldown() {
-  if (resendTimer) {
-    clearInterval(resendTimer);
-    resendTimer = null;
-  }
-}
-
-function startResendCooldown(seconds = 60) {
-  stopResendCooldown();
-  resendSecondsRemaining = seconds;
-  updateResendBtnUI();
-
-  resendTimer = setInterval(() => {
-    resendSecondsRemaining--;
-    if (resendSecondsRemaining <= 0) {
-      stopResendCooldown();
-      updateResendBtnUI();
-    } else {
-      updateResendBtnUI();
-    }
-  }, 1000);
-}
-
-function updateResendBtnUI() {
-  const resendBtn = document.getElementById("resend-otp-btn");
-  if (!resendBtn) return;
-  if (resendSecondsRemaining > 0) {
-    resendBtn.disabled = true;
-    resendBtn.style.color = "#94A3B8";
-    resendBtn.style.cursor = "not-allowed";
-    resendBtn.style.textDecoration = "none";
-    resendBtn.innerText = `⏳ Resend SMS in ${resendSecondsRemaining}s`;
-  } else {
-    resendBtn.disabled = false;
-    resendBtn.style.color = "#2563EB";
-    resendBtn.style.cursor = "pointer";
-    resendBtn.style.textDecoration = "underline";
-    resendBtn.innerText = "🔄 Resend SMS (दोबारा SMS भेजें)";
-  }
-}
-
-function formatFirebasePhoneError(err) {
-  const code = err.code || "";
-  const msg = err.message || "";
-
-  if (code === "auth/unauthorized-domain") {
-    return "Domain Authorization Error: Firebase Console > Authentication > Settings > Authorized Domains me jakar 'ayush-hardware-general-store.vercel.app' add karein.";
-  }
-  if (code === "auth/operation-not-allowed") {
-    return "Firebase Error: Phone Authentication provider disabled hai. Firebase Console > Authentication > Sign-in method me jakar Phone provider ON karein.";
-  }
-  if (code === "auth/quota-exceeded") {
-    return "Firebase SMS limit poori ho gayi hai. Kripya thodi der baad koshish karein ya WhatsApp (+91 96169 32589) se order karein.";
-  }
-  if (code === "auth/too-many-requests") {
-    return "Bahut saari OTP requests bheji gayi hain. Kripya 15-30 minute baad dobara koshish karein.";
-  }
-  if (code === "auth/invalid-phone-number") {
-    return "Mobile number galat hai. Kripya 10-digit ka sahi Bharatiya mobile number dalein.";
-  }
-  if (code === "auth/missing-phone-number") {
-    return "Kripya apna 10-digit mobile number enter karein.";
-  }
-  if (code === "auth/captcha-check-failed") {
-    return "reCAPTCHA verification fail ho gaya. Kripya page refresh karke dobara try karein.";
-  }
-  if (code === "auth/network-request-failed") {
-    return "Network error: Internet connection check karein aur dobara koshish karein.";
-  }
-  if (code === "auth/app-not-authorized") {
-    return "App Not Authorized: Firebase project credentials ya Authorized Domains match nahi kar rahe.";
-  }
-  return msg || "SMS OTP bhejne mein dikkat aayi. Kripya thodi der baad dobara koshish karein.";
-}
-
-function formatFirebaseOtpConfirmError(err) {
-  const code = err.code || "";
-  if (code === "auth/invalid-verification-code") {
-    return "Galat OTP code! Kripya apne phone Messages (SMS) inbox mein aaya hua sahi 6-digit code dalein.";
-  }
-  if (code === "auth/code-expired") {
-    return "OTP code expire ho chuka hai. Kripya 'Resend SMS' par click karke naya code mangayein.";
-  }
-  if (code === "auth/session-expired") {
-    return "Verification session expire ho gaya hai. Kripya naya SMS code request karein.";
-  }
-  if (code === "auth/network-request-failed") {
-    return "Network error: Internet connection check karein.";
-  }
-  return "OTP verification fail hua. Kripya sahi code dalein ya dobara SMS mangayein.";
-}
-
-function setupRecaptchaVerifier() {
-  let container = document.getElementById("recaptcha-container");
-  if (!container) {
-    container = document.createElement("div");
-    container.id = "recaptcha-container";
-    document.body.appendChild(container);
-  }
-
-  // Clear previous verifier instance to prevent "reCAPTCHA already rendered" error
-  if (window.ascRecaptchaVerifier) {
-    try {
-      window.ascRecaptchaVerifier.clear();
-    } catch (e) {
-      console.warn("Recaptcha verifier clear warning:", e);
-    }
-    window.ascRecaptchaVerifier = null;
-  }
-  container.innerHTML = "";
-
-  try {
-    window.ascRecaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
-      size: "invisible",
-      callback: () => {
-        // reCAPTCHA solved automatically
-      },
-      "expired-callback": () => {
-        showToast("reCAPTCHA expire ho gaya. Kripya dobara OTP request karein.", "warning");
-      }
-    });
-    return window.ascRecaptchaVerifier;
-  } catch (err) {
-    console.error("RecaptchaVerifier init error:", err);
-    throw err;
-  }
-}
-
+// Direct Customer Checkout (No Login / No OTP Barrier)
 export function showCustomerOtpModal(options = {}) {
-  let backdrop = document.getElementById("customer-otp-modal");
-  if (!backdrop) {
-    backdrop = document.createElement("div");
-    backdrop.id = "customer-otp-modal";
-    backdrop.className = "otp-modal-backdrop";
-    document.body.appendChild(backdrop);
+  // Passthrough: proceed immediately with zero modal
+  if (typeof options.onSuccess === "function") {
+    options.onSuccess(getCustomerAuth() || { phone: options.phone || "", verified: true });
   }
-
-  const defaultPhone = options.phone || (getCustomerAuth() ? getCustomerAuth().phone : "");
-
-  backdrop.innerHTML = `
-    <div class="otp-modal-card">
-      <button type="button" id="close-otp-modal-btn" style="position: absolute; top: 12px; right: 12px; background: #F1F5F9; border: 1px solid #CBD5E1; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #64748B; cursor: pointer; z-index: 10;">✕</button>
-
-      <div style="text-align: center; margin-bottom: 16px;">
-        <div style="width: 48px; height: 48px; background: #EFF6FF; color: #2563EB; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 8px;">💬</div>
-        <h3 style="font-size: 1.2rem; font-weight: 800; color: #0F172A; margin: 0 0 4px;">Customer Mobile Login</h3>
-        <p style="font-size: 0.82rem; color: #64748B; margin: 0;">Order verify karne ke liye apna 10-digit mobile number dalein.</p>
-      </div>
-
-      <!-- Step 1: Enter Mobile -->
-      <div id="otp-step-phone">
-        <div class="form-group" style="margin-bottom: 12px;">
-          <label style="font-size: 0.82rem; font-weight: 700; color: #0F172A; display: block; margin-bottom: 6px;">Apna 10-Digit Mobile Number Dalein *</label>
-          <div style="display: flex; gap: 8px;">
-            <span style="display: flex; align-items: center; padding: 0 12px; background: #F8FAFC; border: 1.5px solid #CBD5E1; border-radius: 10px; font-weight: 700; color: #0F172A;">+91</span>
-            <input type="tel" id="otp-input-phone" class="form-control" placeholder="10-digit number (e.g. 9616932589)" maxlength="10" value="${defaultPhone}" style="flex: 1; font-size: 1rem; font-weight: 700; letter-spacing: 0.5px; height: 46px;">
-          </div>
-          <div style="font-size: 0.75rem; color: #64748B; margin-top: 6px;">
-            📶 Telecom Carrier SMS - Phone ke Messages app inbox mein 6-digit OTP aayega.
-          </div>
-        </div>
-
-        <!-- Inline error box for Step 1 -->
-        <div id="otp-phone-error" style="display: none; background: #FEF2F2; border: 1px solid #FCA5A5; border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; font-size: 0.82rem; color: #991B1B; line-height: 1.4;"></div>
-
-        <button type="button" id="send-otp-btn" class="btn btn-primary btn-full" style="min-height: 46px; height: auto; font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 10px 14px; box-sizing: border-box;">
-          📩 Send SMS OTP to Mobile →
-        </button>
-      </div>
-
-      <!-- Step 2: Enter OTP received on phone (NO OTP SHOWN ON SCREEN) -->
-      <div id="otp-step-verify" style="display: none;">
-        <div class="otp-alert-box" style="background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; text-align: center;">
-          <div style="font-size: 0.95rem; color: #15803D; font-weight: 800; margin-bottom: 4px;">
-            📩 SMS Sent to +91 <span id="otp-target-phone-num"></span>
-          </div>
-          <p style="font-size: 0.8rem; color: #166534; margin: 0; line-height: 1.35;">
-            Apne mobile ke SMS Messages app inbox mein aaya hua 6-digit code yahan dalein:
-          </p>
-        </div>
-
-        <!-- Inline error box for Step 2 -->
-        <div id="otp-verify-error" style="display: none; background: #FEF2F2; border: 1px solid #FCA5A5; border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; font-size: 0.82rem; color: #991B1B; line-height: 1.4;"></div>
-
-        <div class="form-group" style="margin-bottom: 14px;">
-          <label style="font-size: 0.82rem; font-weight: 700; color: #0F172A; display: block; margin-bottom: 6px;">Phone Par Aaya Hua 6-Digit SMS OTP Dalein *</label>
-          <input type="text" id="otp-input-code" class="form-control" placeholder="• • • • • •" maxlength="6" inputmode="numeric" autocomplete="one-time-code" style="text-align: center; font-size: 1.5rem; font-weight: 800; letter-spacing: 6px; height: 48px; box-sizing: border-box; width: 100%;">
-        </div>
-
-        <button type="button" id="confirm-otp-btn" class="btn btn-primary btn-full" style="min-height: 46px; height: auto; font-weight: 700; font-size: 0.95rem; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 10px 14px; box-sizing: border-box;">
-          Verify & Continue →
-        </button>
-
-        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; margin-top: 6px; padding: 0 4px;">
-          <button type="button" id="resend-otp-btn" style="background: none; border: none; color: #2563EB; font-weight: 700; cursor: pointer; text-decoration: underline; padding: 0;">🔄 Resend SMS</button>
-          <button type="button" id="change-phone-btn" style="background: none; border: none; color: #64748B; cursor: pointer; padding: 0;">✏️ Change Number</button>
-        </div>
-      </div>
-    </div>
-  `;
-
-  backdrop.classList.add("active");
-
-  const closeBtn = document.getElementById("close-otp-modal-btn");
-  const sendBtn = document.getElementById("send-otp-btn");
-  const phoneInput = document.getElementById("otp-input-phone");
-  const stepPhone = document.getElementById("otp-step-phone");
-  const stepVerify = document.getElementById("otp-step-verify");
-  const otpTargetPhoneNum = document.getElementById("otp-target-phone-num");
-  const otpCodeInput = document.getElementById("otp-input-code");
-  const confirmBtn = document.getElementById("confirm-otp-btn");
-  const resendBtn = document.getElementById("resend-otp-btn");
-  const changePhoneBtn = document.getElementById("change-phone-btn");
-  const phoneErrorBox = document.getElementById("otp-phone-error");
-  const verifyErrorBox = document.getElementById("otp-verify-error");
-
-  const closeModal = () => {
-    stopResendCooldown();
-    backdrop.classList.remove("active");
-  };
-
-  closeBtn.addEventListener("click", closeModal);
-  backdrop.addEventListener("click", (e) => {
-    if (e.target === backdrop) closeModal();
-  });
-
-  const triggerOtpSend = async (isResend = false) => {
-    const raw = phoneInput.value.trim().replace(/\D/g, "");
-    if (!/^[6-9]\d{9}$/.test(raw)) {
-      phoneErrorBox.style.display = "block";
-      phoneErrorBox.textContent = "Kripya 10-digit ka valid Bharatiya mobile number dalein (shuruwat 6, 7, 8, ya 9 se honi chahiye).";
-      phoneInput.focus();
-      return;
-    }
-    phoneErrorBox.style.display = "none";
-    phoneErrorBox.textContent = "";
-
-    activeOtpPhone = raw;
-    sendBtn.disabled = true;
-    sendBtn.innerHTML = "⏳ Sending Firebase SMS OTP...";
-
-    if (isResend && resendBtn) {
-      resendBtn.disabled = true;
-      resendBtn.innerText = "⏳ Resending SMS...";
-    }
-
-    try {
-      const verifier = setupRecaptchaVerifier();
-      const confirmationResult = await signInWithPhoneNumber(auth, `+91${activeOtpPhone}`, verifier);
-
-      // ONLY on verified Firebase dispatch:
-      activeConfirmationResult = confirmationResult;
-
-      stepPhone.style.display = "none";
-      stepVerify.style.display = "block";
-      otpTargetPhoneNum.textContent = activeOtpPhone;
-
-      verifyErrorBox.style.display = "none";
-      verifyErrorBox.textContent = "";
-      otpCodeInput.value = "";
-      otpCodeInput.focus();
-
-      // Start 60-second cooldown
-      startResendCooldown(60);
-
-      showToast(`📩 SMS OTP sent to +91 ${activeOtpPhone}. Messages app check karein!`, "success", 4000);
-    } catch (err) {
-      console.error("Firebase Phone Auth error:", err);
-      activeConfirmationResult = null;
-
-      const errorMsg = formatFirebasePhoneError(err);
-
-      if (isResend) {
-        verifyErrorBox.style.display = "block";
-        verifyErrorBox.textContent = errorMsg;
-        showToast(errorMsg, "error", 5000);
-        updateResendBtnUI();
-      } else {
-        phoneErrorBox.style.display = "block";
-        phoneErrorBox.textContent = errorMsg;
-        showToast(errorMsg, "error", 5000);
-      }
-
-      // Clear verifier on failure so user can retry
-      if (window.ascRecaptchaVerifier) {
-        try { window.ascRecaptchaVerifier.clear(); } catch(e) {}
-        window.ascRecaptchaVerifier = null;
-      }
-    } finally {
-      sendBtn.disabled = false;
-      sendBtn.innerHTML = "📩 Send SMS OTP to Mobile →";
-    }
-  };
-
-  sendBtn.addEventListener("click", () => triggerOtpSend(false));
-  phoneInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") triggerOtpSend(false);
-  });
-
-  confirmBtn.addEventListener("click", async () => {
-    const entered = otpCodeInput.value.trim().replace(/\D/g, "");
-    if (entered.length !== 6) {
-      verifyErrorBox.style.display = "block";
-      verifyErrorBox.textContent = "Kripya SMS mein aaya hua poora 6-digit OTP code dalein.";
-      otpCodeInput.focus();
-      return;
-    }
-    verifyErrorBox.style.display = "none";
-    verifyErrorBox.textContent = "";
-
-    if (!activeConfirmationResult) {
-      verifyErrorBox.style.display = "block";
-      verifyErrorBox.textContent = "Session expire ho chuka hai. Kripya 'Resend SMS' par click karke naya code mangayein.";
-      return;
-    }
-
-    confirmBtn.disabled = true;
-    confirmBtn.innerHTML = "⏳ Verifying with Firebase...";
-
-    try {
-      // Real Firebase Phone Auth confirmation
-      const userCredential = await activeConfirmationResult.confirm(entered);
-      const user = userCredential.user;
-
-      stopResendCooldown();
-      const authData = setCustomerAuth(activeOtpPhone, user.displayName || "");
-      backdrop.classList.remove("active");
-      showToast(`✅ +91 ${activeOtpPhone} Mobile verified successfully!`, "success");
-
-      if (typeof options.onSuccess === "function") {
-        options.onSuccess(authData);
-      }
-    } catch (confirmErr) {
-      console.error("SMS OTP verification failed:", confirmErr);
-      const errorMsg = formatFirebaseOtpConfirmError(confirmErr);
-      verifyErrorBox.style.display = "block";
-      verifyErrorBox.textContent = errorMsg;
-      showToast(errorMsg, "error", 4000);
-      confirmBtn.disabled = false;
-      confirmBtn.innerHTML = "Verify & Continue →";
-      otpCodeInput.focus();
-    }
-  });
-
-  otpCodeInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") confirmBtn.click();
-  });
-
-  resendBtn.addEventListener("click", async () => {
-    if (resendSecondsRemaining > 0) return;
-    await triggerOtpSend(true);
-  });
-
-  changePhoneBtn.addEventListener("click", () => {
-    stopResendCooldown();
-    stepVerify.style.display = "none";
-    stepPhone.style.display = "block";
-    phoneErrorBox.style.display = "none";
-    phoneInput.focus();
-  });
 }
 
 // ==========================================
@@ -490,20 +131,7 @@ export function initCartPage() {
         <!-- Order Summary & Coupon -->
         <div>
           <div class="order-summary-card">
-            <!-- Customer Login Badge -->
-            <div style="margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid #F1F5F9; display: flex; align-items: center; justify-content: space-between;">
-              ${customerAuth ? `
-                <div style="font-size: 0.85rem; color: #16A34A; font-weight: 700; display: flex; align-items: center; gap: 6px;">
-                  <span>✓</span> <span>+91 ${customerAuth.phone} (Verified)</span>
-                </div>
-                <button type="button" id="cart-logout-btn" style="background: none; border: none; font-size: 0.78rem; color: #64748B; cursor: pointer; text-decoration: underline;">Change</button>
-              ` : `
-                <div style="font-size: 0.85rem; color: #475569; font-weight: 600;">
-                  🔒 Mobile verification needed before checkout
-                </div>
-                <button type="button" id="cart-login-btn" class="btn btn-sm btn-outline" style="font-weight: 700; padding: 4px 10px;">Login</button>
-              `}
-            </div>
+
 
             <h3 style="font-size: 1.2rem; font-weight: 800; color: #0F172A; margin: 0 0 16px;">Order Summary</h3>
 
@@ -565,35 +193,11 @@ export function initCartPage() {
       </div>
     `;
 
-    // Proceed to checkout with OTP Login requirement
+    // Direct proceed to checkout
     const proceedBtn = document.getElementById("cart-proceed-btn");
     if (proceedBtn) {
       proceedBtn.addEventListener("click", () => {
-        const auth = getCustomerAuth();
-        if (!auth || !auth.verified) {
-          showCustomerOtpModal({
-            onSuccess: () => {
-              window.location.href = "checkout.html";
-            }
-          });
-        } else {
-          window.location.href = "checkout.html";
-        }
-      });
-    }
-
-    const loginBtn = document.getElementById("cart-login-btn");
-    if (loginBtn) {
-      loginBtn.addEventListener("click", () => {
-        showCustomerOtpModal({ onSuccess: () => render() });
-      });
-    }
-
-    const logoutBtn = document.getElementById("cart-logout-btn");
-    if (logoutBtn) {
-      logoutBtn.addEventListener("click", () => {
-        clearCustomerAuth();
-        render();
+        window.location.href = "checkout.html";
       });
     }
 
@@ -693,21 +297,7 @@ export function initCheckoutPage() {
       <!-- Checkout Form -->
       <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 18px; padding: 22px; box-shadow: 0 4px 16px rgba(0,0,0,0.03);">
         
-        <!-- Customer Login Status Strip -->
-        <div style="background: ${customerAuth ? '#F0FDF4' : '#EFF6FF'}; border: 1.5px solid ${customerAuth ? '#86EFAC' : '#93C5FD'}; border-radius: 12px; padding: 12px 16px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
-          <div>
-            ${customerAuth ? `
-              <span style="font-weight: 800; color: #15803D; font-size: 0.95rem;">✓ Verified Customer:</span>
-              <span style="font-weight: 700; color: #0F172A; font-size: 0.95rem; margin-left: 4px;">+91 ${customerAuth.phone}</span>
-            ` : `
-              <span style="font-weight: 800; color: #1E40AF; font-size: 0.95rem;">🔒 Mobile OTP Login Required</span>
-              <div style="font-size: 0.78rem; color: #475569;">Order place karne ke liye mobile verify hona zaroori hai.</div>
-            `}
-          </div>
-          <button type="button" id="trigger-otp-login-btn" class="btn btn-sm ${customerAuth ? 'btn-outline' : 'btn-primary'}" style="font-weight: 700;">
-            ${customerAuth ? 'Change Number' : '📱 Verify via OTP'}
-          </button>
-        </div>
+
 
         <h2 style="font-size: 1.35rem; font-weight: 800; color: #0F172A; margin-bottom: 18px;">Customer & Delivery Details</h2>
 
@@ -719,7 +309,10 @@ export function initCheckoutPage() {
             </div>
             <div class="form-group">
               <label class="form-label">Mobile Number *</label>
-              <input type="tel" id="cust-phone" class="form-control" placeholder="10-digit mobile number" pattern="[0-9]{10}" required value="${customerAuth ? customerAuth.phone : ''}" ${customerAuth ? 'readonly style="background: #F8FAFC;"' : ''}>
+              <div style="display: flex; gap: 8px;">
+                <span style="display: flex; align-items: center; padding: 0 12px; background: #F8FAFC; border: 1.5px solid #CBD5E1; border-radius: 10px; font-weight: 700; color: #0F172A;">+91</span>
+                <input type="tel" id="cust-phone" class="form-control" placeholder="10-digit number (e.g. 9616932589)" maxlength="10" required value="${customerAuth ? customerAuth.phone : ''}" style="flex: 1; font-weight: 700;">
+              </div>
             </div>
           </div>
 
@@ -891,17 +484,7 @@ export function initCheckoutPage() {
     </div>
   `;
 
-  // Trigger OTP button
-  const triggerOtpBtn = document.getElementById("trigger-otp-login-btn");
-  if (triggerOtpBtn) {
-    triggerOtpBtn.addEventListener("click", () => {
-      showCustomerOtpModal({
-        onSuccess: (auth) => {
-          initCheckoutPage();
-        }
-      });
-    });
-  }
+
 
   // Toggle delivery address field based on fulfillment choice
   const radios = container.querySelectorAll("input[name='fulfillmentType']");
@@ -943,21 +526,16 @@ export function initCheckoutPage() {
     });
   }
 
-  // Handle Checkout submission
+  // Handle Checkout submission (Direct, No OTP Barrier)
   const form = document.getElementById("checkout-form");
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // Check customer OTP verification
-    const verifiedAuth = getCustomerAuth();
-    if (!verifiedAuth || !verifiedAuth.verified) {
-      showCustomerOtpModal({
-        phone: document.getElementById("cust-phone").value.trim(),
-        onSuccess: (auth) => {
-          document.getElementById("cust-phone").value = auth.phone;
-          form.requestSubmit();
-        }
-      });
+    const customerName = document.getElementById("cust-name").value.trim();
+    const rawPhone = document.getElementById("cust-phone").value.trim().replace(/\D/g, "");
+    if (rawPhone.length !== 10) {
+      showToast("Kripya 10-digit ka sahi mobile number dalein", "error");
+      document.getElementById("cust-phone").focus();
       return;
     }
 
@@ -977,12 +555,11 @@ export function initCheckoutPage() {
       paymentStatus = "Pending (UPI on Delivery)";
     }
 
-    const customerName = document.getElementById("cust-name").value.trim();
-    setCustomerAuth(verifiedAuth.phone, customerName);
+    setCustomerAuth(rawPhone, customerName);
 
     const orderPayload = {
       customerName: customerName,
-      customerPhone: verifiedAuth.phone,
+      customerPhone: rawPhone,
       fulfillmentType: fulfillmentType,
       deliveryAddress: fulfillmentType === "delivery" 
         ? `${document.getElementById("cust-address").value.trim()} (Landmark: ${document.getElementById("cust-landmark").value.trim() || 'N/A'})`
