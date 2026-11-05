@@ -357,76 +357,16 @@ export function initCheckoutPage() {
             </div>
           </div>
 
-          <!-- Payment Methods (Clean UPI - NO QR) -->
+          <!-- Payment Method: Cash on Delivery Only -->
           <div class="form-group" style="margin-top: 18px;">
-            <label class="form-label">Choose Payment Method *</label>
-
-            <!-- Option 1: Online UPI -->
-            <label class="payment-card">
-              <input type="radio" name="paymentMethod" value="Online UPI" checked style="accent-color: #2563EB; width: 18px; height: 18px; margin-top: 3px;">
-              <div style="flex: 1;">
-                <div style="font-weight: 700; color: #0F172A; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;">
-                  <span>📱 Pay Online via UPI (9616932589)</span>
-                  <span class="badge badge-success" style="font-size: 0.7rem; padding: 2px 8px;">Instant & Fast</span>
-                </div>
-                <div style="font-size: 0.78rem; color: #64748B; margin-top: 2px;">Google Pay, PhonePe, Paytm, BHIM or Direct UPI Transfer</div>
-              </div>
-            </label>
-
-            <!-- UPI Payment Box (WITHOUT QR - Clean UPI info) -->
-            <div id="upi-payment-details-box" class="upi-pay-box" style="text-align: left;">
-              <div style="font-weight: 800; color: #0F172A; font-size: 1rem; margin-bottom: 6px;">
-                💳 Store UPI Payment: ₹${summary.grandTotal}
-              </div>
-              <p style="font-size: 0.82rem; color: #475569; margin: 0 0 12px;">
-                Apne Google Pay, PhonePe ya Paytm se is UPI ID par ₹${summary.grandTotal} pay karein:
-              </p>
-
-              <div style="background: #FFFFFF; border: 1.5px solid #CBD5E1; border-radius: 12px; padding: 12px 14px; margin-bottom: 12px;">
-                <div style="font-size: 0.75rem; color: #64748B; font-weight: 700; text-transform: uppercase;">Official Store UPI ID:</div>
-                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 4px; flex-wrap: wrap;">
-                  <span style="font-family: monospace; font-size: 1.15rem; font-weight: 800; color: #0F172A; letter-spacing: 0.5px;">9616932589@paytm</span>
-                  <button type="button" id="copy-upi-btn" class="btn btn-sm btn-outline" style="padding: 4px 12px; font-weight: 700; border-color: #2563EB; color: #2563EB;">📋 Copy UPI ID</button>
-                </div>
-                <div style="font-size: 0.78rem; color: #16A34A; font-weight: 600; margin-top: 6px;">
-                  ✓ Store Phone / GPay / PhonePe: <strong>9616932589</strong>
-                </div>
-              </div>
-
-              <!-- Tap to pay via UPI Intent -->
-              <a href="${upiIntentUrl}" class="upi-intent-btn" style="display: flex; width: 100%; max-width: 100%;">
-                ⚡ Open UPI App & Pay ₹${summary.grandTotal} (GPay / PhonePe / Paytm)
-              </a>
-
-              <!-- Optional UTR Input -->
-              <div style="margin-top: 14px; border-top: 1px dashed #CBD5E1; padding-top: 12px;">
-                <label style="font-size: 0.82rem; font-weight: 700; color: #0F172A; display: block; margin-bottom: 4px;">
-                  UPI UTR / Reference No. (Payment ke baad yahan dalein):
-                </label>
-                <input type="text" id="cust-utr" class="form-control" placeholder="12-digit UTR No. (e.g. 4312XXXXXXXX)" maxlength="16" style="text-align: center; font-weight: 700; font-size: 0.95rem;">
-                <small style="font-size: 0.72rem; color: #64748B; display: block; margin-top: 4px;">
-                  * Payment confirmation ke liye UTR number zaroor dalein taaki instant dispatch ho sake.
-                </small>
+            <label class="form-label">Payment Method *</label>
+            <div style="background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; gap: 12px;">
+              <input type="radio" name="paymentMethod" value="Cash on Delivery" checked style="accent-color: #16A34A; width: 20px; height: 20px; cursor: pointer;">
+              <div>
+                <div style="font-weight: 800; color: #15803D; font-size: 1rem;">💵 Cash on Delivery (COD) / Pay at Store</div>
+                <div style="font-size: 0.8rem; color: #166534; margin-top: 2px;">Delivery hone par ya counter par saaman prapt hone ke baad cash payment karein.</div>
               </div>
             </div>
-
-            <!-- Option 2: Cash on Delivery -->
-            <label class="payment-card">
-              <input type="radio" name="paymentMethod" value="Cash on Delivery" style="accent-color: #2563EB; width: 18px; height: 18px; margin-top: 3px;">
-              <div>
-                <div style="font-weight: 700; color: #0F172A; font-size: 0.95rem;">💵 Cash on Delivery / Pay at Store</div>
-                <div style="font-size: 0.78rem; color: #64748B;">Pay cash when items are delivered or picked up</div>
-              </div>
-            </label>
-
-            <!-- Option 3: UPI on Delivery -->
-            <label class="payment-card">
-              <input type="radio" name="paymentMethod" value="UPI on Delivery" style="accent-color: #2563EB; width: 18px; height: 18px; margin-top: 3px;">
-              <div>
-                <div style="font-weight: 700; color: #0F172A; font-size: 0.95rem;">💳 UPI on Delivery</div>
-                <div style="font-size: 0.78rem; color: #64748B;">Scan delivery agent's UPI upon arrival</div>
-              </div>
-            </label>
           </div>
 
           <!-- Order Notes -->
@@ -436,7 +376,7 @@ export function initCheckoutPage() {
           </div>
 
           <button type="submit" class="btn btn-primary btn-lg btn-full" id="submit-order-btn" style="margin-top: 22px; font-size: 1.08rem; font-weight: 700; height: 50px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);">
-            Place Order Now (₹${summary.grandTotal}) →
+            Place Order via WhatsApp (₹${summary.grandTotal}) →
           </button>
         </form>
       </div>
@@ -503,28 +443,7 @@ export function initCheckoutPage() {
     });
   });
 
-  // Toggle UPI payment details box
-  const payRadios = container.querySelectorAll("input[name='paymentMethod']");
-  const upiBox = document.getElementById("upi-payment-details-box");
-  payRadios.forEach(radio => {
-    radio.addEventListener("change", (e) => {
-      if (upiBox) {
-        upiBox.style.display = e.target.value === "Online UPI" ? "block" : "none";
-      }
-    });
-  });
 
-  // Copy UPI ID button
-  const copyBtn = document.getElementById("copy-upi-btn");
-  if (copyBtn) {
-    copyBtn.addEventListener("click", () => {
-      navigator.clipboard.writeText("9616932589@paytm").then(() => {
-        showToast("UPI ID Copied: 9616932589@paytm", "success");
-      }).catch(() => {
-        showToast("UPI ID: 9616932589@paytm", "info");
-      });
-    });
-  }
 
   // Handle Checkout submission (Direct, No OTP Barrier)
   const form = document.getElementById("checkout-form");
@@ -544,16 +463,9 @@ export function initCheckoutPage() {
     submitBtn.innerHTML = "Placing Order & Connecting to WhatsApp...";
 
     const fulfillmentType = container.querySelector("input[name='fulfillmentType']:checked").value;
-    const paymentMethod = container.querySelector("input[name='paymentMethod']:checked").value;
-    const utrInput = document.getElementById("cust-utr");
-    const utrNumber = (utrInput && paymentMethod === "Online UPI") ? utrInput.value.trim() : "";
-
-    let paymentStatus = "Pending (Cash on Delivery)";
-    if (paymentMethod === "Online UPI") {
-      paymentStatus = utrNumber ? `Paid Online via UPI (UTR: ${utrNumber})` : "Paid Online via UPI (9616932589@paytm)";
-    } else if (paymentMethod === "UPI on Delivery") {
-      paymentStatus = "Pending (UPI on Delivery)";
-    }
+    const paymentMethod = "Cash on Delivery";
+    const paymentStatus = "Pending (Cash on Delivery)";
+    const utrNumber = "";
 
     setCustomerAuth(rawPhone, customerName);
 
@@ -592,7 +504,7 @@ export function initCheckoutPage() {
     } else {
       showToast("Order creation error. Please try again.", "error");
       submitBtn.disabled = false;
-      submitBtn.innerHTML = `Place Order Now (₹${summary.grandTotal}) →`;
+      submitBtn.innerHTML = `Place Order via WhatsApp (₹${summary.grandTotal}) →`;
     }
   });
 }

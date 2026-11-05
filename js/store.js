@@ -634,7 +634,8 @@ export async function submitReview(reviewData) {
 // ==========================================
 export function getWhatsAppOrderUrl(order) {
   const settings = getCachedSettings();
-  const phone = (settings.whatsappNumber || "919616932589").replace(/\D/g, "");
+  const rawPhone = (settings.whatsappNumber || "919616932589").replace(/\D/g, "");
+  const phone = rawPhone.length === 10 ? `91${rawPhone}` : (rawPhone.startsWith("91") ? rawPhone : `91${rawPhone}`);
 
   let msg = `🛍️ *NEW ORDER - AYUSH SERVICE CENTER*\n`;
   msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
@@ -683,7 +684,8 @@ export function getWhatsAppOrderUrl(order) {
 
 export function getWhatsAppAutoBookingUrl(booking) {
   const settings = getCachedSettings();
-  const phone = (settings.whatsappNumber || "919616932589").replace(/\D/g, "");
+  const rawPhone = (settings.whatsappNumber || "919616932589").replace(/\D/g, "");
+  const phone = rawPhone.length === 10 ? `91${rawPhone}` : (rawPhone.startsWith("91") ? rawPhone : `91${rawPhone}`);
 
   let msg = `🚗 *AUTO BOOKING REQUEST - AYUSH SERVICE CENTER*\n`;
   msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
@@ -707,7 +709,8 @@ export function getWhatsAppAutoBookingUrl(booking) {
 
 export function getWhatsAppProductInquiryUrl(product) {
   const settings = getCachedSettings();
-  const phone = (settings.whatsappNumber || "919616932589").replace(/\D/g, "");
+  const rawPhone = (settings.whatsappNumber || "919616932589").replace(/\D/g, "");
+  const phone = rawPhone.length === 10 ? `91${rawPhone}` : (rawPhone.startsWith("91") ? rawPhone : `91${rawPhone}`);
   
   let msg = `Hello Ayush Service Center,\nI am interested in buying: *${product.name}* (Price: ₹${product.price}).\nIs this available in stock?`;
   return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
