@@ -1621,3 +1621,123 @@ button, input, select, textarea {
   flex-direction: column;
   flex: 1;
 }
+
+/* ==========================================================================
+   CLASSICAL HOMEPAGE STYLES & CATEGORY PRODUCT TABS
+   ========================================================================== */
+.classical-cat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .classical-cat-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .classical-cat-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+}
+
+.classical-cat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 14px;
+  text-align: center;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.classical-cat-card:hover {
+  transform: translateY(-4px);
+  border-color: #93C5FD;
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.12);
+}
+
+.classical-cat-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  background: #F1F5F9;
+  border: 2px solid #E2E8F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.classical-cat-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.classical-cat-card:hover .classical-cat-icon img {
+  transform: scale(1.1);
+}
+
+.classical-tabs-wrapper {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 24px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.classical-tabs-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.home-tab-btn {
+  padding: 9px 18px;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--navy);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.home-tab-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: #EFF6FF;
+}
+
+.home-tab-btn.active {
+  background: var(--primary);
+  color: var(--white);
+  border-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.review-card-classical {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
