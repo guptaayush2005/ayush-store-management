@@ -27,7 +27,9 @@ import {
   onAuthStateChanged, 
   sendPasswordResetEmail,
   createUserWithEmailAndPassword,
-  signInAnonymously
+  signInAnonymously,
+  RecaptchaVerifier,
+  signInWithPhoneNumber
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { 
   getStorage, 
@@ -80,7 +82,9 @@ export {
   onAuthStateChanged,
   sendPasswordResetEmail,
   createUserWithEmailAndPassword,
-  signInAnonymously
+  signInAnonymously,
+  RecaptchaVerifier,
+  signInWithPhoneNumber
 };
 
 // Export Storage utilities

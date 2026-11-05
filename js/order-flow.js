@@ -70,47 +70,51 @@ export function showCustomerOtpModal(options = {}) {
       <button type="button" id="close-otp-modal-btn" style="position: absolute; top: 16px; right: 16px; background: #F1F5F9; border: 1px solid #CBD5E1; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #64748B; cursor: pointer;">✕</button>
 
       <div style="text-align: center; margin-bottom: 20px;">
-        <div style="width: 56px; height: 56px; background: #EFF6FF; color: #2563EB; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 12px;">📱</div>
-        <h3 style="font-size: 1.3rem; font-weight: 800; color: #0F172A; margin: 0 0 6px;">Customer Mobile Login</h3>
-        <p style="font-size: 0.88rem; color: #64748B; margin: 0;">Order karne se pehle apna 10-digit mobile number verify karein.</p>
+        <div style="width: 54px; height: 54px; background: #EFF6FF; color: #2563EB; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 10px;">📱</div>
+        <h3 style="font-size: 1.25rem; font-weight: 800; color: #0F172A; margin: 0 0 6px;">Customer Mobile Login</h3>
+        <p style="font-size: 0.85rem; color: #64748B; margin: 0;">Order karne se pehle apna mobile number verify karein.</p>
       </div>
 
       <!-- Step 1: Enter Mobile -->
       <div id="otp-step-phone">
         <div class="form-group" style="margin-bottom: 16px;">
-          <label style="font-size: 0.85rem; font-weight: 700; color: #0F172A; display: block; margin-bottom: 6px;">Mobile Number *</label>
+          <label style="font-size: 0.85rem; font-weight: 700; color: #0F172A; display: block; margin-bottom: 6px;">Apna 10-Digit Mobile Number Dalein *</label>
           <div style="display: flex; gap: 8px;">
             <span style="display: flex; align-items: center; padding: 0 12px; background: #F8FAFC; border: 1.5px solid #CBD5E1; border-radius: 10px; font-weight: 700; color: #0F172A;">+91</span>
-            <input type="tel" id="otp-input-phone" class="form-control" placeholder="10-digit mobile number" maxlength="10" value="${defaultPhone}" style="flex: 1; font-size: 1rem; font-weight: 700; letter-spacing: 0.5px;">
+            <input type="tel" id="otp-input-phone" class="form-control" placeholder="Mobile Number (e.g. 9876543210)" maxlength="10" value="${defaultPhone}" style="flex: 1; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.5px;">
           </div>
         </div>
 
-        <button type="button" id="send-otp-btn" class="btn btn-primary btn-full" style="height: 46px; font-weight: 700; font-size: 1rem;">
-          Send Verification OTP (ओटीपी भेजें) →
+        <button type="button" id="send-otp-btn" class="btn btn-primary btn-full" style="height: 48px; font-weight: 700; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 8px;">
+          📲 Send OTP to My Number (ओटीपी भेजें) →
         </button>
       </div>
 
-      <!-- Step 2: Enter OTP -->
+      <!-- Step 2: Enter OTP received on phone (NO OTP SHOWN ON SCREEN) -->
       <div id="otp-step-verify" style="display: none;">
-        <div id="otp-simulated-notification" class="otp-alert-box">
-          <div style="font-size: 0.85rem; color: #166534; font-weight: 700;">📲 Instant Verification OTP Sent:</div>
-          <div id="otp-display-code" style="font-size: 1.6rem; font-weight: 800; color: #15803D; letter-spacing: 4px; margin: 4px 0;">----</div>
-          <div style="font-size: 0.75rem; color: #15803D;">(Ye OTP niche box me dalein aur verify karein)</div>
+        <div class="otp-alert-box" style="background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 12px; padding: 14px; margin-bottom: 16px; text-align: center;">
+          <div style="font-size: 1rem; color: #15803D; font-weight: 800; margin-bottom: 4px;">
+            📲 OTP Sent to +91 <span id="otp-target-phone-num"></span>
+          </div>
+          <p style="font-size: 0.82rem; color: #166534; margin: 0; line-height: 1.4;">
+            Aapke number par 4-digit verification code bhej diya gaya hai. Apna WhatsApp / SMS check karein aur code yahan dalein:
+          </p>
         </div>
 
         <div class="form-group" style="margin-bottom: 16px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <label style="font-size: 0.85rem; font-weight: 700; color: #0F172A;">Enter 4-Digit OTP *</label>
-            <span id="otp-target-phone" style="font-size: 0.8rem; color: #64748B; font-weight: 600;"></span>
-          </div>
-          <input type="text" id="otp-input-code" class="form-control" placeholder="e.g. 4826" maxlength="6" style="text-align: center; font-size: 1.4rem; font-weight: 800; letter-spacing: 6px;">
+          <label style="font-size: 0.85rem; font-weight: 700; color: #0F172A; display: block; margin-bottom: 6px;">Phone Par Aaya Hua 4-Digit OTP Dalein *</label>
+          <input type="text" id="otp-input-code" class="form-control" placeholder="• • • •" maxlength="4" style="text-align: center; font-size: 1.5rem; font-weight: 800; letter-spacing: 8px; height: 50px;">
         </div>
 
-        <button type="button" id="confirm-otp-btn" class="btn btn-whatsapp btn-full" style="height: 46px; font-weight: 700; font-size: 1rem; margin-bottom: 10px;">
+        <button type="button" id="confirm-otp-btn" class="btn btn-whatsapp btn-full" style="height: 48px; font-weight: 700; font-size: 1.02rem; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;">
           ✓ Verify & Continue (सत्यापित करें)
         </button>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; margin-top: 8px;">
+        <a id="open-wa-otp-link" href="#" target="_blank" class="btn btn-sm btn-outline" style="color: #16A34A; border-color: #86EFAC; font-weight: 700; width: 100%; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 12px;">
+          💬 Open WhatsApp to Check OTP
+        </a>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; margin-top: 4px;">
           <button type="button" id="resend-otp-btn" style="background: none; border: none; color: #2563EB; font-weight: 700; cursor: pointer; text-decoration: underline;">Resend OTP</button>
           <button type="button" id="change-phone-btn" style="background: none; border: none; color: #64748B; cursor: pointer;">Change Number</button>
         </div>
@@ -129,12 +133,12 @@ export function showCustomerOtpModal(options = {}) {
   const phoneInput = document.getElementById("otp-input-phone");
   const stepPhone = document.getElementById("otp-step-phone");
   const stepVerify = document.getElementById("otp-step-verify");
-  const otpDisplay = document.getElementById("otp-display-code");
-  const otpTargetPhone = document.getElementById("otp-target-phone");
+  const otpTargetPhoneNum = document.getElementById("otp-target-phone-num");
   const otpCodeInput = document.getElementById("otp-input-code");
   const confirmBtn = document.getElementById("confirm-otp-btn");
   const resendBtn = document.getElementById("resend-otp-btn");
   const changePhoneBtn = document.getElementById("change-phone-btn");
+  const openWaLink = document.getElementById("open-wa-otp-link");
 
   const triggerOtpSend = () => {
     const raw = phoneInput.value.trim().replace(/\D/g, "");
@@ -147,14 +151,27 @@ export function showCustomerOtpModal(options = {}) {
     activeOtpPhone = raw;
     activeGeneratedOtp = Math.floor(1000 + Math.random() * 9000).toString();
 
+    // Direct WhatsApp message to the customer's phone number containing the OTP
+    const waOtpUrl = `https://api.whatsapp.com/send?phone=91${activeOtpPhone}&text=${encodeURIComponent(
+      `🔐 *AYUSH SERVICE CENTER - VERIFICATION CODE*\n\nYour Order Verification OTP is: *${activeGeneratedOtp}*\n\nValid for 10 minutes. Do not share this OTP with anyone.\n\n📍 Budhiya Mai Mandir, Tarajeevanpur Chauraha, Chandauli`
+    )}`;
+
+    try {
+      window.open(waOtpUrl, "_blank");
+    } catch (e) {
+      console.warn("Popup blocked:", e);
+    }
+
     stepPhone.style.display = "none";
     stepVerify.style.display = "block";
-    otpTargetPhone.textContent = `+91 ${activeOtpPhone}`;
-    otpDisplay.textContent = activeGeneratedOtp;
-    otpCodeInput.value = activeGeneratedOtp; // Pre-filled for seamless UX
+    otpTargetPhoneNum.textContent = activeOtpPhone;
+    openWaLink.href = waOtpUrl;
+
+    // EMPTY the input so the user has to check their phone and type it
+    otpCodeInput.value = "";
     otpCodeInput.focus();
 
-    showToast(`OTP Sent to +91 ${activeOtpPhone}: ${activeGeneratedOtp}`, "success");
+    showToast(`OTP dispatched to +91 ${activeOtpPhone}. Please check your phone!`, "success");
   };
 
   sendBtn.addEventListener("click", triggerOtpSend);
@@ -164,24 +181,29 @@ export function showCustomerOtpModal(options = {}) {
 
   confirmBtn.addEventListener("click", () => {
     const entered = otpCodeInput.value.trim();
-    if (entered === activeGeneratedOtp || entered === "1234" || entered.length >= 4) {
+    if (entered === activeGeneratedOtp || (activeGeneratedOtp && entered === activeGeneratedOtp)) {
       const auth = setCustomerAuth(activeOtpPhone);
       backdrop.classList.remove("active");
-      showToast("✅ Mobile verified successfully!", "success");
+      showToast(`✅ +91 ${activeOtpPhone} verified successfully!`, "success");
       if (typeof options.onSuccess === "function") {
         options.onSuccess(auth);
       }
     } else {
-      showToast("Invalid OTP. Sahi 4-digit OTP dalein.", "error");
+      showToast("Galat OTP! Kripya phone par aaya hua sahi 4-digit code dalein.", "error");
       otpCodeInput.focus();
     }
   });
 
   resendBtn.addEventListener("click", () => {
     activeGeneratedOtp = Math.floor(1000 + Math.random() * 9000).toString();
-    otpDisplay.textContent = activeGeneratedOtp;
-    otpCodeInput.value = activeGeneratedOtp;
-    showToast(`New OTP: ${activeGeneratedOtp}`, "info");
+    const waOtpUrl = `https://api.whatsapp.com/send?phone=91${activeOtpPhone}&text=${encodeURIComponent(
+      `🔐 *AYUSH SERVICE CENTER - NEW OTP*\n\nYour new Verification OTP is: *${activeGeneratedOtp}*`
+    )}`;
+    window.open(waOtpUrl, "_blank");
+    openWaLink.href = waOtpUrl;
+    otpCodeInput.value = "";
+    otpCodeInput.focus();
+    showToast(`New OTP sent to +91 ${activeOtpPhone}!`, "info");
   });
 
   changePhoneBtn.addEventListener("click", () => {
