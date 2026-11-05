@@ -8,9 +8,13 @@ import {
   fetchStoreSettings,
   getWhatsAppProductInquiryUrl 
 } from "./store.js";
+import { initThemeSwitcher } from "./theme.js";
+import { initLanguageSwitcher } from "./i18n.js";
 
 // Initialize UI elements across all public pages
 document.addEventListener("DOMContentLoaded", async () => {
+  initThemeSwitcher();
+  initLanguageSwitcher();
   initHeader();
   initCartBadges();
   initSearchAutocomplete();

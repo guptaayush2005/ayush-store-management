@@ -357,105 +357,154 @@ export async function initProductDetailsPage() {
 
   container.innerHTML = `
     <!-- Breadcrumb -->
-    <nav style="font-size: 0.85rem; color: #64748B; margin-bottom: 24px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-      <a href="index.html" style="color: #2563EB;">Home</a> <span>/</span>
-      <a href="shop.html" style="color: #2563EB;">Shop</a> <span>/</span>
-      <a href="shop.html?category=${encodeURIComponent(product.category)}" style="color: #2563EB;">${product.category}</a> <span>/</span>
-      <span style="color: #0F172A; font-weight: 600;">${product.name}</span>
+    <nav style="font-size: 0.88rem; color: #64748B; margin-bottom: 24px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+      <a href="index.html" style="color: #2563EB; font-weight: 500;">🏠 Home</a> <span>/</span>
+      <a href="shop.html" style="color: #2563EB; font-weight: 500;">Shop</a> <span>/</span>
+      <a href="shop.html?category=${encodeURIComponent(product.category)}" style="color: #2563EB; font-weight: 500;">${product.category}</a> <span>/</span>
+      <span style="color: var(--navy, #0F172A); font-weight: 700;">${product.name}</span>
     </nav>
 
-    <div style="display: grid; grid-template-columns: 1fr; gap: 36px;" class="product-details-grid">
-      <!-- Image Gallery -->
-      <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; padding: 24px; text-align: center;">
-        <div style="aspect-ratio: 1 / 1; max-height: 440px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; border-radius: 12px; background: #FFFFFF; border: 1px solid #F1F5F9;">
-          <img src="${imgUrl}" alt="${product.name}" id="main-product-img" style="max-height: 100%; max-width: 100%; object-fit: contain; padding: 16px;" onerror="this.onerror=null; this.src='images/poster.jpg';">
-        </div>
-        ${product.images && product.images.length > 1 ? `
-          <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-            ${product.images.map((img, idx) => `
-              <img src="${img}" onclick="document.getElementById('main-product-img').src='${img}'" style="width: 60px; height: 60px; object-fit: contain; padding: 4px; background: #FFF; border-radius: 8px; border: 2px solid ${idx === 0 ? '#2563EB' : '#E2E8F0'}; cursor: pointer;" onerror="this.onerror=null; this.src='images/poster.jpg';">
-            `).join("")}
+    <div style="display: grid; grid-template-columns: 1fr; gap: 36px; align-items: start;" class="product-details-grid">
+      <!-- Left Column: Image Gallery & Assurance Badges -->
+      <div>
+        <div class="product-gallery-frame" style="background: var(--card-bg, #FFFFFF); border: 1px solid var(--border, #E2E8F0); border-radius: 20px; padding: 24px; text-align: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);">
+          <div style="aspect-ratio: 1 / 1; max-height: 440px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; border-radius: 14px; background: var(--bg-light, #F8FAFC); border: 1px solid var(--border-light, #F1F5F9); position: relative;">
+            <img src="${imgUrl}" alt="${product.name}" id="main-product-img" style="max-height: 100%; max-width: 100%; object-fit: contain; padding: 18px; transition: transform 0.3s;" onerror="this.onerror=null; this.src='images/poster.jpg';">
+            ${discount > 0 ? `<span class="badge badge-danger" style="position: absolute; top: 12px; left: 12px; font-size: 0.8rem; font-weight: 800; padding: 4px 10px; border-radius: 6px;">${discount}% OFF</span>` : ""}
+            <span class="badge badge-success" style="position: absolute; bottom: 12px; left: 12px; font-size: 0.78rem; font-weight: 700;">● Verified ASC Stock</span>
           </div>
-        ` : ""}
+
+          ${product.images && product.images.length > 1 ? `
+            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+              ${product.images.map((img, idx) => `
+                <img src="${img}" onclick="document.getElementById('main-product-img').src='${img}'" style="width: 62px; height: 62px; object-fit: contain; padding: 4px; background: var(--card-bg, #FFF); border-radius: 10px; border: 2px solid ${idx === 0 ? '#2563EB' : 'var(--border, #E2E8F0)'}; cursor: pointer; transition: all 0.2s;" onerror="this.onerror=null; this.src='images/poster.jpg';">
+              `).join("")}
+            </div>
+          ` : ""}
+        </div>
+
+        <!-- Assurance Strip -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 18px; text-align: center;">
+          <div style="background: var(--card-bg, #FFF); border: 1px solid var(--border, #E2E8F0); border-radius: 12px; padding: 12px 8px; font-size: 0.75rem; font-weight: 600; color: var(--text-muted, #64748B);">
+            🛡️ 100% Genuine
+          </div>
+          <div style="background: var(--card-bg, #FFF); border: 1px solid var(--border, #E2E8F0); border-radius: 12px; padding: 12px 8px; font-size: 0.75rem; font-weight: 600; color: var(--text-muted, #64748B);">
+            🏪 25+ Yrs Store
+          </div>
+          <div style="background: var(--card-bg, #FFF); border: 1px solid var(--border, #E2E8F0); border-radius: 12px; padding: 12px 8px; font-size: 0.75rem; font-weight: 600; color: var(--text-muted, #64748B);">
+            ⚡ Instant Pickup
+          </div>
+        </div>
       </div>
 
-      <!-- Info & Purchase -->
+      <!-- Right Column: Info, Pricing & Actions -->
       <div style="display: flex; flex-direction: column;">
-        <div style="display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap;">
-          <span class="badge badge-primary">${product.category}</span>
-          ${discount > 0 ? `<span class="badge badge-danger">${discount}% DISCOUNT</span>` : ""}
-          <span class="badge badge-success">Verified Genuine Stock</span>
+        <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; align-items: center;">
+          <span class="badge badge-primary" style="font-size: 0.8rem; font-weight: 700; padding: 4px 10px;">${product.category}</span>
+          <span style="font-size: 0.85rem; color: #F59E0B; font-weight: 700;">★ 4.8</span>
+          <span style="font-size: 0.82rem; color: var(--text-muted, #64748B);">(15+ Verified Reviews)</span>
         </div>
 
-        <h1 style="font-size: 1.85rem; font-weight: 800; color: #0F172A; margin-bottom: 6px; line-height: 1.25;">
+        <h1 style="font-size: 2rem; font-weight: 800; color: var(--navy, #0F172A); margin-bottom: 6px; line-height: 1.25;">
           ${product.name}
         </h1>
-        ${product.nameHindi ? `<div style="font-size: 1.05rem; color: #64748B; font-weight: 500; margin-bottom: 16px;">${product.nameHindi}</div>` : ""}
+        ${product.nameHindi ? `<div style="font-size: 1.15rem; color: #64748B; font-weight: 600; margin-bottom: 18px;">${product.nameHindi}</div>` : ""}
 
-        <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #E2E8F0;">
-          <span style="font-size: 2.2rem; font-weight: 800; color: #2563EB;">₹${product.price}</span>
-          ${product.mrp ? `<span style="font-size: 1.3rem; color: #94A3B8; text-decoration: line-through;">₹${product.mrp}</span>` : ""}
-          ${savings > 0 ? `<span class="badge badge-success" style="font-size: 0.85rem;">You Save ₹${savings}</span>` : ""}
-          <span style="font-size: 0.9rem; color: #64748B; margin-left: auto;">(Inclusive of all taxes)</span>
+        <!-- Price Breakdown -->
+        <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 22px; padding: 16px 20px; background: rgba(37,99,235,0.05); border: 1px solid rgba(37,99,235,0.15); border-radius: 14px; flex-wrap: wrap;">
+          <span style="font-size: 2.3rem; font-weight: 800; color: #2563EB;">₹${product.price}</span>
+          ${product.mrp && product.mrp > product.price ? `
+            <span style="font-size: 1.3rem; color: #94A3B8; text-decoration: line-through;">₹${product.mrp}</span>
+            <span class="badge badge-success" style="font-size: 0.82rem; font-weight: 700;">Save ₹${savings}</span>
+          ` : ""}
+          <span style="font-size: 0.85rem; color: var(--text-muted, #64748B); margin-left: auto;">(Inclusive of all taxes)</span>
         </div>
 
+        <!-- Product Overview -->
         <div style="margin-bottom: 24px;">
-          <h4 style="font-size: 0.95rem; font-weight: 700; color: #0F172A; margin-bottom: 8px;">Product Overview:</h4>
-          <p style="font-size: 0.95rem; color: #334155; line-height: 1.6;">${product.description || "High-quality genuine product available at Ayush Service Center, Tarajeevanpur Chauraha, Chandauli."}</p>
+          <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--navy, #0F172A); margin-bottom: 8px;">Product Overview:</h4>
+          <p style="font-size: 0.95rem; color: var(--text-muted, #334155); line-height: 1.6; margin: 0;">${product.description || "High-quality genuine retail product available at Ayush Service Center, Tarajeevanpur Chauraha, Chandauli."}</p>
         </div>
 
         <!-- Specifications Table -->
-        <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 16px; margin-bottom: 28px;">
-          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; font-size: 0.88rem;">
-            <div><strong style="color: #64748B;">SKU Code:</strong> <span style="color: #0F172A; font-weight: 600;">${product.sku || 'ASC-GEN'}</span></div>
-            <div><strong style="color: #64748B;">Unit:</strong> <span style="color: #0F172A; font-weight: 600;">${product.unit || 'Piece'}</span></div>
-            <div><strong style="color: #64748B;">Stock Status:</strong> <span style="color: #16A34A; font-weight: 600;">Available in Store</span></div>
-            <div><strong style="color: #64748B;">Store Location:</strong> <span style="color: #0F172A; font-weight: 600;">Tarajeevanpur Chauraha</span></div>
+        <div class="spec-box" style="background: var(--bg-light, #F8FAFC); border: 1px solid var(--border, #E2E8F0); border-radius: 14px; padding: 18px; margin-bottom: 28px;">
+          <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted, #64748B); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">Specifications & Availability:</div>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; font-size: 0.88rem;">
+            <div><span style="color: var(--text-muted, #64748B);">SKU Code:</span> <strong style="color: var(--navy, #0F172A);">${product.sku || 'ASC-GEN'}</strong></div>
+            <div><span style="color: var(--text-muted, #64748B);">Unit:</span> <strong style="color: var(--navy, #0F172A);">${product.unit || 'Piece'}</strong></div>
+            <div><span style="color: var(--text-muted, #64748B);">Stock Status:</span> <strong style="color: #16A34A;">● In Stock at Store</strong></div>
+            <div><span style="color: var(--text-muted, #64748B);">Store Location:</span> <strong style="color: var(--navy, #0F172A);">Tarajeevanpur Chauraha</strong></div>
           </div>
         </div>
 
         <!-- Quantity & Purchase Action Buttons -->
-        <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 20px; flex-wrap: wrap;">
-          <div style="display: flex; align-items: center; border: 1px solid #CBD5E1; border-radius: 10px; overflow: hidden; background: #FFFFFF;">
-            <button type="button" id="qty-dec-btn" style="width: 44px; height: 44px; background: none; border: none; font-size: 20px; cursor: pointer; color: #0F172A;">−</button>
-            <input type="number" id="detail-qty-input" value="1" min="1" max="50" style="width: 50px; text-align: center; border: none; font-size: 1.05rem; font-weight: 700;">
-            <button type="button" id="qty-inc-btn" style="width: 44px; height: 44px; background: none; border: none; font-size: 20px; cursor: pointer; color: #0F172A;">+</button>
+        <div style="display: flex; gap: 14px; align-items: center; margin-bottom: 18px; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; border: 1px solid var(--border, #CBD5E1); border-radius: 12px; overflow: hidden; background: var(--card-bg, #FFFFFF);">
+            <button type="button" id="qty-dec-btn" style="width: 46px; height: 46px; background: none; border: none; font-size: 20px; cursor: pointer; color: var(--navy, #0F172A);">−</button>
+            <input type="number" id="detail-qty-input" value="1" min="1" max="50" style="width: 52px; text-align: center; border: none; font-size: 1.1rem; font-weight: 700; background: transparent; color: var(--navy, #0F172A);">
+            <button type="button" id="qty-inc-btn" style="width: 46px; height: 46px; background: none; border: none; font-size: 20px; cursor: pointer; color: var(--navy, #0F172A);">+</button>
           </div>
 
-          <button type="button" class="btn btn-primary btn-lg" id="detail-add-cart-btn" style="flex: 1; min-width: 200px;">
+          <div style="font-weight: 700; color: #2563EB; font-size: 1.1rem;" id="detail-total-price">
+            Total: ₹${product.price}
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px;">
+          <button type="button" class="btn btn-primary btn-lg" id="detail-add-cart-btn" style="flex: 1.2; min-width: 180px; font-weight: 700;">
             🛒 Add to Cart
           </button>
           
-          <a href="${whatsappUrl}" target="_blank" class="btn btn-whatsapp btn-lg" style="flex: 1; min-width: 200px;">
+          <a href="${whatsappUrl}" target="_blank" class="btn btn-whatsapp btn-lg" id="detail-whatsapp-link" style="flex: 1.2; min-width: 180px; font-weight: 700;">
             💬 Order on WhatsApp
           </a>
-        </div>
 
-        <!-- Trust Badges Strip -->
-        <div style="display: flex; gap: 16px; font-size: 0.82rem; color: #64748B; padding-top: 16px; border-top: 1px solid #E2E8F0;">
-          <div style="display: flex; align-items: center; gap: 6px;">🛡️ 100% Genuine Quality</div>
-          <div style="display: flex; align-items: center; gap: 6px;">🏪 25+ Years Store Trust</div>
-          <div style="display: flex; align-items: center; gap: 6px;">⚡ Fast Local Delivery / Pickup</div>
+          <a href="tel:+919616932589" class="btn btn-outline btn-lg" style="font-weight: 700; padding: 12px 18px;">
+            📞 Call
+          </a>
         </div>
       </div>
     </div>
 
     <!-- Related Products -->
-    <div style="margin-top: 64px;">
-      <h2 style="font-size: 1.45rem; font-weight: 800; color: #0F172A; margin-bottom: 24px;">Similar Products in ${product.category}</h2>
+    <div style="margin-top: 60px; padding-top: 36px; border-top: 1px solid var(--border, #E2E8F0);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+        <h2 style="font-size: 1.45rem; font-weight: 800; color: var(--navy, #0F172A); margin: 0;">Similar Products in ${product.category}</h2>
+        <a href="shop.html?category=${encodeURIComponent(product.category)}" class="btn btn-sm btn-outline">View All →</a>
+      </div>
       <div class="product-grid" id="related-products-grid"></div>
     </div>
   `;
 
-  // Quantity button logic
+  // Quantity button logic with live price update
   const qtyInput = document.getElementById("detail-qty-input");
+  const totalDisplay = document.getElementById("detail-total-price");
+  const waLink = document.getElementById("detail-whatsapp-link");
+
+  const updateQuantityAndPrice = (newVal) => {
+    const val = Math.max(1, Math.min(50, newVal));
+    qtyInput.value = val;
+    if (totalDisplay) {
+      totalDisplay.textContent = `Total: ₹${product.price * val}`;
+    }
+    if (waLink) {
+      const text = encodeURIComponent(
+        `Hello Ayush Service Center,\nI would like to order: *${product.name}* (Qty: ${val}, Unit Price: ₹${product.price}, Total: ₹${product.price * val}).\nIs this available in stock?`
+      );
+      waLink.href = `https://wa.me/919616932589?text=${text}`;
+    }
+  };
+
   document.getElementById("qty-dec-btn").addEventListener("click", () => {
     const val = parseInt(qtyInput.value) || 1;
-    if (val > 1) qtyInput.value = val - 1;
+    updateQuantityAndPrice(val - 1);
   });
   document.getElementById("qty-inc-btn").addEventListener("click", () => {
     const val = parseInt(qtyInput.value) || 1;
-    qtyInput.value = val + 1;
+    updateQuantityAndPrice(val + 1);
+  });
+  qtyInput.addEventListener("change", () => {
+    updateQuantityAndPrice(parseInt(qtyInput.value) || 1);
   });
 
   // Add to cart trigger
@@ -485,21 +534,26 @@ export async function initOffersPage() {
 
   offers.forEach(o => {
     html += `
-      <div style="background: #FFFFFF; border: 2px dashed #2563EB; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-          <span class="badge badge-primary" style="font-size: 0.8rem; padding: 4px 10px;">PROMO CODE</span>
-          <span style="font-size: 0.82rem; color: #16A34A; font-weight: 700;">● Active Offer</span>
+      <div class="coupon-ticket-card" style="background: var(--card-bg, #FFFFFF); border: 2px dashed #2563EB; border-radius: 20px; padding: 26px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <span class="badge badge-primary" style="font-size: 0.78rem; font-weight: 800; padding: 4px 10px; border-radius: 6px;">PROMO CODE</span>
+            <span style="font-size: 0.82rem; color: #16A34A; font-weight: 700;">● Active Offer</span>
+          </div>
+          <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--navy, #0F172A); margin-bottom: 8px;">${o.title}</h3>
+          <p style="font-size: 0.92rem; color: var(--text-muted, #475569); margin-bottom: 20px; line-height: 1.55;">${o.description}</p>
         </div>
-        <h3 style="font-size: 1.25rem; font-weight: 800; color: #0F172A; margin-bottom: 6px;">${o.title}</h3>
-        <p style="font-size: 0.92rem; color: #475569; margin-bottom: 18px; line-height: 1.5;">${o.description}</p>
         
-        <div style="background: #F1F5F9; border-radius: 10px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-          <div style="font-family: monospace; font-size: 1.25rem; font-weight: 800; color: #2563EB; letter-spacing: 1.5px;">${o.code}</div>
-          <button class="btn btn-sm btn-primary copy-code-btn" data-code="${o.code}">Copy Code</button>
-        </div>
+        <div>
+          <div class="coupon-code-box" style="background: var(--bg-light, #F1F5F9); border: 1px solid var(--border, #E2E8F0); border-radius: 12px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <div style="font-family: monospace; font-size: 1.3rem; font-weight: 800; color: #2563EB; letter-spacing: 1.5px;">${o.code}</div>
+            <button class="btn btn-sm btn-primary copy-code-btn" data-code="${o.code}" style="font-weight: 700; padding: 6px 14px;">Copy Code</button>
+          </div>
 
-        <div style="font-size: 0.8rem; color: #94A3B8;">
-          Min Order: ₹${o.minOrderAmount || 0} • Valid Until: ${o.validUntil || '2026-12-31'}
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-muted, #94A3B8);">
+            <span>Min Order: <strong>₹${o.minOrderAmount || 0}</strong></span>
+            <a href="shop.html" style="color: #2563EB; font-weight: 700; text-decoration: none;">Shop Now →</a>
+          </div>
         </div>
       </div>
     `;
@@ -511,9 +565,14 @@ export async function initOffersPage() {
     btn.addEventListener("click", () => {
       const code = btn.dataset.code;
       navigator.clipboard.writeText(code).then(() => {
-        showToast(`Copied ${code} to clipboard! Apply it at checkout.`, "success");
-        btn.textContent = "Copied! ✓";
-        setTimeout(() => btn.textContent = "Copy Code", 2500);
+        showToast(`Copied coupon code ${code}! Apply it in cart or WhatsApp.`, "success");
+        const originalText = btn.textContent;
+        btn.textContent = "✓ Copied!";
+        btn.style.backgroundColor = "#10B981";
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.backgroundColor = "";
+        }, 2200);
       });
     });
   });

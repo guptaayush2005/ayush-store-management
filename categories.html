@@ -6,6 +6,14 @@
   <title>All Categories - Ayush Service Center | Utensils, Plastic, Mobile & Auto</title>
   <meta name="description" content="Explore 8 retail departments: Steel Utensils, Plasticware, Mobile Accessories, Cold Drinks, Cosmetics, Dona-Pattal, Gas Spares and Auto Booking in Chandauli.">
 
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem("asc_theme") || "light";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+      if (savedTheme === "dark") document.documentElement.classList.add("dark-mode");
+    })();
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
@@ -49,6 +57,16 @@
       </div>
 
       <div class="header-actions">
+        <!-- Language Switcher Button -->
+        <button type="button" class="lang-toggle-btn" id="lang-toggle-btn" title="हिंदी / English" aria-label="Toggle Language">
+          <span style="font-size: 16px;">🇮🇳</span> <span style="font-weight: 700; font-size: 0.82rem;">हिंदी</span>
+        </button>
+
+        <!-- Theme Toggle Button -->
+        <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
+          🌙
+        </button>
+
         <a href="my-orders.html" class="header-action-btn hide-on-mobile" title="Track Order">
           <span style="font-size: 20px;">📦</span>
           <span style="font-weight: 600;">Track</span>
@@ -96,6 +114,16 @@
       <button type="button" id="drawer-close-btn" style="background: none; border: none; color: #FFF; font-size: 22px; cursor: pointer;">✕</button>
     </div>
     <div class="drawer-body">
+      <!-- Quick Language & Theme toggles inside drawer -->
+      <div style="display: flex; gap: 10px; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <button type="button" class="lang-toggle-btn" style="flex: 1; padding: 8px 12px; justify-content: center;">
+          <span style="font-size: 16px;">🇮🇳</span> <span style="font-weight: 700;">हिंदी / English</span>
+        </button>
+        <button type="button" class="theme-toggle-btn" style="flex: 1; padding: 8px 12px; justify-content: center;">
+          🌙 <span>Theme</span>
+        </button>
+      </div>
+
       <ul class="drawer-nav-list">
         <li class="drawer-nav-item"><a href="index.html">🏠 Home</a></li>
         <li class="drawer-nav-item"><a href="shop.html">🛍️ Shop Catalog</a></li>

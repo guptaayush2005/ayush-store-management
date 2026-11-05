@@ -3,8 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Special Offers & Coupons - Ayush Service Center</title>
+  <title>Special Offers & Discount Coupons - Ayush Service Center</title>
   
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem("asc_theme") || "light";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+      if (savedTheme === "dark") document.documentElement.classList.add("dark-mode");
+    })();
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
@@ -15,13 +23,13 @@
   <!-- Top Announcement Bar -->
   <div class="top-bar">
     <div class="container top-bar-content">
-      <div>✨ <strong>Budhiya Mai Mandir Ke Paas</strong>, Tarajeevanpur Chauraha, Chandauli • Call: +91 96169 32589</div>
+      <div data-i18n="topbar_landmark">✨ <strong>Budhiya Mai Mandir Ke Paas</strong>, Tarajeevanpur Chauraha, Chandauli • Call: +91 96169 32589</div>
       <div class="top-bar-links">
-        <a href="tel:+919616932589" class="dynamic-phone-link">📞 +91 96169 32589</a>
+        <a href="tel:+919616932589" class="dynamic-phone-link" data-i18n="topbar_call">📞 +91 96169 32589</a>
         <span>|</span>
-        <a href="my-orders.html">📦 Track Order</a>
+        <a href="my-orders.html" data-i18n="topbar_track">📦 Track Order</a>
         <span>|</span>
-        <a href="admin/login.html" style="color: #60A5FA; font-weight: 600;">👤 Admin Portal</a>
+        <a href="admin/login.html" style="color: #60A5FA; font-weight: 600;" data-i18n="topbar_admin">👤 Admin Portal</a>
       </div>
     </div>
   </div>
@@ -33,24 +41,34 @@
         <div class="brand-icon">ASC</div>
         <div class="brand-text">
           <h1 class="dynamic-store-name">Ayush Service Center</h1>
-          <p>Discounts & Promotional Offers</p>
+          <p data-i18n="offers_badge">Discounts & Promotional Offers</p>
         </div>
       </a>
       <div class="header-actions">
+        <!-- Language Switcher Button -->
+        <button type="button" class="lang-toggle-btn" id="lang-toggle-btn" title="हिंदी / English" aria-label="Toggle Language">
+          <span style="font-size: 16px;">🇮🇳</span> <span style="font-weight: 700; font-size: 0.82rem;">हिंदी</span>
+        </button>
+
+        <!-- Theme Toggle Button -->
+        <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
+          🌙
+        </button>
+
         <a href="my-orders.html" class="header-action-btn hide-on-mobile" title="Track Order">
           <span style="font-size: 20px;">📦</span>
-          <span style="font-weight: 600;">Track</span>
+          <span style="font-weight: 600;" data-i18n="nav_track">Track</span>
         </a>
         <a href="cart.html" class="header-action-btn">
           <span style="font-size: 22px;">🛒</span>
           <span class="cart-badge cart-count-badge" style="display: none;">0</span>
-          <span class="hide-on-mobile">Cart</span>
+          <span class="hide-on-mobile" data-i18n="nav_cart">Cart</span>
         </a>
         <a href="admin/login.html" class="header-action-btn" title="Admin Portal" style="background: rgba(37, 99, 235, 0.08); border-color: rgba(37, 99, 235, 0.3);">
           <span style="font-size: 20px;">👤</span>
-          <span style="font-weight: 700; color: #2563EB;">Admin</span>
+          <span style="font-weight: 700; color: #2563EB;" data-i18n="nav_admin">Admin</span>
         </a>
-        <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
+        <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle Navigation Menu">☰</button>
       </div>
     </div>
   </header>
@@ -59,16 +77,16 @@
   <nav class="desktop-nav">
     <div class="container desktop-nav-inner">
       <ul class="nav-links">
-        <li><a href="index.html" class="nav-link">Home</a></li>
-        <li><a href="shop.html" class="nav-link">Shop Catalog</a></li>
-        <li><a href="offers.html" class="nav-link active">Offers & Deals</a></li>
-        <li><a href="autobooking.html" class="nav-link">Auto Booking</a></li>
-        <li><a href="about.html" class="nav-link">About Us</a></li>
-        <li><a href="contact.html" class="nav-link">Contact</a></li>
-        <li><a href="my-orders.html" class="nav-link">Track Order</a></li>
+        <li><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+        <li><a href="shop.html" class="nav-link" data-i18n="nav_shop">Shop Catalog</a></li>
+        <li><a href="offers.html" class="nav-link active" data-i18n="nav_offers">Offers & Deals</a></li>
+        <li><a href="autobooking.html" class="nav-link" data-i18n="nav_autobooking">Auto Booking</a></li>
+        <li><a href="about.html" class="nav-link" data-i18n="nav_about">About Us</a></li>
+        <li><a href="contact.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
+        <li><a href="my-orders.html" class="nav-link" data-i18n="nav_track">Track Order</a></li>
       </ul>
       <div class="nav-quick-cta">
-        <a href="https://wa.me/919616932589" target="_blank" class="btn btn-sm btn-whatsapp">💬 WhatsApp Chat</a>
+        <a href="https://wa.me/919616932589" target="_blank" class="btn btn-sm btn-whatsapp" data-i18n="nav_whatsapp">💬 WhatsApp Chat</a>
       </div>
     </div>
   </nav>
@@ -77,18 +95,28 @@
   <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop"></div>
   <aside class="mobile-drawer" id="mobile-drawer">
     <div class="drawer-header">
-      <span style="font-weight: 700;">Menu</span>
+      <span style="font-weight: 700;" data-i18n="nav_menu">Menu</span>
       <button type="button" id="drawer-close-btn" style="background: none; border: none; color: #FFF; font-size: 22px;">✕</button>
     </div>
     <div class="drawer-body">
+      <!-- Quick Language & Theme toggles inside drawer -->
+      <div style="display: flex; gap: 10px; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <button type="button" class="lang-toggle-btn" style="flex: 1; padding: 8px 12px; justify-content: center;">
+          <span style="font-size: 16px;">🇮🇳</span> <span style="font-weight: 700;">हिंदी / English</span>
+        </button>
+        <button type="button" class="theme-toggle-btn" style="flex: 1; padding: 8px 12px; justify-content: center;">
+          🌙 <span>Theme</span>
+        </button>
+      </div>
+
       <ul class="drawer-nav-list">
-        <li class="drawer-nav-item"><a href="index.html">🏠 Home</a></li>
-        <li class="drawer-nav-item"><a href="shop.html">🛍️ Shop Catalog</a></li>
-        <li class="drawer-nav-item"><a href="offers.html" class="active">🎟️ Special Offers</a></li>
-        <li class="drawer-nav-item"><a href="autobooking.html">🚗 Auto Booking</a></li>
-        <li class="drawer-nav-item"><a href="about.html">✨ About Store</a></li>
-        <li class="drawer-nav-item"><a href="contact.html">📞 Contact & Map</a></li>
-        <li class="drawer-nav-item"><a href="cart.html">🛒 View Cart</a></li>
+        <li class="drawer-nav-item"><a href="index.html" data-i18n="nav_home">🏠 Home</a></li>
+        <li class="drawer-nav-item"><a href="shop.html" data-i18n="nav_shop">🛍️ Shop Catalog</a></li>
+        <li class="drawer-nav-item"><a href="offers.html" class="active" data-i18n="nav_offers">🎟️ Special Offers</a></li>
+        <li class="drawer-nav-item"><a href="autobooking.html" data-i18n="nav_autobooking">🚗 Auto Booking</a></li>
+        <li class="drawer-nav-item"><a href="about.html" data-i18n="nav_about">✨ About Store</a></li>
+        <li class="drawer-nav-item"><a href="contact.html" data-i18n="nav_contact">📞 Contact & Map</a></li>
+        <li class="drawer-nav-item"><a href="cart.html" data-i18n="nav_cart">🛒 View Cart</a></li>
       </ul>
     </div>
   </aside>
@@ -96,13 +124,13 @@
   <!-- Mobile Bottom Nav -->
   <nav class="mobile-bottom-nav">
     <div class="mobile-bottom-nav-inner">
-      <a href="index.html" class="bottom-nav-item"><span>🏠</span><span>Home</span></a>
-      <a href="shop.html" class="bottom-nav-item"><span>🛍️</span><span>Shop</span></a>
+      <a href="index.html" class="bottom-nav-item"><span>🏠</span><span data-i18n="nav_home">Home</span></a>
+      <a href="shop.html" class="bottom-nav-item"><span>🛍️</span><span data-i18n="nav_shop">Shop</span></a>
       <a href="autobooking.html" class="bottom-nav-item"><span>🚗</span><span>Auto</span></a>
       <a href="cart.html" class="bottom-nav-item">
         <span>🛒</span>
         <span class="bottom-cart-badge cart-count-badge" style="display: none;">0</span>
-        <span>Cart</span>
+        <span data-i18n="nav_cart">Cart</span>
       </a>
       <a href="https://wa.me/919616932589" target="_blank" class="bottom-nav-item" style="color: #25D366;"><span>💬</span><span>WA</span></a>
     </div>
@@ -115,20 +143,89 @@
     </svg>
   </a>
 
-  <!-- Content -->
-  <main style="padding: 36px 0 60px;">
+  <!-- ================= 1. CLASSICAL OFFERS HERO BANNER ================= -->
+  <section class="offers-hero-banner" style="background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 50%, #0F172A 100%); color: #FFFFFF; padding: 56px 0 48px; position: relative; overflow: hidden;">
+    <div class="container" style="max-width: 860px; text-align: center; margin: 0 auto; display: flex; flex-direction: column; align-items: center;">
+      <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(37, 99, 235, 0.35); border: 1px solid #60A5FA; padding: 8px 22px; border-radius: 9999px; margin-bottom: 20px; font-size: 0.88rem; font-weight: 700; color: #93C5FD;" data-i18n="offers_badge">
+        🎟️ Verified Store Coupons • 25+ Years of Trust • Tarajeevanpur
+      </div>
+      <h1 style="font-size: 2.5rem; font-weight: 800; color: #FFFFFF; line-height: 1.25; margin: 0 0 14px;" data-i18n="offers_hero_title">
+        Exclusive Offers & Discount Coupons
+      </h1>
+      <p style="font-size: 1.05rem; color: #CBD5E1; line-height: 1.65; margin: 0 auto 28px; max-width: 740px;" data-i18n="offers_hero_subtitle">
+        Apply these verified promotional coupon codes at checkout or share on WhatsApp for instant direct savings on genuine kitchenware, plastics, and party supplies!
+      </p>
+      
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
+        <a href="#offers-list-container" class="btn btn-primary" style="font-weight: 700;">
+          🎟️ View Active Coupons
+        </a>
+        <a href="shop.html" class="btn btn-outline" style="color: #FFF; border-color: rgba(255,255,255,0.4); font-weight: 700;" data-i18n="nav_shop">
+          🛍️ Shop Catalog
+        </a>
+        <a href="https://wa.me/919616932589?text=Hello%20Ayush%20Service%20Center,%20I%20want%20to%20know%20about%20bulk%20and%20wedding%20discounts" target="_blank" class="btn btn-whatsapp" style="font-weight: 700;">
+          💬 Bulk Order Inquiry
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 2. ACTIVE COUPONS GRID ================= -->
+  <main style="padding: 44px 0 60px;">
     <div class="container">
-      <div style="margin-bottom: 32px;">
-        <nav style="font-size: 0.85rem; color: #64748B; margin-bottom: 8px;">
-          <a href="index.html" style="color: #2563EB;">Home</a> <span>/</span> <span>Offers</span>
-        </nav>
-        <h1 style="font-size: 2rem; font-weight: 800; color: #0F172A; margin-bottom: 4px;">Exclusive Offers & Discount Coupons</h1>
-        <p style="font-size: 0.95rem; color: #64748B;">Copy these active discount codes and apply them in your shopping cart for instant savings!</p>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 56px;" id="offers-list-container">
+        <!-- Rendered dynamically by catalog.js -->
+        <div style="text-align: center; padding: 48px 0; color: #64748B; grid-column: 1 / -1;">
+          <div style="font-size: 2rem; margin-bottom: 8px;">⏳</div>
+          <div>Loading verified discount coupons...</div>
+        </div>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;" id="offers-list-container">
-        <!-- Rendered by catalog.js -->
+      <!-- ================= 3. HOW TO REDEEM STEP-BY-STEP ================= -->
+      <section style="background: var(--card-bg, #FFFFFF); border: 1px solid var(--border, #E2E8F0); border-radius: 20px; padding: 36px 30px; margin-bottom: 48px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);">
+        <h2 style="font-size: 1.45rem; font-weight: 800; color: var(--navy, #0F172A); text-align: center; margin-bottom: 30px;" data-i18n="offers_how_to_title">
+          How to Redeem Your Discount Coupon
+        </h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px;">
+          <div style="display: flex; gap: 14px;">
+            <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(37,99,235,0.1); color: #2563EB; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; flex-shrink: 0;">1</div>
+            <div>
+              <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--navy, #0F172A); margin-bottom: 4px;" data-i18n="offers_step_1_title">1. Copy Code</h4>
+              <p style="font-size: 0.88rem; color: var(--text-muted, #64748B); line-height: 1.5; margin: 0;" data-i18n="offers_step_1_desc">Click 'Copy Code' on any active coupon above.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 14px;">
+            <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(37,99,235,0.1); color: #2563EB; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; flex-shrink: 0;">2</div>
+            <div>
+              <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--navy, #0F172A); margin-bottom: 4px;" data-i18n="offers_step_2_title">2. Choose Products</h4>
+              <p style="font-size: 0.88rem; color: var(--text-muted, #64748B); line-height: 1.5; margin: 0;" data-i18n="offers_step_2_desc">Browse our 190+ genuine catalog items and add to cart.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 14px;">
+            <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(37,99,235,0.1); color: #2563EB; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; flex-shrink: 0;">3</div>
+            <div>
+              <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--navy, #0F172A); margin-bottom: 4px;" data-i18n="offers_step_3_title">3. Instant Savings</h4>
+              <p style="font-size: 0.88rem; color: var(--text-muted, #64748B); line-height: 1.5; margin: 0;" data-i18n="offers_step_3_desc">Apply the code in your cart or mention it during your WhatsApp order!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 4. WHOLESALE & BULK DISCOUNT BANNER ================= -->
+      <div style="background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%); border-radius: 20px; padding: 36px 32px; color: #FFF; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px;">
+        <div style="max-width: 600px;">
+          <span style="background: #F59E0B; color: #000; font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; text-transform: uppercase;">Wholesale & Wedding Orders</span>
+          <h3 style="font-size: 1.5rem; font-weight: 800; color: #FFF; margin: 10px 0 6px;" data-i18n="offers_wholesale_title">Wholesale & Bulk Event Inquiries</h3>
+          <p style="font-size: 0.95rem; color: #CBD5E1; line-height: 1.5; margin: 0;" data-i18n="offers_wholesale_desc">Special wholesale bulk pricing for marriages, caterers, and rural retailers with direct delivery via loader auto.</p>
+        </div>
+        <div>
+          <a href="https://wa.me/919616932589?text=Hello%20Ayush%20Service%20Center,%20I%20want%20to%20inquire%20about%20Wholesale%20and%20Bulk%20Orders" target="_blank" class="btn btn-whatsapp btn-lg" style="font-weight: 700; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.4);" data-i18n="btn_inquire_whatsapp">
+            💬 Inquire on WhatsApp
+          </a>
+        </div>
       </div>
+
     </div>
   </main>
 
@@ -137,23 +234,27 @@
     <div class="container footer-top">
       <div class="footer-grid">
         <div class="footer-col">
-          <h3 style="color: #FFF; font-size: 1.25rem; margin-bottom: 12px;">Ayush Service Center</h3>
-          <p style="font-size: 0.9rem; line-height: 1.6;">Budhiya Mai Mandir Ke Paas, Tarajeevanpur Chauraha, Chandauli • Call: +91 96169 32589</p>
+          <h3 style="color: #FFF; font-size: 1.25rem; margin-bottom: 12px;" data-i18n="footer_about_title">Ayush Service Center</h3>
+          <p style="font-size: 0.9rem; line-height: 1.6;" data-i18n="footer_about_desc">Budhiya Mai Mandir Ke Paas, Tarajeevanpur Chauraha, Chandauli • Call: +91 96169 32589</p>
         </div>
         <div class="footer-col">
-          <h4>Customer Service</h4>
+          <h4 data-i18n="footer_customer_service">Customer Service</h4>
           <ul class="footer-links">
-            <li><a href="shop.html">Shop Catalog</a></li>
-            <li><a href="categories.html">Categories</a></li>
-            <li><a href="cart.html">Cart</a></li>
-            <li><a href="my-orders.html">Track Order</a></li>
+            <li><a href="shop.html" data-i18n="nav_shop">Shop Catalog</a></li>
+            <li><a href="offers.html" data-i18n="nav_offers">Offers & Deals</a></li>
+            <li><a href="cart.html" data-i18n="nav_cart">Cart</a></li>
+            <li><a href="my-orders.html" data-i18n="nav_track">Track Order</a></li>
           </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_store_hours_title">Store Hours</h4>
+          <p style="font-size: 0.88rem; color: #CBD5E1;" data-i18n="footer_store_hours_text">Monday – Sunday: 7:00 AM – 9:00 PM</p>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
       <div class="container footer-bottom-inner">
-        <div>© 2026 Ayush Service Center. All rights reserved.</div>
+        <div data-i18n="footer_rights">© 2026 Ayush Service Center. All rights reserved.</div>
         <div>Developed by Ayush Gupta (T.WILL) • 9519099011</div>
       </div>
     </div>
@@ -171,4 +272,3 @@
   </script>
 </body>
 </html>
-

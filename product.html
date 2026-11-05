@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product Details - Ayush Service Center</title>
   
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem("asc_theme") || "light";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+      if (savedTheme === "dark") document.documentElement.classList.add("dark-mode");
+    })();
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
@@ -13,7 +21,7 @@
   <style>
     @media (min-width: 900px) {
       .product-details-grid {
-        grid-template-columns: 1fr 1.2fr !important;
+        grid-template-columns: 1fr 1.25fr !important;
       }
     }
   </style>
@@ -23,13 +31,13 @@
   <!-- Top Announcement Bar -->
   <div class="top-bar">
     <div class="container top-bar-content">
-      <div>✨ <strong>Budhiya Mai Mandir Ke Paas</strong>, Tarajeevanpur Chauraha, Chandauli • Call: +91 96169 32589</div>
+      <div data-i18n="topbar_landmark">✨ <strong>Budhiya Mai Mandir Ke Paas</strong>, Tarajeevanpur Chauraha, Chandauli • Call: +91 96169 32589</div>
       <div class="top-bar-links">
-        <a href="tel:+919616932589" class="dynamic-phone-link">📞 +91 96169 32589</a>
+        <a href="tel:+919616932589" class="dynamic-phone-link" data-i18n="topbar_call">📞 +91 96169 32589</a>
         <span>|</span>
-        <a href="my-orders.html">📦 Track Order</a>
+        <a href="my-orders.html" data-i18n="topbar_track">📦 Track Order</a>
         <span>|</span>
-        <a href="admin/login.html" style="color: #60A5FA; font-weight: 600;">👤 Admin Portal</a>
+        <a href="admin/login.html" style="color: #60A5FA; font-weight: 600;" data-i18n="topbar_admin">👤 Admin Portal</a>
       </div>
     </div>
   </div>
@@ -47,27 +55,37 @@
 
       <div class="header-search">
         <form id="header-search-form" class="search-input-wrapper">
-          <input type="text" id="header-search-input" class="search-input" placeholder="Search other products..." autocomplete="off">
-          <button type="submit" class="search-btn">🔍</button>
+          <input type="text" id="header-search-input" class="search-input" placeholder="Search other products..." autocomplete="off" data-i18n-placeholder="search_placeholder">
+          <button type="submit" class="search-btn" aria-label="Search">🔍</button>
         </form>
         <div id="header-search-dropdown" class="search-suggestions-dropdown"></div>
       </div>
 
       <div class="header-actions">
+        <!-- Language Switcher Button -->
+        <button type="button" class="lang-toggle-btn" id="lang-toggle-btn" title="हिंदी / English" aria-label="Toggle Language">
+          <span style="font-size: 16px;">🇮🇳</span> <span style="font-weight: 700; font-size: 0.82rem;">हिंदी</span>
+        </button>
+
+        <!-- Theme Toggle Button -->
+        <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
+          🌙
+        </button>
+
         <a href="my-orders.html" class="header-action-btn hide-on-mobile" title="Track Order">
           <span style="font-size: 20px;">📦</span>
-          <span style="font-weight: 600;">Track</span>
+          <span style="font-weight: 600;" data-i18n="nav_track">Track</span>
         </a>
         <a href="cart.html" class="header-action-btn">
           <span style="font-size: 22px;">🛒</span>
           <span class="cart-badge cart-count-badge" style="display: none;">0</span>
-          <span class="hide-on-mobile">Cart</span>
+          <span class="hide-on-mobile" data-i18n="nav_cart">Cart</span>
         </a>
         <a href="admin/login.html" class="header-action-btn" title="Admin Portal" style="background: rgba(37, 99, 235, 0.08); border-color: rgba(37, 99, 235, 0.3);">
           <span style="font-size: 20px;">👤</span>
-          <span style="font-weight: 700; color: #2563EB;">Admin</span>
+          <span style="font-weight: 700; color: #2563EB;" data-i18n="nav_admin">Admin</span>
         </a>
-        <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
+        <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle Menu">☰</button>
       </div>
     </div>
   </header>
@@ -76,16 +94,16 @@
   <nav class="desktop-nav">
     <div class="container desktop-nav-inner">
       <ul class="nav-links">
-        <li><a href="index.html" class="nav-link">Home</a></li>
-        <li><a href="shop.html" class="nav-link">Shop Catalog</a></li>
-        <li><a href="offers.html" class="nav-link">Offers & Deals</a></li>
-        <li><a href="autobooking.html" class="nav-link">Auto Booking</a></li>
-        <li><a href="about.html" class="nav-link">About Us</a></li>
-        <li><a href="contact.html" class="nav-link">Contact</a></li>
-        <li><a href="my-orders.html" class="nav-link">Track Order</a></li>
+        <li><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+        <li><a href="shop.html" class="nav-link active" data-i18n="nav_shop">Shop Catalog</a></li>
+        <li><a href="offers.html" class="nav-link" data-i18n="nav_offers">Offers & Deals</a></li>
+        <li><a href="autobooking.html" class="nav-link" data-i18n="nav_autobooking">Auto Booking</a></li>
+        <li><a href="about.html" class="nav-link" data-i18n="nav_about">About Us</a></li>
+        <li><a href="contact.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
+        <li><a href="my-orders.html" class="nav-link" data-i18n="nav_track">Track Order</a></li>
       </ul>
       <div class="nav-quick-cta">
-        <a href="https://wa.me/919616932589" target="_blank" class="btn btn-sm btn-whatsapp">💬 WhatsApp Chat</a>
+        <a href="https://wa.me/919616932589" target="_blank" class="btn btn-sm btn-whatsapp" data-i18n="nav_whatsapp">💬 WhatsApp Chat</a>
       </div>
     </div>
   </nav>
@@ -94,18 +112,28 @@
   <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop"></div>
   <aside class="mobile-drawer" id="mobile-drawer">
     <div class="drawer-header">
-      <span style="font-weight: 700;">Menu</span>
+      <span style="font-weight: 700;" data-i18n="nav_menu">Menu</span>
       <button type="button" id="drawer-close-btn" style="background: none; border: none; color: #FFF; font-size: 22px;">✕</button>
     </div>
     <div class="drawer-body">
+      <!-- Quick Language & Theme toggles inside drawer -->
+      <div style="display: flex; gap: 10px; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <button type="button" class="lang-toggle-btn" style="flex: 1; padding: 8px 12px; justify-content: center;">
+          <span style="font-size: 16px;">🇮🇳</span> <span style="font-weight: 700;">हिंदी / English</span>
+        </button>
+        <button type="button" class="theme-toggle-btn" style="flex: 1; padding: 8px 12px; justify-content: center;">
+          🌙 <span>Theme</span>
+        </button>
+      </div>
+
       <ul class="drawer-nav-list">
-        <li class="drawer-nav-item"><a href="index.html">🏠 Home</a></li>
-        <li class="drawer-nav-item"><a href="shop.html" class="active">🛍️ Shop Catalog</a></li>
-        <li class="drawer-nav-item"><a href="offers.html">🎟️ Special Offers</a></li>
-        <li class="drawer-nav-item"><a href="autobooking.html">🚗 Auto Booking</a></li>
-        <li class="drawer-nav-item"><a href="about.html">✨ About Store</a></li>
-        <li class="drawer-nav-item"><a href="contact.html">📞 Contact & Map</a></li>
-        <li class="drawer-nav-item"><a href="cart.html">🛒 View Cart</a></li>
+        <li class="drawer-nav-item"><a href="index.html" data-i18n="nav_home">🏠 Home</a></li>
+        <li class="drawer-nav-item"><a href="shop.html" class="active" data-i18n="nav_shop">🛍️ Shop Catalog</a></li>
+        <li class="drawer-nav-item"><a href="offers.html" data-i18n="nav_offers">🎟️ Special Offers</a></li>
+        <li class="drawer-nav-item"><a href="autobooking.html" data-i18n="nav_autobooking">🚗 Auto Booking</a></li>
+        <li class="drawer-nav-item"><a href="about.html" data-i18n="nav_about">✨ About Store</a></li>
+        <li class="drawer-nav-item"><a href="contact.html" data-i18n="nav_contact">📞 Contact & Map</a></li>
+        <li class="drawer-nav-item"><a href="cart.html" data-i18n="nav_cart">🛒 View Cart</a></li>
       </ul>
     </div>
   </aside>
@@ -113,13 +141,13 @@
   <!-- Mobile Bottom Nav -->
   <nav class="mobile-bottom-nav">
     <div class="mobile-bottom-nav-inner">
-      <a href="index.html" class="bottom-nav-item"><span>🏠</span><span>Home</span></a>
-      <a href="shop.html" class="bottom-nav-item active"><span>🛍️</span><span>Shop</span></a>
+      <a href="index.html" class="bottom-nav-item"><span>🏠</span><span data-i18n="nav_home">Home</span></a>
+      <a href="shop.html" class="bottom-nav-item active"><span>🛍️</span><span data-i18n="nav_shop">Shop</span></a>
       <a href="autobooking.html" class="bottom-nav-item"><span>🚗</span><span>Auto</span></a>
       <a href="cart.html" class="bottom-nav-item">
         <span>🛒</span>
         <span class="bottom-cart-badge cart-count-badge" style="display: none;">0</span>
-        <span>Cart</span>
+        <span data-i18n="nav_cart">Cart</span>
       </a>
       <a href="https://wa.me/919616932589" target="_blank" class="bottom-nav-item" style="color: #25D366;"><span>💬</span><span>WA</span></a>
     </div>
@@ -133,7 +161,7 @@
   </a>
 
   <!-- Main Content -->
-  <main style="padding: 36px 0 60px;">
+  <main style="padding: 32px 0 60px;">
     <div class="container" id="product-detail-container">
       <div style="text-align: center; padding: 60px 0; color: #64748B;">
         <div style="font-size: 2.5rem; margin-bottom: 8px;">⏳</div>
@@ -147,27 +175,27 @@
     <div class="container footer-top">
       <div class="footer-grid">
         <div class="footer-col">
-          <h3 style="color: #FFF; font-size: 1.25rem; margin-bottom: 12px;">Ayush Service Center</h3>
-          <p style="font-size: 0.9rem; line-height: 1.6;">Budhiya Mai Mandir Ke Paas, Tarajeevanpur Chauraha, Chandauli • Call: +91 96169 32589</p>
+          <h3 style="color: #FFF; font-size: 1.25rem; margin-bottom: 12px;" data-i18n="footer_about_title">Ayush Service Center</h3>
+          <p style="font-size: 0.9rem; line-height: 1.6;" data-i18n="footer_about_desc">Budhiya Mai Mandir Ke Paas, Tarajeevanpur Chauraha, Chandauli • Call: +91 96169 32589</p>
         </div>
         <div class="footer-col">
-          <h4>Customer Service</h4>
+          <h4 data-i18n="footer_customer_service">Customer Service</h4>
           <ul class="footer-links">
-            <li><a href="shop.html">Shop Catalog</a></li>
-            <li><a href="offers.html">Deals</a></li>
-            <li><a href="cart.html">Cart</a></li>
-            <li><a href="my-orders.html">Track Order</a></li>
+            <li><a href="shop.html" data-i18n="nav_shop">Shop Catalog</a></li>
+            <li><a href="offers.html" data-i18n="nav_offers">Deals & Coupons</a></li>
+            <li><a href="cart.html" data-i18n="nav_cart">Cart</a></li>
+            <li><a href="my-orders.html" data-i18n="nav_track">Track Order</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Store Hours</h4>
-          <p style="font-size: 0.88rem; color: #CBD5E1;">Daily: <strong>7:00 AM – 9:00 PM</strong></p>
+          <h4 data-i18n="footer_store_hours_title">Store Hours</h4>
+          <p style="font-size: 0.88rem; color: #CBD5E1;" data-i18n="footer_store_hours_text">Monday – Sunday: 7:00 AM – 9:00 PM</p>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
       <div class="container footer-bottom-inner">
-        <div>© 2026 Ayush Service Center. All rights reserved.</div>
+        <div data-i18n="footer_rights">© 2026 Ayush Service Center. All rights reserved.</div>
         <div>Developed by Ayush Gupta (T.WILL) • 9519099011</div>
       </div>
     </div>
@@ -185,4 +213,3 @@
   </script>
 </body>
 </html>
-
