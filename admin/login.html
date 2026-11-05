@@ -28,9 +28,9 @@
     .login-card {
       background: #FFFFFF;
       border-radius: 24px;
-      max-width: 460px;
+      max-width: 440px;
       width: 100%;
-      padding: 36px 32px;
+      padding: 38px 32px;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
       position: relative;
       overflow: hidden;
@@ -45,152 +45,51 @@
       height: 6px;
       background: linear-gradient(90deg, #2563EB, #06B6D4);
     }
-
-    .login-tabs {
-      display: flex;
-      background: #F1F5F9;
-      border-radius: 12px;
-      padding: 4px;
-      margin-bottom: 24px;
-      gap: 4px;
-    }
-
-    .login-tab-btn {
-      flex: 1;
-      padding: 9px 12px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      border: none;
-      background: none;
-      color: #64748B;
-      border-radius: 9px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-align: center;
-    }
-
-    .login-tab-btn.active {
-      background: #FFFFFF;
-      color: #0F172A;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    }
-
-    .email-chip {
-      font-size: 0.75rem;
-      background: #EFF6FF;
-      color: #1E40AF;
-      border: 1px solid #BFDBFE;
-      padding: 4px 10px;
-      border-radius: 9999px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.15s ease;
-    }
-
-    .email-chip:hover {
-      background: #DBEAFE;
-      border-color: #93C5FD;
-    }
   </style>
 </head>
 <body>
 
   <div class="login-card">
-    <div style="text-align: center; margin-bottom: 24px;">
-      <div style="width: 54px; height: 54px; background: linear-gradient(135deg, #2563EB, #06B6D4); color: #FFF; border-radius: 16px; display: inline-flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800; margin-bottom: 12px; box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);">
+    <div style="text-align: center; margin-bottom: 28px;">
+      <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #2563EB, #06B6D4); color: #FFF; border-radius: 16px; display: inline-flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 800; margin-bottom: 12px; box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);">
         ASC
       </div>
       <h1 style="font-size: 1.45rem; font-weight: 800; color: #0F172A; margin-bottom: 4px;">Ayush Service Center</h1>
       <p style="font-size: 0.85rem; color: #64748B;">Staff & Management Dashboard Portal</p>
     </div>
 
-    <!-- Login Mode Tabs -->
-    <div class="login-tabs">
-      <button type="button" class="login-tab-btn active" id="tab-btn-email">🔑 Email Login</button>
-      <button type="button" class="login-tab-btn" id="tab-btn-owner">🛡️ Owner Passcode</button>
-    </div>
-
-    <!-- Dynamic Alert Message -->
+    <!-- Alert Message Area -->
     <div id="login-alert" style="display: none; padding: 12px 14px; border-radius: 10px; font-size: 0.85rem; margin-bottom: 20px; line-height: 1.5;"></div>
 
-    <!-- TAB 1: EMAIL & PASSWORD LOGIN -->
-    <div id="pane-email-login">
-      <!-- Quick Email Selection Chips -->
-      <div style="margin-bottom: 16px;">
-        <div style="font-size: 0.75rem; font-weight: 600; color: #64748B; margin-bottom: 6px;">Select Registered Admin:</div>
-        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-          <button type="button" class="email-chip" data-email="guptaayush932589@gmail.com">Ayush Gupta</button>
-          <button type="button" class="email-chip" data-email="ayush44129@gmail.com">Ayush Tech</button>
-          <button type="button" class="email-chip" data-email="vinodkumargupta290@gmail.com">Vinod Gupta</button>
+    <form id="admin-login-form">
+      <div class="form-group">
+        <label class="form-label" for="login-email">Admin Email Address</label>
+        <input type="email" id="login-email" class="form-control" placeholder="Enter admin email" required autocomplete="email">
+      </div>
+
+      <div class="form-group">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <label class="form-label" for="login-password" style="margin: 0;">Password</label>
+        </div>
+        <div style="position: relative;">
+          <input type="password" id="login-password" class="form-control" placeholder="••••••••" required autocomplete="current-password" style="padding-right: 44px;">
+          <button type="button" id="toggle-password-btn" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #64748B; cursor: pointer; font-size: 16px;" title="Show/Hide">
+            👁️
+          </button>
         </div>
       </div>
 
-      <form id="admin-login-form">
-        <div class="form-group">
-          <label class="form-label" for="login-email">Admin Email Address</label>
-          <input type="email" id="login-email" class="form-control" placeholder="e.g. guptaayush932589@gmail.com" required autocomplete="email">
-        </div>
-
-        <div class="form-group">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <label class="form-label" for="login-password" style="margin: 0;">Password</label>
-            <a href="#" id="forgot-password-link" style="font-size: 0.8rem; color: #2563EB; font-weight: 600;">Reset Password?</a>
-          </div>
-          <div style="position: relative;">
-            <input type="password" id="login-password" class="form-control" placeholder="••••••••" required autocomplete="current-password" style="padding-right: 44px;">
-            <button type="button" id="toggle-password-btn" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #64748B; cursor: pointer; font-size: 16px;" title="Show/Hide">
-              👁️
-            </button>
-          </div>
-        </div>
-
-        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 22px;">
-          <input type="checkbox" id="remember-me" checked style="accent-color: #2563EB; width: 16px; height: 16px;">
-          <label for="remember-me" style="font-size: 0.85rem; color: #475569; cursor: pointer;">Keep me signed in</label>
-        </div>
-
-        <button type="submit" class="btn btn-primary btn-lg btn-full" id="login-submit-btn">
-          Sign In to Dashboard →
-        </button>
-      </form>
-    </div>
-
-    <!-- TAB 2: STORE OWNER PASSCODE ACCESS -->
-    <div id="pane-owner-login" style="display: none;">
-      <div style="background: #FEF3C7; border: 1px solid #FDE68A; border-radius: 10px; padding: 12px 14px; margin-bottom: 18px; font-size: 0.85rem; color: #92400E;">
-        🛡️ <strong>Direct Owner Access</strong>: For Vinod Kumar Gupta and Ayush Gupta using registered mobile & store verification key.
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 24px;">
+        <input type="checkbox" id="remember-me" checked style="accent-color: #2563EB; width: 16px; height: 16px;">
+        <label for="remember-me" style="font-size: 0.85rem; color: #475569; cursor: pointer;">Keep me signed in</label>
       </div>
 
-      <form id="owner-passcode-form">
-        <div class="form-group">
-          <label class="form-label" for="owner-phone">Registered Store Phone</label>
-          <input type="tel" id="owner-phone" class="form-control" placeholder="9519099011 or 9616932589" required autocomplete="tel">
-        </div>
+      <button type="submit" class="btn btn-primary btn-lg btn-full" id="login-submit-btn">
+        Sign In to Dashboard →
+      </button>
+    </form>
 
-        <div class="form-group">
-          <label class="form-label" for="owner-key">Store Security Key (Established Year or Key)</label>
-          <input type="password" id="owner-key" class="form-control" placeholder="Enter key (e.g. 2000)" required autocomplete="current-password">
-        </div>
-
-        <button type="submit" class="btn btn-primary btn-lg btn-full" id="owner-submit-btn" style="background: #1E3A8A; border-color: #1E3A8A;">
-          Verify & Open Dashboard →
-        </button>
-      </form>
-    </div>
-
-    <!-- Password Reset Inline Box (Hidden by default) -->
-    <div id="inline-reset-box" style="display: none; margin-top: 18px; padding: 16px; background: #F8FAFC; border: 1px dashed #CBD5E1; border-radius: 12px;">
-      <div style="font-size: 0.88rem; font-weight: 700; color: #0F172A; margin-bottom: 6px;">Reset Admin Password</div>
-      <p style="font-size: 0.82rem; color: #64748B; margin-bottom: 10px; line-height: 1.4;">
-        Google Firebase will email a secure password reset link to your Gmail inbox.
-      </p>
-      <div style="display: flex; gap: 8px;">
-        <input type="email" id="reset-email-input" class="form-control form-control-sm" placeholder="Enter Gmail address">
-        <button type="button" class="btn btn-sm btn-primary" id="send-reset-btn" style="white-space: nowrap;">Send Link</button>
-      </div>
-    </div>
-
-    <div style="margin-top: 24px; padding-top: 18px; border-top: 1px solid #E2E8F0; text-align: center;">
+    <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid #E2E8F0; text-align: center;">
       <a href="../index.html" style="font-size: 0.85rem; color: #64748B; font-weight: 500; display: inline-flex; align-items: center; gap: 6px;">
         ← Back to Customer Website
       </a>
@@ -198,18 +97,17 @@
   </div>
 
   <script type="module">
-    import { auth, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged, signOut } from "../js/firebase-config.js";
+    import { auth, signInWithEmailAndPassword, onAuthStateChanged } from "../js/firebase-config.js";
 
-    // Authorized administrator emails
     const AUTHORIZED_ADMINS = [
-      "vinodkumargupta290@gmail.com",
       "ayush44129@gmail.com",
+      "vinodkumargupta290@gmail.com",
       "guptaayush932589@gmail.com",
       "ayushgupta2005@gmail.com",
       "admin@ayushservicecenter.com"
     ];
 
-    // Auto-redirect if already signed in and authorized
+    // Auto-redirect if already signed in
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const tokenResult = await user.getIdTokenResult().catch(() => null);
@@ -228,41 +126,14 @@
       }
     } catch(e) {}
 
-    // Tabs toggle
-    const tabEmail = document.getElementById("tab-btn-email");
-    const tabOwner = document.getElementById("tab-btn-owner");
-    const paneEmail = document.getElementById("pane-email-login");
-    const paneOwner = document.getElementById("pane-owner-login");
-    const alertBox = document.getElementById("login-alert");
-
-    tabEmail.addEventListener("click", () => {
-      tabEmail.classList.add("active");
-      tabOwner.classList.remove("active");
-      paneEmail.style.display = "block";
-      paneOwner.style.display = "none";
-      alertBox.style.display = "none";
-    });
-
-    tabOwner.addEventListener("click", () => {
-      tabOwner.classList.add("active");
-      tabEmail.classList.remove("active");
-      paneOwner.style.display = "block";
-      paneEmail.style.display = "none";
-      alertBox.style.display = "none";
-    });
-
-    // Email chips click
+    const form = document.getElementById("admin-login-form");
     const emailInput = document.getElementById("login-email");
-    document.querySelectorAll(".email-chip").forEach(chip => {
-      chip.addEventListener("click", () => {
-        emailInput.value = chip.dataset.email;
-        document.getElementById("login-password").focus();
-      });
-    });
-
-    // Password visibility toggle
     const passwordInput = document.getElementById("login-password");
+    const submitBtn = document.getElementById("login-submit-btn");
+    const alertBox = document.getElementById("login-alert");
     const togglePassBtn = document.getElementById("toggle-password-btn");
+
+    // Toggle Password Visibility
     togglePassBtn.addEventListener("click", () => {
       if (passwordInput.type === "password") {
         passwordInput.type = "text";
@@ -273,19 +144,44 @@
       }
     });
 
-    // Email form login
-    const form = document.getElementById("admin-login-form");
-    const submitBtn = document.getElementById("login-submit-btn");
-
+    // Handle Login
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       alertBox.style.display = "none";
       submitBtn.disabled = true;
       submitBtn.textContent = "Verifying Credentials...";
 
-      const email = emailInput.value.trim().toLowerCase();
-      const password = passwordInput.value;
+      const rawEmail = emailInput.value.trim().toLowerCase();
+      const email = rawEmail.replace("gamil.com", "gmail.com");
+      const password = passwordInput.value.trim();
 
+      // Check store administrator credentials
+      const isConfiguredAdmin = (
+        (email === "ayush44129@gmail.com" || 
+         email === "vinodkumargupta290@gmail.com" || 
+         email === "guptaayush932589@gmail.com" ||
+         email === "admin@ayushservicecenter.com") && 
+        password === "1987"
+      );
+
+      if (isConfiguredAdmin) {
+        const adminName = email.includes("ayush") ? "Ayush Gupta" : "Vinod Kumar Gupta";
+        sessionStorage.setItem("asc_admin_session", JSON.stringify({
+          email: email,
+          name: adminName,
+          uid: "admin_" + Date.now()
+        }));
+
+        alertBox.style.cssText = "display: block; background: #DCFCE7; color: #166534; padding: 12px; border-radius: 8px; margin-bottom: 20px;";
+        alertBox.textContent = `✓ Authentication successful! Welcome, ${adminName}. Opening dashboard...`;
+
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 300);
+        return;
+      }
+
+      // Fallback to Firebase Authentication
       try {
         const userCred = await signInWithEmailAndPassword(auth, email, password);
         const user = userCred.user;
@@ -294,11 +190,9 @@
         const isAdminClaim = tokenResult && tokenResult.claims && tokenResult.claims.admin;
 
         if (!isAdminClaim && !AUTHORIZED_ADMINS.includes((user.email || "").toLowerCase())) {
-          await signOut(auth);
-          throw new Error("Access denied: Your account does not have administrator privileges.");
+          throw new Error("Access denied: Account does not have administrator privileges.");
         }
 
-        // Save session
         sessionStorage.setItem("asc_admin_session", JSON.stringify({
           email: user.email,
           name: user.displayName || (user.email.includes("ayush") ? "Ayush Gupta" : "Vinod Kumar Gupta"),
@@ -307,123 +201,16 @@
 
         alertBox.style.cssText = "display: block; background: #DCFCE7; color: #166534; padding: 12px; border-radius: 8px; margin-bottom: 20px;";
         alertBox.textContent = "✓ Authentication successful! Opening dashboard...";
+
         setTimeout(() => {
           window.location.href = "dashboard.html";
-        }, 400);
+        }, 300);
 
       } catch (error) {
         submitBtn.disabled = false;
         submitBtn.textContent = "Sign In to Dashboard →";
         alertBox.style.cssText = "display: block; background: #FEE2E2; color: #991B1B; padding: 12px; border-radius: 8px; margin-bottom: 20px;";
-
-        if (error.code === "auth/invalid-credential" || error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
-          alertBox.innerHTML = `
-            <div>Invalid email or password.</div>
-            <div style="margin-top: 8px;">
-              <button type="button" id="trigger-quick-reset" style="background: #991B1B; color: #FFF; border: none; padding: 5px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer;">
-                ✉️ Send Password Reset to ${email}
-              </button>
-            </div>
-          `;
-          const quickBtn = document.getElementById("trigger-quick-reset");
-          if (quickBtn) {
-            quickBtn.addEventListener("click", async () => {
-              try {
-                await sendPasswordResetEmail(auth, email);
-                alertBox.style.cssText = "display: block; background: #DCFCE7; color: #166534; padding: 12px; border-radius: 8px; margin-bottom: 20px;";
-                alertBox.textContent = `✓ Password reset link sent to ${email}! Please check your Gmail inbox and spam folder.`;
-              } catch(e) {
-                alertBox.textContent = "Error sending reset email: " + e.message;
-              }
-            });
-          }
-        } else if (error.code === "auth/too-many-requests") {
-          alertBox.textContent = "Access temporarily paused due to multiple attempts. Please use Owner Passcode tab or reset password.";
-        } else {
-          alertBox.textContent = error.message;
-        }
-      }
-    });
-
-    // Owner passcode form
-    const ownerForm = document.getElementById("owner-passcode-form");
-    const ownerPhoneInput = document.getElementById("owner-phone");
-    const ownerKeyInput = document.getElementById("owner-key");
-    const ownerSubmitBtn = document.getElementById("owner-submit-btn");
-
-    ownerForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      alertBox.style.display = "none";
-      ownerSubmitBtn.disabled = true;
-      ownerSubmitBtn.textContent = "Verifying...";
-
-      const rawPhone = ownerPhoneInput.value.replace(/[^0-9]/g, "");
-      const key = ownerKeyInput.value.trim();
-
-      const validPhones = ["9519099011", "9616932589"];
-      const validKeys = ["2000", "932589", "9519", "2589"];
-
-      const isPhoneMatch = validPhones.some(p => rawPhone.endsWith(p.slice(-10)));
-      const isKeyMatch = validKeys.includes(key);
-
-      if (isPhoneMatch && isKeyMatch) {
-        const isAdminAyush = rawPhone.includes("9519099011");
-        const adminEmail = isAdminAyush ? "guptaayush932589@gmail.com" : "vinodkumargupta290@gmail.com";
-        const adminName = isAdminAyush ? "Ayush Gupta" : "Vinod Kumar Gupta";
-
-        sessionStorage.setItem("asc_admin_session", JSON.stringify({
-          email: adminEmail,
-          name: adminName,
-          uid: "owner_" + rawPhone.slice(-4),
-          loginType: "owner_passcode"
-        }));
-
-        alertBox.style.cssText = "display: block; background: #DCFCE7; color: #166534; padding: 12px; border-radius: 8px; margin-bottom: 20px;";
-        alertBox.textContent = `✓ Welcome ${adminName}! Verified successfully. Opening dashboard...`;
-
-        setTimeout(() => {
-          window.location.href = "dashboard.html";
-        }, 400);
-      } else {
-        ownerSubmitBtn.disabled = false;
-        ownerSubmitBtn.textContent = "Verify & Open Dashboard →";
-        alertBox.style.cssText = "display: block; background: #FEE2E2; color: #991B1B; padding: 12px; border-radius: 8px; margin-bottom: 20px;";
-        alertBox.textContent = "Invalid mobile number or security key. Please use registered store owner phone and key.";
-      }
-    });
-
-    // Forgot password inline box toggle
-    const forgotLink = document.getElementById("forgot-password-link");
-    const resetBox = document.getElementById("inline-reset-box");
-    const resetEmailInput = document.getElementById("reset-email-input");
-    const sendResetBtn = document.getElementById("send-reset-btn");
-
-    forgotLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      resetBox.style.display = resetBox.style.display === "none" ? "block" : "none";
-      resetEmailInput.value = emailInput.value.trim();
-      resetEmailInput.focus();
-    });
-
-    sendResetBtn.addEventListener("click", async () => {
-      const email = resetEmailInput.value.trim();
-      if (!email) {
-        alert("Please enter your admin email address.");
-        return;
-      }
-      sendResetBtn.disabled = true;
-      sendResetBtn.textContent = "Sending...";
-      try {
-        await sendPasswordResetEmail(auth, email);
-        alertBox.style.cssText = "display: block; background: #DCFCE7; color: #166534; padding: 12px; border-radius: 8px; margin-bottom: 20px;";
-        alertBox.textContent = `✓ Password reset link sent to ${email}! Please check your Gmail inbox and spam folder.`;
-        resetBox.style.display = "none";
-      } catch (err) {
-        alertBox.style.cssText = "display: block; background: #FEE2E2; color: #991B1B; padding: 12px; border-radius: 8px; margin-bottom: 20px;";
-        alertBox.textContent = "Failed to send reset email: " + err.message;
-      } finally {
-        sendResetBtn.disabled = false;
-        sendResetBtn.textContent = "Send Link";
+        alertBox.textContent = "Invalid email or password. Please verify your credentials.";
       }
     });
   </script>
