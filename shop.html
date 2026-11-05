@@ -133,32 +133,66 @@
     </svg>
   </a>
 
-  <!-- ================= MAIN SHOP PAGE CONTENT ================= -->
-  <main style="padding: 36px 0 60px;">
-    <div class="container">
-      
-      <!-- Page Header -->
-      <div style="margin-bottom: 24px;">
-        <nav style="font-size: 0.85rem; color: #64748B; margin-bottom: 8px;">
-          <a href="index.html" style="color: #2563EB;">Home</a> <span>/</span> <span>Shop</span>
-        </nav>
-        <h1 style="font-size: 2rem; font-weight: 800; color: #0F172A; margin-bottom: 4px;">Store Catalog</h1>
-        <p style="font-size: 0.95rem; color: #64748B;">Explore authentic products with transparent pricing, instant stock and direct order options.</p>
-      </div>
+  <!-- ================= HERO BANNER (CLASSICAL ROYAL NAVY) ================= -->
+  <section style="background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 50%, #0F172A 100%); color: #FFFFFF; padding: 48px 0 40px; position: relative; overflow: hidden;">
+    <div class="container" style="max-width: 960px; text-align: center;">
+      <nav style="font-size: 0.85rem; color: #93C5FD; margin-bottom: 12px;">
+        <a href="index.html" style="color: #60A5FA; text-decoration: none;">Home</a> <span>/</span> <span>Shop Catalog</span>
+      </nav>
+      <span class="badge" style="background: rgba(37, 99, 235, 0.4); border: 1px solid #60A5FA; color: #93C5FD; font-size: 0.85rem; padding: 6px 16px; margin-bottom: 14px; display: inline-block;">
+        ✨ 190+ VERIFIED STORE PRODUCTS • HONEST RETAIL & WHOLESALE RATES
+      </span>
+      <h1 style="font-size: 2.3rem; font-weight: 800; color: #FFFFFF; margin-bottom: 10px; line-height: 1.25;" id="shop-hero-title">
+        Store Product Catalog
+      </h1>
+      <p style="font-size: 1.05rem; color: #CBD5E1; line-height: 1.6; margin-bottom: 22px; max-width: 760px; margin-left: auto; margin-right: auto;" id="shop-hero-desc">
+        ताराजीवनपुर व चंदौली का भरोसेमंद संपूर्ण रिटेल कैटलॉग। स्टील बर्तन, प्लास्टिक सामान, मोबाइल गैजेट्स, कोल्ड ड्रिंक, कॉस्मेटिक्स, दोना-पत्तल, गैस एवं ऑटो बुकिंग।
+      </p>
 
-      <!-- Category Filter Chips -->
-      <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 14px; margin-bottom: 24px; -webkit-overflow-scrolling: touch;" id="category-chips-wrapper">
-        <!-- Rendered by catalog.js -->
+      <!-- Department Trust Badges Strip -->
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 16px; padding: 14px 18px; max-width: 800px; margin: 0 auto;">
+        <div>
+          <div style="font-size: 1.25rem; font-weight: 800; color: #60A5FA;">190+</div>
+          <div style="font-size: 0.72rem; color: #CBD5E1;">Genuine Items</div>
+        </div>
+        <div>
+          <div style="font-size: 1.25rem; font-weight: 800; color: #60A5FA;">8</div>
+          <div style="font-size: 0.72rem; color: #CBD5E1;">Departments</div>
+        </div>
+        <div>
+          <div style="font-size: 1.25rem; font-weight: 800; color: #60A5FA;">100%</div>
+          <div style="font-size: 0.72rem; color: #CBD5E1;">Honest Rates</div>
+        </div>
+        <div>
+          <div style="font-size: 1.25rem; font-weight: 800; color: #60A5FA;">25+ Years</div>
+          <div style="font-size: 0.72rem; color: #CBD5E1;">Store Legacy</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MAIN SHOP PAGE CONTENT ================= -->
+  <main style="padding: 32px 0 60px; background: #F8FAFC;">
+    <div class="container">
+
+      <!-- Category Filter Tabs Jump Bar -->
+      <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; padding: 12px 16px; margin-bottom: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);">
+        <div style="font-size: 0.82rem; font-weight: 700; color: #64748B; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;">
+          Select Department:
+        </div>
+        <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch;" id="category-chips-wrapper">
+          <!-- Rendered by catalog.js -->
+        </div>
       </div>
 
       <!-- Search & Sorting Filter Bar -->
-      <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 14px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 28px;">
+      <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 14px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 28px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
         <div style="display: flex; align-items: center; gap: 10px; flex: 1; max-width: 380px;">
-          <input type="text" id="shop-search-input" class="form-control form-control-sm" placeholder="Filter by product name or SKU...">
+          <input type="text" id="shop-search-input" class="form-control form-control-sm" placeholder="🔍 Search by product name, Hindi name or SKU...">
         </div>
 
         <div style="display: flex; align-items: center; gap: 12px; margin-left: auto;">
-          <span style="font-size: 0.85rem; color: #64748B;" id="shop-products-count">Loading products...</span>
+          <span style="font-size: 0.88rem; color: #1E3A8A; font-weight: 700; background: #EFF6FF; border: 1px solid #BFDBFE; padding: 6px 12px; border-radius: 9999px;" id="shop-products-count">Loading products...</span>
           <select id="shop-sort-select" class="form-select form-select-sm" style="width: 170px;">
             <option value="featured">Sort: Featured</option>
             <option value="price_asc">Price: Low to High</option>
@@ -172,6 +206,20 @@
       <!-- Products Grid -->
       <div class="product-grid" id="shop-products-grid">
         <!-- Dynamically rendered -->
+      </div>
+
+      <!-- Bulk Wholesale & Wedding Support Banner -->
+      <div style="margin-top: 56px; background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%); border-radius: 20px; padding: 36px 32px; color: #FFF; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px;">
+        <div style="max-width: 600px;">
+          <span style="background: #F59E0B; color: #000; font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; text-transform: uppercase;">Wholesale & Wedding Orders</span>
+          <h3 style="font-size: 1.5rem; font-weight: 800; color: #FFF; margin: 10px 0 6px;">Need Bulk Cookware, Dona-Pattal or Buckets?</h3>
+          <p style="font-size: 0.95rem; color: #CBD5E1; line-height: 1.5; margin: 0;">शादी-विवाह, धार्मिक आयोजनों एवं थोक दुकानदारों के लिए विशेष डिस्काउंट व सीधे लोडर से होम डिलीवरी उपलब्ध है।</p>
+        </div>
+        <div>
+          <a href="https://wa.me/919616932589?text=Hello%20Ayush%20Service%20Center,%20I%20want%20to%20inquire%20about%20Wholesale%20and%20Bulk%20Orders" target="_blank" class="btn btn-whatsapp btn-lg" style="font-weight: 700; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.4);">
+            💬 Inquire on WhatsApp
+          </a>
+        </div>
       </div>
 
     </div>

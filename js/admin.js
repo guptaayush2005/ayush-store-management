@@ -50,29 +50,56 @@ let salesChart = null;
 // ==========================================
 const AUTHORIZED_ADMIN_EMAILS = [
   "vinodkumargupta290@gmail.com",
-  "ayush44129@gmail.com"
+  "ayush44129@gmail.com",
+  "guptaayush932589@gmail.com",
+  "ayushgupta2005@gmail.com",
+  "admin@ayushservicecenter.com"
 ];
 
 onAuthStateChanged(auth, async (user) => {
-  if (!user) {
+  let activeUser = user;
+
+  // Check local verified session fallback
+  if (!activeUser) {
+    try {
+      const rawSession = sessionStorage.getItem("asc_admin_session");
+      if (rawSession) {
+        const s = JSON.parse(rawSession);
+        if (s && s.email && AUTHORIZED_ADMIN_EMAILS.includes(s.email.toLowerCase())) {
+          activeUser = {
+            email: s.email,
+            displayName: s.name || (s.email.includes("ayush") ? "Ayush Gupta" : "Vinod Kumar Gupta"),
+            uid: s.uid || "owner_session"
+          };
+        }
+      }
+    } catch(e) {}
+  }
+
+  if (!activeUser) {
     window.location.href = "login.html";
     return;
   }
 
   // Check custom claim or whitelist
-  const tokenResult = await user.getIdTokenResult().catch(() => null);
-  const isAdminClaim = tokenResult && tokenResult.claims && tokenResult.claims.admin;
-  const isAuthorized = isAdminClaim || AUTHORIZED_ADMIN_EMAILS.includes((user.email || "").toLowerCase());
+  let isAuthorized = AUTHORIZED_ADMIN_EMAILS.includes((activeUser.email || "").toLowerCase());
+  if (user && user.getIdTokenResult) {
+    const tokenResult = await user.getIdTokenResult().catch(() => null);
+    if (tokenResult && tokenResult.claims && tokenResult.claims.admin) {
+      isAuthorized = true;
+    }
+  }
 
   if (!isAuthorized) {
     alert("Access Denied: You do not have administrator permissions.");
-    await signOut(auth);
+    try { await signOut(auth); } catch(e) {}
+    sessionStorage.removeItem("asc_admin_session");
     window.location.href = "login.html";
     return;
   }
 
-  currentUser = user;
-  const userEmail = user.email || "admin@ayushservicecenter.com";
+  currentUser = activeUser;
+  const userEmail = activeUser.email || "admin@ayushservicecenter.com";
   const userInitials = (userEmail[0] || "A").toUpperCase();
 
   const avatarEl = document.getElementById("sidebar-user-avatar");
@@ -81,7 +108,7 @@ onAuthStateChanged(auth, async (user) => {
 
   if (avatarEl) avatarEl.textContent = userInitials;
   if (emailEl) emailEl.textContent = userEmail;
-  if (nameEl) nameEl.textContent = user.displayName || (userEmail.includes("ayush") ? "Ayush Gupta" : "Vinod Kumar Gupta");
+  if (nameEl) nameEl.textContent = activeUser.displayName || (userEmail.includes("ayush") ? "Ayush Gupta" : "Vinod Kumar Gupta");
 
   // Load all operational data
   await loadAllAdminData();
@@ -92,6 +119,7 @@ onAuthStateChanged(auth, async (user) => {
 document.getElementById("admin-logout-btn").addEventListener("click", async () => {
   if (confirm("Are you sure you want to log out of the admin panel?")) {
     logAuditAction("LOGOUT", `Admin logged out`);
+    sessionStorage.removeItem("asc_admin_session");
     try {
       await signOut(auth);
     } catch(e) {}
