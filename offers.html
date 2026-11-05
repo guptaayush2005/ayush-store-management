@@ -35,7 +35,7 @@
         <div class="brand-icon">ASC</div>
         <div class="brand-text">
           <h1 class="dynamic-store-name">Ayush Service Center</h1>
-          <p data-i18n="offers_badge">Discounts & Promotional Offers</p>
+          <p>Discounts & Promotional Offers</p>
         </div>
       </a>
       <div class="header-actions">
@@ -55,7 +55,7 @@
         </a>
         <a href="admin/login.html" class="header-action-btn" title="Admin Portal" style="background: rgba(37, 99, 235, 0.08); border-color: rgba(37, 99, 235, 0.3);">
           <span style="font-size: 20px;">👤</span>
-          <span style="font-weight: 700; color: #2563EB;" data-i18n="nav_admin">Admin</span>
+          <span class="hide-on-mobile" style="font-weight: 700; color: #2563EB;">Admin</span>
         </a>
         <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle Navigation Menu">☰</button>
       </div>
@@ -129,28 +129,25 @@
     </svg>
   </a>
 
-  <!-- ================= 1. CLASSICAL OFFERS HERO BANNER ================= -->
-  <section class="offers-hero-banner" style="background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 50%, #0F172A 100%); color: #FFFFFF; padding: 56px 0 48px; position: relative; overflow: hidden;">
-    <div class="container" style="max-width: 860px; text-align: center; margin: 0 auto; display: flex; flex-direction: column; align-items: center;">
-      <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(37, 99, 235, 0.35); border: 1px solid #60A5FA; padding: 8px 22px; border-radius: 9999px; margin-bottom: 20px; font-size: 0.88rem; font-weight: 700; color: #93C5FD;" data-i18n="offers_badge">
+  <!-- ================= 1. SLEEK MINIMIZED OFFERS HERO BANNER ================= -->
+  <section class="offers-hero-banner page-hero-compact">
+    <div class="container" style="max-width: 820px; text-align: center; margin: 0 auto; display: flex; flex-direction: column; align-items: center;">
+      <div class="hero-badge-pill" data-i18n="offers_badge">
         🎟️ Verified Store Coupons • 25+ Years of Trust • Tarajeevanpur
       </div>
-      <h1 style="font-size: 2.5rem; font-weight: 800; color: #FFFFFF; line-height: 1.25; margin: 0 0 14px;" data-i18n="offers_hero_title">
+      <h1 data-i18n="offers_hero_title">
         Exclusive Offers & Discount Coupons
       </h1>
-      <p style="font-size: 1.05rem; color: #CBD5E1; line-height: 1.65; margin: 0 auto 28px; max-width: 740px;" data-i18n="offers_hero_subtitle">
-        Apply these verified promotional coupon codes at checkout or share on WhatsApp for instant direct savings on genuine kitchenware, plastics, and party supplies!
+      <p data-i18n="offers_hero_subtitle">
+        Apply verified promotional coupon codes at checkout or share on WhatsApp for instant savings!
       </p>
       
-      <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
-        <a href="#offers-list-container" class="btn btn-primary" style="font-weight: 700;">
+      <div class="hero-actions">
+        <a href="#offers-list-container" class="btn btn-primary btn-sm" style="font-weight: 700;">
           🎟️ View Active Coupons
         </a>
-        <a href="shop.html" class="btn btn-outline" style="color: #FFF; border-color: rgba(255,255,255,0.4); font-weight: 700;" data-i18n="nav_shop">
+        <a href="shop.html" class="btn btn-outline btn-sm" style="color: #FFF; border-color: rgba(255,255,255,0.4); font-weight: 700;" data-i18n="nav_shop">
           🛍️ Shop Catalog
-        </a>
-        <a href="https://wa.me/919616932589?text=Hello%20Ayush%20Service%20Center,%20I%20want%20to%20know%20about%20bulk%20and%20wedding%20discounts" target="_blank" class="btn btn-whatsapp" style="font-weight: 700;">
-          💬 Bulk Order Inquiry
         </a>
       </div>
     </div>

@@ -1353,20 +1353,60 @@ button, input, select, textarea {
   }
 
   .header-action-btn {
-    padding: 0;
-    width: 36px;
-    height: 36px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    font-size: 18px;
-    flex-shrink: 0;
+    padding: 0 !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    max-width: 36px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    font-size: 18px !important;
+    flex-shrink: 0 !important;
+    position: relative !important;
   }
 
-  .hero-slide { padding: 32px 0; min-height: 380px; }
-  .hero-content h2 { font-size: 1.6rem; }
-  .hero-content p { font-size: 0.9rem; }
+  .header-action-btn span:not(:first-child):not(.cart-badge) {
+    display: none !important;
+  }
+
+  /* Sleek Minimized Hero Banners on Mobile */
+  .page-hero-compact,
+  .about-hero-banner,
+  .contact-hero-banner,
+  .ab-hero-banner,
+  .offers-hero-banner,
+  .home-hero-banner {
+    padding: 18px 0 14px !important;
+  }
+
+  .page-hero-compact h1,
+  .about-hero-banner h1,
+  .contact-hero-banner h1,
+  .ab-hero-banner h1,
+  .offers-hero-banner h1,
+  .home-hero-banner h1 {
+    font-size: 1.25rem !important;
+    line-height: 1.25 !important;
+    margin: 0 0 4px !important;
+  }
+
+  .page-hero-compact p,
+  .about-hero-banner p,
+  .contact-hero-banner p,
+  .ab-hero-banner p,
+  .offers-hero-banner p,
+  .home-hero-banner p {
+    font-size: 0.82rem !important;
+    line-height: 1.35 !important;
+    margin: 0 auto 10px !important;
+    max-width: 100% !important;
+  }
+
+  .hero-slide { padding: 24px 0; min-height: 280px; }
+  .hero-content h2 { font-size: 1.3rem; }
+  .hero-content p { font-size: 0.82rem; }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
@@ -1409,12 +1449,67 @@ button, input, select, textarea {
 }
 
 /* ==========================================================================
+   SLEEK MINIMIZED HERO BANNERS (ALL PAGES)
+   ========================================================================== */
+.page-hero-compact,
+.offers-hero-banner,
+.home-hero-banner {
+  background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 55%, #0F172A 100%);
+  color: #FFFFFF;
+  padding: 28px 0 24px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.page-hero-compact h1,
+.offers-hero-banner h1,
+.home-hero-banner h1 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.25;
+  margin: 0 0 8px;
+}
+
+.page-hero-compact p,
+.offers-hero-banner p,
+.home-hero-banner p {
+  font-size: 0.92rem;
+  color: #CBD5E1;
+  line-height: 1.5;
+  margin: 0 auto 14px;
+  max-width: 720px;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.hero-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(37, 99, 235, 0.35);
+  border: 1px solid rgba(96, 165, 250, 0.6);
+  padding: 4px 14px;
+  border-radius: 9999px;
+  margin-bottom: 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #93C5FD;
+}
+
+/* ==========================================================================
    CLASSIC & INTERACTIVE CONTACT PAGE STYLES
    ========================================================================== */
 .contact-hero-banner {
   background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 55%, #0F172A 100%);
   color: #FFFFFF;
-  padding: 56px 0 44px;
+  padding: 26px 0 22px;
   position: relative;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -1564,7 +1659,7 @@ button, input, select, textarea {
 .about-hero-banner {
   background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 55%, #0F172A 100%);
   color: #FFFFFF;
-  padding: 60px 0 48px;
+  padding: 26px 0 22px;
   position: relative;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -1936,7 +2031,7 @@ button, input, select, textarea {
 .ab-hero-banner {
   background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 50%, #0F172A 100%);
   color: #FFFFFF;
-  padding: 56px 0 48px;
+  padding: 26px 0 22px;
   position: relative;
   overflow: hidden;
 }
