@@ -224,14 +224,30 @@ export async function initCategoriesPage() {
     ).length;
 
     html += `
-      <div class="category-card" onclick="window.location.href='shop.html?category=${encodeURIComponent(cat.name)}'" style="cursor: pointer;">
-        <div class="category-icon-wrapper" style="width: 90px; height: 90px; border-radius: 16px; margin-bottom: 16px;">
-          <img src="${cat.image || 'images/poster.jpg'}" alt="${cat.name}">
+      <div class="category-card-premium" onclick="window.location.href='shop.html?category=${encodeURIComponent(cat.name)}'" style="cursor: pointer;">
+        <div class="category-card-img-wrapper">
+          <img src="${cat.image || 'images/poster.jpg'}" alt="${cat.name}" loading="lazy" onerror="this.onerror=null; this.src='images/poster.jpg';">
+          <div style="position: absolute; top: 12px; right: 12px; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(4px); color: #FFF; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 9999px;">
+            ${count} Items
+          </div>
         </div>
-        <h3 style="font-size: 1.15rem; margin-bottom: 4px;">${cat.name}</h3>
-        ${cat.nameHindi ? `<div style="font-size: 0.85rem; color: #2563EB; font-weight: 600; margin-bottom: 6px;">${cat.nameHindi}</div>` : ""}
-        <p style="font-size: 0.85rem; color: #64748B; margin-bottom: 12px; line-height: 1.4;">${cat.description || ''}</p>
-        <span class="badge badge-primary" style="margin-top: auto;">${count} Products Available</span>
+        <div class="category-card-body-premium">
+          <div style="display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-bottom: 4px;">
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #0F172A; margin: 0;">${cat.name}</h3>
+            ${cat.nameHindi ? `<span style="font-size: 0.9rem; color: #2563EB; font-weight: 700;">${cat.nameHindi}</span>` : ""}
+          </div>
+          <p style="font-size: 0.88rem; color: #64748B; margin: 6px 0 16px; line-height: 1.5; flex: 1;">
+            ${cat.description || 'Quality retail and wholesale items available at best local rates.'}
+          </p>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid #F1F5F9;">
+            <span style="font-size: 0.82rem; font-weight: 700; color: #16A34A; background: #DCFCE7; padding: 3px 8px; border-radius: 6px;">
+              ✓ In Stock
+            </span>
+            <span style="font-size: 0.9rem; font-weight: 700; color: #2563EB; display: flex; align-items: center; gap: 4px;">
+              Explore Category →
+            </span>
+          </div>
+        </div>
       </div>
     `;
   });
@@ -362,7 +378,7 @@ export async function initProductDetailsPage() {
         <!-- Trust Badges Strip -->
         <div style="display: flex; gap: 16px; font-size: 0.82rem; color: #64748B; padding-top: 16px; border-top: 1px solid #E2E8F0;">
           <div style="display: flex; align-items: center; gap: 6px;">🛡️ 100% Genuine Quality</div>
-          <div style="display: flex; align-items: center; gap: 6px;">🏪 24+ Years Store Trust</div>
+          <div style="display: flex; align-items: center; gap: 6px;">🏪 25+ Years Store Trust</div>
           <div style="display: flex; align-items: center; gap: 6px;">⚡ Fast Local Delivery / Pickup</div>
         </div>
       </div>

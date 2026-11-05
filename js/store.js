@@ -672,47 +672,66 @@ export function getWhatsAppProductInquiryUrl(product) {
 // ==========================================
 export async function seedInitialDatabase() {
   try {
-    const batch = writeBatch(db);
+    let currentBatch = writeBatch(db);
+    let count = 0;
+
+    const commitIfNeeded = async () => {
+      count++;
+      if (count >= 400) {
+        await currentBatch.commit();
+        currentBatch = writeBatch(db);
+        count = 0;
+      }
+    };
 
     // 1. Store settings
     const settingsRef = doc(db, "store_settings", "general");
-    batch.set(settingsRef, {
+    currentBatch.set(settingsRef, {
       ...INITIAL_STORE_SETTINGS,
       updatedAt: serverTimestamp()
     });
+    await commitIfNeeded();
 
     // 2. Categories
     for (const cat of INITIAL_CATEGORIES) {
       const catRef = doc(db, "categories", cat.id);
-      batch.set(catRef, { ...cat, updatedAt: serverTimestamp() });
+      currentBatch.set(catRef, { ...cat, updatedAt: serverTimestamp() });
+      await commitIfNeeded();
     }
 
     // 3. Products
     for (const prod of INITIAL_PRODUCTS) {
       const prodRef = doc(db, "products", prod.id);
-      batch.set(prodRef, { ...prod, updatedAt: serverTimestamp() });
+      currentBatch.set(prodRef, { ...prod, updatedAt: serverTimestamp() });
+      await commitIfNeeded();
     }
 
     // 4. Banners
     for (const ban of INITIAL_BANNERS) {
       const banRef = doc(db, "banners", ban.id);
-      batch.set(banRef, { ...ban, updatedAt: serverTimestamp() });
+      currentBatch.set(banRef, { ...ban, updatedAt: serverTimestamp() });
+      await commitIfNeeded();
     }
 
     // 5. Offers
     for (const off of INITIAL_OFFERS) {
       const offRef = doc(db, "offers", off.id);
-      batch.set(offRef, { ...off, updatedAt: serverTimestamp() });
+      currentBatch.set(offRef, { ...off, updatedAt: serverTimestamp() });
+      await commitIfNeeded();
     }
 
     // 6. Reviews
     for (const rev of INITIAL_REVIEWS) {
       const revRef = doc(db, "reviews", rev.id);
-      batch.set(revRef, { ...rev, createdAt: Date.now() });
+      currentBatch.set(revRef, { ...rev, createdAt: Date.now() });
+      await commitIfNeeded();
     }
 
-    await batch.commit();
-    showToast("🎉 Store database successfully initialized with all categories, products & settings!", "success", 5000);
+    if (count > 0) {
+      await currentBatch.commit();
+    }
+
+    showToast("🎉 Store database successfully initialized with all 190+ products, categories & settings!", "success", 5000);
     return { success: true };
   } catch (e) {
     console.error("Seeding error:", e);
