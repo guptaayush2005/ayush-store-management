@@ -10,28 +10,44 @@ import {
   getCachedSettings 
 } from "./store.js";
 
-// Helper to render standard product card HTML
+// Helper to render standard product card HTML (Inspired by SG Stores clean retail presentation)
 export function renderProductCard(p) {
-  const imgUrl = p.image || (p.images && p.images[0]) || "images/poster.jpg";
+  const cat = (p.category || "").toLowerCase();
+  let defaultFallback = "images/poster.jpg";
+  if (cat.includes("steel")) defaultFallback = "images/1bartan.jpg";
+  else if (cat.includes("plastic")) defaultFallback = "images/1plastic.jpg";
+  else if (cat.includes("mobile")) defaultFallback = "images/1mobile.jpg";
+  else if (cat.includes("cold")) defaultFallback = "images/1colddrink.jpg";
+  else if (cat.includes("cosmetic")) defaultFallback = "images/facewash.jpg";
+  else if (cat.includes("dona")) defaultFallback = "images/1dona-pattal.jpg";
+  else if (cat.includes("gas")) defaultFallback = "images/1gas.jpg";
+  else if (cat.includes("auto")) defaultFallback = "images/1autobooking.jpg";
+
+  const imgUrl = p.image || (p.images && p.images[0]) || defaultFallback;
   const discount = p.mrp && p.mrp > p.price 
     ? Math.round(((p.mrp - p.price) / p.mrp) * 100) 
     : 0;
+  const savings = p.mrp && p.mrp > p.price ? (p.mrp - p.price) : 0;
 
   const isOutOfStock = p.stock === 0 || p.stock === "Out of Stock";
   const whatsappUrl = getWhatsAppProductInquiryUrl(p);
 
   return `
-    <div class="product-card" data-id="${p.id}">
+    <div class="product-card sg-product-card" data-id="${p.id}">
       <div class="product-image-container" onclick="window.location.href='product.html?id=${p.id}'" style="cursor: pointer;">
-        <img src="${imgUrl}" alt="${p.name}" class="product-image" loading="lazy">
+        <img src="${imgUrl}" alt="${p.name}" class="product-image" loading="lazy" onerror="this.onerror=null; this.src='${defaultFallback}';">
         <div class="product-badges">
           ${discount > 0 ? `<span class="badge-discount">${discount}% OFF</span>` : ""}
-          ${p.isFeatured ? `<span class="badge-featured">Featured</span>` : ""}
+          ${p.isFeatured ? `<span class="badge-featured">Bestseller</span>` : ""}
         </div>
+        <span class="product-stock-tag ${isOutOfStock ? 'out-of-stock' : 'in-stock'}">
+          <span class="stock-dot"></span> ${isOutOfStock ? 'Unavailable' : 'In Stock'}
+        </span>
       </div>
       <div class="product-card-body">
         <div class="product-category">${p.category}</div>
         <a href="product.html?id=${p.id}" class="product-title" title="${p.name}">${p.name}</a>
+        ${p.nameHindi ? `<div class="product-hindi-name">${p.nameHindi}</div>` : ""}
         
         <div class="product-rating">
           <span>★</span> <span>${p.rating || '4.8'}</span>
@@ -40,8 +56,8 @@ export function renderProductCard(p) {
 
         <div class="product-price-row">
           <div class="product-price">₹${p.price}</div>
-          ${p.mrp ? `<div class="product-mrp">₹${p.mrp}</div>` : ""}
-          <div style="font-size: 0.75rem; color: #64748B; margin-left: auto;">/ ${p.unit || 'pc'}</div>
+          ${p.mrp && p.mrp > p.price ? `<div class="product-mrp">₹${p.mrp}</div>` : ""}
+          ${savings > 0 ? `<span class="product-save">Save ₹${savings}</span>` : ""}
         </div>
 
         <div class="product-actions">
@@ -54,7 +70,7 @@ export function renderProductCard(p) {
               🛒 Add to Cart
             </button>
             <a href="${whatsappUrl}" target="_blank" class="btn-whatsapp-order">
-              💬 Order on WhatsApp
+              💬 WhatsApp
             </a>
           `}
         </div>
@@ -311,13 +327,13 @@ export async function initProductDetailsPage() {
     <div style="display: grid; grid-template-columns: 1fr; gap: 36px;" class="product-details-grid">
       <!-- Image Gallery -->
       <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; padding: 24px; text-align: center;">
-        <div style="aspect-ratio: 1 / 1; max-height: 440px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; border-radius: 12px; background: #F8FAFC;">
-          <img src="${imgUrl}" alt="${product.name}" id="main-product-img" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+        <div style="aspect-ratio: 1 / 1; max-height: 440px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; border-radius: 12px; background: #FFFFFF; border: 1px solid #F1F5F9;">
+          <img src="${imgUrl}" alt="${product.name}" id="main-product-img" style="max-height: 100%; max-width: 100%; object-fit: contain; padding: 16px;" onerror="this.onerror=null; this.src='images/poster.jpg';">
         </div>
         ${product.images && product.images.length > 1 ? `
           <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
             ${product.images.map((img, idx) => `
-              <img src="${img}" onclick="document.getElementById('main-product-img').src='${img}'" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 2px solid ${idx === 0 ? '#2563EB' : '#E2E8F0'}; cursor: pointer;">
+              <img src="${img}" onclick="document.getElementById('main-product-img').src='${img}'" style="width: 60px; height: 60px; object-fit: contain; padding: 4px; background: #FFF; border-radius: 8px; border: 2px solid ${idx === 0 ? '#2563EB' : '#E2E8F0'}; cursor: pointer;" onerror="this.onerror=null; this.src='images/poster.jpg';">
             `).join("")}
           </div>
         ` : ""}

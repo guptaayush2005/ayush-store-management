@@ -3,20 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ayush Service Center | 25+ Years of Trust | Kitchenware, Plasticware & General Retail</title>
-  <meta name="description" content="Ayush Service Center at Budhiya Mai Mandir Ke Paas, Tarajeevanpur Chauraha, Chandauli. 25+ years of trust in Stainless Steel Utensils, Plasticware, Mobile Accessories, Cold Drinks, Cosmetics & Auto Booking.">
+  <title>Ayush Hardware & General Store | Steel Utensils, Plastic, Mobile & Auto</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  
+  <link rel="icon" type="image/x-icon" href="images/1bartan.jpg">
 </head>
 <body>
 
   <!-- Top Announcement Bar -->
   <div class="top-bar">
     <div class="container top-bar-content">
-      <div>✨ <strong>Budhiya Mai Mandir Ke Paas</strong>, Tarajeevanpur Chauraha, Chandauli • 25+ Years of Trust • Call: +91 96169 32589</div>
+      <div>✨ <strong>Budhiya Mai Mandir Ke Paas</strong>, Tarajeevanpur Chauraha, Chandauli • Call: +91 96169 32589 • Free Delivery Above ₹500</div>
       <div class="top-bar-links">
         <a href="tel:+919616932589" class="dynamic-phone-link">📞 +91 96169 32589</a>
         <span>|</span>
@@ -27,14 +28,16 @@
     </div>
   </div>
 
-  <!-- Main Retail Header -->
+  <!-- Main Header -->
   <header class="main-header">
     <div class="container header-inner">
+      
+      <!-- Brand Logo -->
       <a href="index.html" class="brand-logo">
         <div class="brand-icon">ASC</div>
         <div class="brand-text">
           <h1 class="dynamic-store-name">Ayush Service Center</h1>
-          <p>Retail, Kitchenware & Hardware • Est. 2000</p>
+          <p>Hardware & General Store</p>
         </div>
       </a>
 
@@ -46,35 +49,39 @@
         </form>
       </div>
 
-      <!-- Header Actions -->
+      <!-- Header Action Buttons -->
       <div class="header-actions">
-        <a href="tel:+919616932589" class="btn btn-sm btn-outline hide-on-mobile" style="color: #2563EB; border-color: #BFDBFE;">
-          📞 96169 32589
+        <a href="my-orders.html" class="header-action-btn hide-on-mobile" title="Track Order">
+          <span style="font-size: 20px;">📦</span>
+          <span style="font-weight: 600;">Track</span>
         </a>
 
-        <!-- Cart Button -->
-        <a href="cart.html" class="header-action-btn" title="View Shopping Cart">
-          <span style="font-size: 20px;">🛒</span>
-          <span class="cart-count-badge" id="header-cart-badge" style="display: none;">0</span>
-          <span class="hide-on-mobile" style="font-weight: 600; font-size: 0.85rem;">Cart</span>
+        <a href="cart.html" class="header-action-btn" title="View Cart">
+          <span style="font-size: 22px;">🛒</span>
+          <span class="cart-badge cart-count-badge" style="display: none;">0</span>
+          <span class="hide-on-mobile" style="font-weight: 700;">Cart</span>
         </a>
 
-        <!-- Admin Portal Icon -->
         <a href="admin/login.html" class="header-action-btn" title="Admin Portal" style="background: rgba(37, 99, 235, 0.08); border-color: rgba(37, 99, 235, 0.3);">
           <span style="font-size: 20px;">👤</span>
-          <span class="hide-on-mobile" style="font-weight: 700; color: #2563EB;">Admin</span>
+          <span style="font-weight: 700; color: #2563EB;">Admin</span>
         </a>
 
-        <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation">☰</button>
+        <!-- Mobile Menu Toggle Button -->
+        <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle Navigation Menu">
+          ☰
+        </button>
       </div>
+
     </div>
   </header>
 
-  <!-- Secondary Desktop Navigation (Clean without Shop All) -->
+  <!-- Secondary Navigation Bar (Desktop) -->
   <nav class="desktop-nav">
     <div class="container desktop-nav-inner">
       <ul class="nav-links">
         <li><a href="index.html" class="nav-link active">Home</a></li>
+        <li><a href="shop.html" class="nav-link">Shop Catalog</a></li>
         <li><a href="categories.html" class="nav-link">Categories</a></li>
         <li><a href="offers.html" class="nav-link">Offers & Deals</a></li>
         <li><a href="autobooking.html" class="nav-link">Auto Booking</a></li>
@@ -82,26 +89,21 @@
         <li><a href="contact.html" class="nav-link">Contact</a></li>
         <li><a href="my-orders.html" class="nav-link">Track Order</a></li>
       </ul>
-
       <div class="nav-quick-cta">
         <a href="https://wa.me/919616932589?text=Hello%20Ayush%20Service%20Center,%20I%20have%20an%20enquiry" target="_blank" class="btn btn-sm btn-whatsapp">
-          💬 WhatsApp Chat
+          💬 WhatsApp Quick Order
         </a>
       </div>
     </div>
   </nav>
 
-  <!-- Mobile Drawer -->
+  <!-- Mobile Drawer Menu -->
   <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop"></div>
   <aside class="mobile-drawer" id="mobile-drawer">
     <div class="drawer-header">
-      <div style="display: flex; align-items: center; gap: 8px;">
-        <span class="brand-icon" style="width: 32px; height: 32px; font-size: 14px;">ASC</span>
-        <span style="font-weight: 700; color: #FFF;">Ayush Service Center</span>
-      </div>
+      <span style="font-weight: 700;">Store Menu</span>
       <button type="button" id="drawer-close-btn" style="background: none; border: none; color: #FFF; font-size: 22px; cursor: pointer;">✕</button>
     </div>
-    
     <div class="drawer-body">
       <ul class="drawer-nav-list">
         <li class="drawer-nav-item"><a href="index.html" class="active">🏠 Home</a></li>
@@ -109,40 +111,31 @@
         <li class="drawer-nav-item"><a href="categories.html">🏷️ All Categories</a></li>
         <li class="drawer-nav-item"><a href="offers.html">🎟️ Special Offers</a></li>
         <li class="drawer-nav-item"><a href="autobooking.html">🚗 Auto Booking</a></li>
-        <li class="drawer-nav-item"><a href="about.html">✨ About Store (25+ Yrs)</a></li>
+        <li class="drawer-nav-item"><a href="about.html">✨ About Store Heritage</a></li>
         <li class="drawer-nav-item"><a href="contact.html">📞 Contact & Map</a></li>
         <li class="drawer-nav-item"><a href="my-orders.html">📦 Track My Order</a></li>
         <li class="drawer-nav-item"><a href="cart.html">🛒 View Cart</a></li>
         <li class="drawer-nav-item" style="border-top: 1px solid #E2E8F0; margin-top: 10px; padding-top: 10px;">
-          <a href="admin/login.html" style="color: #64748B;">⚙️ Admin Portal</a>
+          <a href="admin/login.html" style="color: #2563EB; font-weight: 700;">👤 Admin Login</a>
         </li>
       </ul>
     </div>
-
-    <div class="drawer-footer">
-      <div style="font-size: 0.8rem; color: #64748B; margin-bottom: 8px;">
-        📍 Budhiya Mai Mandir Ke Paas, Tarajeevanpur Chauraha
-      </div>
-      <a href="tel:+919616932589" class="btn btn-primary btn-full btn-sm">
-        📞 Call +91 96169 32589
-      </a>
-    </div>
   </aside>
 
-  <!-- Mobile Bottom Navigation Bar -->
+  <!-- Mobile Bottom Sticky Navigation -->
   <nav class="mobile-bottom-nav">
     <div class="mobile-bottom-nav-inner">
       <a href="index.html" class="bottom-nav-item active">
         <span>🏠</span>
         <span>Home</span>
       </a>
+      <a href="shop.html" class="bottom-nav-item">
+        <span>🛍️</span>
+        <span>Shop</span>
+      </a>
       <a href="categories.html" class="bottom-nav-item">
         <span>🏷️</span>
         <span>Categories</span>
-      </a>
-      <a href="autobooking.html" class="bottom-nav-item">
-        <span>🚗</span>
-        <span>Auto</span>
       </a>
       <a href="cart.html" class="bottom-nav-item">
         <span>🛒</span>
@@ -254,16 +247,21 @@
     </div>
   </section>
 
-  <!-- ================= 3. CATEGORY TABS / QUICK ACCESS (REPLACING SHOP BY CATEGORY) ================= -->
+  <!-- ================= 3. CATEGORIES PREVIEW WITH PRODUCT COUNTS ================= -->
   <section style="padding: 48px 0 52px; background: #F8FAFC;">
     <div class="container">
-      <div style="text-align: center; margin-bottom: 28px;">
-        <span class="badge badge-primary" style="margin-bottom: 6px;">QUICK CATEGORY ACCESS</span>
-        <h2 style="font-size: 1.8rem; font-weight: 800; color: #0F172A; margin: 0;">Explore Our Departments</h2>
-        <p style="font-size: 0.95rem; color: #64748B; margin-top: 4px;">Click any category below to browse items directly in our shop catalog.</p>
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 28px; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <span style="font-size: 0.85rem; font-weight: 700; color: #2563EB; text-transform: uppercase; letter-spacing: 0.5px;">Browse by Department</span>
+          <h2 style="font-size: 1.8rem; font-weight: 800; color: #0F172A; margin: 4px 0 0;">Shop by Categories</h2>
+          <p style="font-size: 0.92rem; color: #64748B; margin-top: 2px;">Explore verified household departments with honest rates and ready stock.</p>
+        </div>
+        <a href="categories.html" style="font-size: 0.95rem; font-weight: 700; color: #2563EB; display: flex; align-items: center; gap: 4px;">
+          View All Categories →
+        </a>
       </div>
 
-      <!-- Clean Category Navigation Cards (No item counts displayed) -->
+      <!-- Category Navigation Cards with actual published product counts -->
       <div class="classical-cat-grid">
         <a href="shop.html?category=Steel" class="classical-cat-card">
           <div class="classical-cat-icon">
@@ -271,6 +269,7 @@
           </div>
           <h3 style="font-size: 1.05rem; font-weight: 700; color: #0F172A; margin: 0;">Steel Utensils</h3>
           <div style="font-size: 0.85rem; color: #2563EB; font-weight: 600; margin-top: 2px;">स्टील बर्तन</div>
+          <div style="font-size: 0.75rem; color: #64748B; margin-top: 4px; font-weight: 600;">25 Products</div>
         </a>
 
         <a href="shop.html?category=Plastic" class="classical-cat-card">
@@ -279,6 +278,7 @@
           </div>
           <h3 style="font-size: 1.05rem; font-weight: 700; color: #0F172A; margin: 0;">Plastic Household</h3>
           <div style="font-size: 0.85rem; color: #2563EB; font-weight: 600; margin-top: 2px;">प्लास्टिक सामान</div>
+          <div style="font-size: 0.75rem; color: #64748B; margin-top: 4px; font-weight: 600;">25 Products</div>
         </a>
 
         <a href="shop.html?category=Mobile" class="classical-cat-card">
@@ -287,6 +287,7 @@
           </div>
           <h3 style="font-size: 1.05rem; font-weight: 700; color: #0F172A; margin: 0;">Mobile Accessories</h3>
           <div style="font-size: 0.85rem; color: #2563EB; font-weight: 600; margin-top: 2px;">मोबाइल एक्सेसरीज</div>
+          <div style="font-size: 0.75rem; color: #64748B; margin-top: 4px; font-weight: 600;">25 Products</div>
         </a>
 
         <a href="shop.html?category=Cold%20Drink" class="classical-cat-card">
@@ -295,6 +296,7 @@
           </div>
           <h3 style="font-size: 1.05rem; font-weight: 700; color: #0F172A; margin: 0;">Cold Drinks</h3>
           <div style="font-size: 0.85rem; color: #2563EB; font-weight: 600; margin-top: 2px;">कोल्ड ड्रिंक एवं पेय</div>
+          <div style="font-size: 0.75rem; color: #64748B; margin-top: 4px; font-weight: 600;">25 Products</div>
         </a>
 
         <a href="shop.html?category=Cosmetics" class="classical-cat-card">
@@ -303,6 +305,7 @@
           </div>
           <h3 style="font-size: 1.05rem; font-weight: 700; color: #0F172A; margin: 0;">Cosmetics</h3>
           <div style="font-size: 0.85rem; color: #2563EB; font-weight: 600; margin-top: 2px;">कॉस्मेटिक्स सामान</div>
+          <div style="font-size: 0.75rem; color: #64748B; margin-top: 4px; font-weight: 600;">25 Products</div>
         </a>
 
         <a href="shop.html?category=Dona%20Pattal" class="classical-cat-card">
@@ -311,6 +314,7 @@
           </div>
           <h3 style="font-size: 1.05rem; font-weight: 700; color: #0F172A; margin: 0;">Dona & Pattal</h3>
           <div style="font-size: 0.85rem; color: #2563EB; font-weight: 600; margin-top: 2px;">दोना-पत्तल</div>
+          <div style="font-size: 0.75rem; color: #64748B; margin-top: 4px; font-weight: 600;">25 Products</div>
         </a>
 
         <a href="shop.html?category=Gas" class="classical-cat-card">
@@ -319,6 +323,7 @@
           </div>
           <h3 style="font-size: 1.05rem; font-weight: 700; color: #0F172A; margin: 0;">Gas Items & Spares</h3>
           <div style="font-size: 0.85rem; color: #2563EB; font-weight: 600; margin-top: 2px;">गैस चूल्हा एवं पार्ट्स</div>
+          <div style="font-size: 0.75rem; color: #64748B; margin-top: 4px; font-weight: 600;">20 Products</div>
         </a>
 
         <a href="autobooking.html" class="classical-cat-card">
@@ -327,18 +332,57 @@
           </div>
           <h3 style="font-size: 1.05rem; font-weight: 700; color: #0F172A; margin: 0;">Auto Booking</h3>
           <div style="font-size: 0.85rem; color: #2563EB; font-weight: 600; margin-top: 2px;">ऑटो बुकिंग सेवा</div>
-        </a>
-      </div>
-
-      <div style="text-align: center; margin-top: 28px;">
-        <a href="categories.html" class="btn btn-outline" style="font-weight: 700;">
-          View All Categories Page →
+          <div style="font-size: 0.75rem; color: #64748B; margin-top: 4px; font-weight: 600;">20 Services</div>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- ================= 4. SMALL WHATSAPP SHOPPING CTA ================= -->
+  <!-- ================= 4. FEATURED PRODUCTS (SG STORES INSPIRED) ================= -->
+  <section style="padding: 48px 0; background: #FFFFFF; border-top: 1px solid #E2E8F0;">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 28px; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <span style="font-size: 0.85rem; font-weight: 700; color: #2563EB; text-transform: uppercase; letter-spacing: 0.5px;">Customer Favorites</span>
+          <h2 style="font-size: 1.8rem; font-weight: 800; color: #0F172A; margin: 4px 0 0;">Featured Products</h2>
+          <p style="font-size: 0.92rem; color: #64748B; margin-top: 2px;">Handpicked bestsellers with verified store pricing and instant availability.</p>
+        </div>
+        <a href="shop.html" style="font-size: 0.95rem; font-weight: 700; color: #2563EB; display: flex; align-items: center; gap: 4px;">
+          Explore Full Catalog →
+        </a>
+      </div>
+
+      <!-- Product Grid (2-col mobile, 4-col desktop) -->
+      <div class="product-grid" id="featured-products-grid">
+        <!-- Rendered by catalog.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 5. ACTIVE STORE OFFERS & PROMOTIONS ================= -->
+  <section style="padding: 40px 0; background: #F8FAFC; border-top: 1px solid #E2E8F0;">
+    <div class="container">
+      <div style="background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%); border-radius: 20px; padding: 32px 36px; color: #FFFFFF; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px;">
+        <div style="max-width: 580px;">
+          <span class="badge" style="background: #2563EB; color: #FFF; font-size: 0.78rem; font-weight: 700; margin-bottom: 10px; display: inline-block;">ACTIVE STORE COUPONS</span>
+          <h3 style="font-size: 1.6rem; font-weight: 800; color: #FFF; margin-bottom: 8px;">Special Seasonal Savings</h3>
+          <p style="font-size: 0.95rem; color: #CBD5E1; margin: 0; line-height: 1.6;">
+            Use coupon code <strong>SAVINGS10</strong> for 10% off on Steel cookware, or <strong>FREEDEL</strong> for free doorstep delivery in Chandauli district on orders above ₹500.
+          </p>
+        </div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="offers.html" class="btn btn-primary" style="background: #2563EB; border: none; font-weight: 700; padding: 12px 24px;">
+            View All Offers & Coupons →
+          </a>
+          <a href="shop.html" class="btn btn-outline" style="color: #FFF; border-color: rgba(255,255,255,0.4); padding: 12px 20px;">
+            Shop Catalog
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 6. SMALL WHATSAPP SHOPPING CTA ================= -->
   <section style="padding: 44px 0; background: #FFFFFF; border-top: 1px solid #E2E8F0;">
     <div class="container" style="max-width: 860px;">
       <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 20px; padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; box-shadow: var(--shadow-sm);">
@@ -356,6 +400,34 @@
         <a href="https://wa.me/919616932589?text=Hello%20Ayush%20Service%20Center,%20I%20want%20to%20order%20products" target="_blank" class="btn btn-whatsapp" style="padding: 10px 22px; font-weight: 700; white-space: nowrap;">
           Chat on WhatsApp
         </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 7. SMALL STORE LOCATION PREVIEW ================= -->
+  <section style="padding: 40px 0; background: #F8FAFC; border-top: 1px solid #E2E8F0;">
+    <div class="container" style="max-width: 860px;">
+      <div style="background: #FFFFFF; border: 1px solid #CBD5E1; border-radius: 20px; padding: 26px 30px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+        <div>
+          <span class="badge badge-primary" style="margin-bottom: 8px;">VISIT OUR STORE</span>
+          <h3 style="font-size: 1.25rem; font-weight: 800; color: #0F172A; margin-bottom: 6px;">
+            Ayush Service Center
+          </h3>
+          <p style="font-size: 0.9rem; color: #475569; margin-bottom: 4px;">
+            📍 <strong>Budhiya Mai Mandir Ke Paas</strong>, Tarajeevanpur Chauraha, Chandauli, UP 232120
+          </p>
+          <p style="font-size: 0.85rem; color: #64748B; margin: 0;">
+            ⏰ Open Daily: 7:00 AM – 9:00 PM • 📞 Call/WhatsApp: +91 96169 32589
+          </p>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <a href="https://maps.google.com/?q=Budhiya+Mai+Mandir+Tarajeevanpur+Chauraha+Chandauli+Uttar+Pradesh" target="_blank" class="btn btn-primary" style="padding: 10px 18px; font-weight: 600;">
+            🗺️ Directions
+          </a>
+          <a href="contact.html" class="btn btn-outline" style="padding: 10px 18px;">
+            Store Details →
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -457,5 +529,22 @@
 
   <!-- Scripts -->
   <script type="module" src="js/app.js"></script>
+  <script type="module">
+    import { fetchProducts } from "./js/store.js";
+    import { renderProductCard } from "./js/catalog.js";
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      const grid = document.getElementById("featured-products-grid");
+      if (!grid) return;
+      try {
+        const allProds = await fetchProducts();
+        const featured = allProds.filter(p => p.isFeatured).slice(0, 8);
+        const displayProds = featured.length >= 4 ? featured : allProds.slice(0, 8);
+        grid.innerHTML = displayProds.map(renderProductCard).join("");
+      } catch (err) {
+        console.warn("Featured products hydration fallback:", err);
+      }
+    });
+  </script>
 </body>
 </html>
