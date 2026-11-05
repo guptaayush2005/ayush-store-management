@@ -114,58 +114,58 @@ export function showCustomerOtpModal(options = {}) {
 
   backdrop.innerHTML = `
     <div class="otp-modal-card">
-      <button type="button" id="close-otp-modal-btn" style="position: absolute; top: 16px; right: 16px; background: #F1F5F9; border: 1px solid #CBD5E1; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #64748B; cursor: pointer;">✕</button>
+      <button type="button" id="close-otp-modal-btn" style="position: absolute; top: 12px; right: 12px; background: #F1F5F9; border: 1px solid #CBD5E1; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #64748B; cursor: pointer; z-index: 10;">✕</button>
 
-      <div style="text-align: center; margin-bottom: 20px;">
-        <div style="width: 54px; height: 54px; background: #EFF6FF; color: #2563EB; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 10px;">💬</div>
-        <h3 style="font-size: 1.25rem; font-weight: 800; color: #0F172A; margin: 0 0 6px;">Customer Mobile Login (एसएमएस)</h3>
-        <p style="font-size: 0.85rem; color: #64748B; margin: 0;">Order karne se pehle apna mobile number verify karein. Aapke SIM ke normal Message app mein 6-digit OTP aayega.</p>
+      <div style="text-align: center; margin-bottom: 16px;">
+        <div style="width: 48px; height: 48px; background: #EFF6FF; color: #2563EB; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 8px;">💬</div>
+        <h3 style="font-size: 1.2rem; font-weight: 800; color: #0F172A; margin: 0 0 4px;">Customer Mobile Login</h3>
+        <p style="font-size: 0.82rem; color: #64748B; margin: 0;">Order verify karne ke liye apna 10-digit mobile number dalein.</p>
       </div>
 
       <!-- Step 1: Enter Mobile -->
       <div id="otp-step-phone">
-        <div class="form-group" style="margin-bottom: 16px;">
-          <label style="font-size: 0.85rem; font-weight: 700; color: #0F172A; display: block; margin-bottom: 6px;">Apna 10-Digit Mobile Number Dalein *</label>
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label style="font-size: 0.82rem; font-weight: 700; color: #0F172A; display: block; margin-bottom: 6px;">Apna 10-Digit Mobile Number Dalein *</label>
           <div style="display: flex; gap: 8px;">
             <span style="display: flex; align-items: center; padding: 0 12px; background: #F8FAFC; border: 1.5px solid #CBD5E1; border-radius: 10px; font-weight: 700; color: #0F172A;">+91</span>
-            <input type="tel" id="otp-input-phone" class="form-control" placeholder="10-digit number (e.g. 9616932589)" maxlength="10" value="${defaultPhone}" style="flex: 1; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.5px;">
+            <input type="tel" id="otp-input-phone" class="form-control" placeholder="10-digit number (e.g. 9616932589)" maxlength="10" value="${defaultPhone}" style="flex: 1; font-size: 1rem; font-weight: 700; letter-spacing: 0.5px; height: 46px;">
           </div>
-          <div style="font-size: 0.78rem; color: #64748B; margin-top: 6px;">
-            📶 Telecom Carrier SMS (Jio, Airtel, Vi, BSNL) - Seedhe phone ke normal Messages inbox me aayega.
+          <div style="font-size: 0.75rem; color: #64748B; margin-top: 6px;">
+            📶 Telecom Carrier SMS - Phone ke Messages inbox mein 6-digit OTP code aayega.
           </div>
         </div>
 
-        <button type="button" id="send-otp-btn" class="btn btn-primary btn-full" style="height: 48px; font-weight: 700; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 8px;">
-          📩 Send SMS OTP to Mobile (मैसेज में ओटीपी भेजें) →
+        <button type="button" id="send-otp-btn" class="btn btn-primary btn-full" style="min-height: 46px; height: auto; font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 10px 14px; box-sizing: border-box;">
+          📩 Send SMS OTP to Mobile →
         </button>
       </div>
 
       <!-- Step 2: Enter OTP received on phone (NO OTP SHOWN ON SCREEN) -->
       <div id="otp-step-verify" style="display: none;">
-        <div class="otp-alert-box" style="background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 12px; padding: 14px; margin-bottom: 16px; text-align: center;">
-          <div style="font-size: 1rem; color: #15803D; font-weight: 800; margin-bottom: 4px;">
+        <div class="otp-alert-box" style="background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 12px; padding: 10px 12px; margin-bottom: 12px; text-align: center;">
+          <div style="font-size: 0.95rem; color: #15803D; font-weight: 800; margin-bottom: 2px;">
             📩 Telecom SMS Sent to +91 <span id="otp-target-phone-num"></span>
           </div>
-          <p style="font-size: 0.82rem; color: #166534; margin: 0; line-height: 1.4;">
-            Aapke mobile ke normal Messages (SMS inbox) mein 6-digit OTP code bhej diya gaya hai. Kripya apna SMS check karein aur 6-digit code yahan dalein:
+          <p style="font-size: 0.8rem; color: #166534; margin: 0; line-height: 1.35;">
+            Apne phone ke SMS Messages inbox mein aaya hua 6-digit code yahan dalein:
           </p>
         </div>
 
-        <div id="otp-console-notice" style="display: none; background: #FEF3C7; border: 1px solid #FCD34D; border-radius: 10px; padding: 10px 12px; margin-bottom: 14px; font-size: 0.8rem; color: #92400E; text-align: left; line-height: 1.4;">
+        <div id="otp-console-notice" style="display: none; background: #FEF3C7; border: 1px solid #FCD34D; border-radius: 10px; padding: 8px 12px; margin-bottom: 12px; font-size: 0.78rem; color: #92400E; text-align: left; line-height: 1.35;">
           <strong>⚙️ Store Test Mode:</strong> Firebase Console me Phone Auth enable hone tak demo verification code <strong>123456</strong> dalein. (Live carrier SMS ke liye console me Phone toggle ON karein).
         </div>
 
-        <div class="form-group" style="margin-bottom: 16px;">
-          <label style="font-size: 0.85rem; font-weight: 700; color: #0F172A; display: block; margin-bottom: 6px;">Phone Par Aaya Hua 6-Digit SMS OTP Dalein *</label>
-          <input type="text" id="otp-input-code" class="form-control" placeholder="• • • • • •" maxlength="6" inputmode="numeric" autocomplete="one-time-code" style="text-align: center; font-size: 1.6rem; font-weight: 800; letter-spacing: 8px; height: 52px;">
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label style="font-size: 0.82rem; font-weight: 700; color: #0F172A; display: block; margin-bottom: 6px;">Phone Par Aaya Hua 6-Digit SMS OTP Dalein *</label>
+          <input type="text" id="otp-input-code" class="form-control" placeholder="• • • • • •" maxlength="6" inputmode="numeric" autocomplete="one-time-code" style="text-align: center; font-size: 1.5rem; font-weight: 800; letter-spacing: 6px; height: 48px; box-sizing: border-box; width: 100%;">
         </div>
 
-        <button type="button" id="confirm-otp-btn" class="btn btn-primary btn-full" style="height: 48px; font-weight: 700; font-size: 1.02rem; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-          ✓ Verify SMS OTP & Continue (ओटीपी सत्यापित करें)
+        <button type="button" id="confirm-otp-btn" class="btn btn-primary btn-full" style="min-height: 46px; height: auto; font-weight: 700; font-size: 0.95rem; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 10px 14px; box-sizing: border-box;">
+          Verify & Continue →
         </button>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.84rem; margin-top: 8px;">
-          <button type="button" id="resend-otp-btn" style="background: none; border: none; color: #2563EB; font-weight: 700; cursor: pointer; text-decoration: underline; padding: 0;">🔄 Resend SMS (दोबारा SMS भेजें)</button>
+        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; margin-top: 6px; padding: 0 4px;">
+          <button type="button" id="resend-otp-btn" style="background: none; border: none; color: #2563EB; font-weight: 700; cursor: pointer; text-decoration: underline; padding: 0;">🔄 Resend SMS</button>
           <button type="button" id="change-phone-btn" style="background: none; border: none; color: #64748B; cursor: pointer; padding: 0;">✏️ Change Number</button>
         </div>
       </div>
@@ -249,7 +249,7 @@ export function showCustomerOtpModal(options = {}) {
     }
 
     confirmBtn.disabled = true;
-    confirmBtn.innerHTML = "⏳ Verifying SMS OTP...";
+    confirmBtn.innerHTML = "⏳ Verifying OTP...";
 
     try {
       let isVerified = false;
@@ -277,7 +277,7 @@ export function showCustomerOtpModal(options = {}) {
       console.error("SMS OTP verification failed:", confirmErr);
       showToast("Galat OTP code! Kripya phone message mein aaya hua sahi code dalein.", "error");
       confirmBtn.disabled = false;
-      confirmBtn.innerHTML = "✓ Verify SMS OTP & Continue (ओटीपी सत्यापित करें)";
+      confirmBtn.innerHTML = "Verify & Continue →";
       otpCodeInput.focus();
     }
   });
