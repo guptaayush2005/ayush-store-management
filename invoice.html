@@ -62,6 +62,12 @@
     import { initInvoicePage } from "./js/order-flow.js";
     document.addEventListener("DOMContentLoaded", () => {
       initInvoicePage();
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get("print") === "1" || urlParams.get("download") === "1") {
+        setTimeout(() => {
+          window.print();
+        }, 800);
+      }
 
       const toggleBtn = document.getElementById("btn-toggle-thermal");
       if (toggleBtn) {

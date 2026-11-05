@@ -70,30 +70,36 @@
   flex-shrink: 0;
 }
 
-.lang-toggle-btn:hover:hover {
+.lang-toggle-btn:hover {
   background: rgba(37, 99, 235, 0.18);
   border-color: var(--primary);
   transform: scale(1.06);
 }
 
-.lang-toggle-btn-drawer-drawer {
-  width: 100%;
-  border-radius: 12px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  font-size: 0.95rem;
-  font-weight: 700;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #FFFFFF;
+.lang-toggle-btn-drawer {
+  width: 100% !important;
+  max-width: 100% !important;
+  border-radius: 12px !important;
+  height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  background: #F1F5F9 !important;
+  border: 1.5px solid #CBD5E1 !important;
+  color: #0F172A !important;
+  cursor: pointer !important;
+  padding: 0 16px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  outline: none !important;
 }
 
-.lang-toggle-btn-drawer:hover-drawer:hover {
-  background: rgba(255, 255, 255, 0.2);
-  color: #FFFFFF;
+.lang-toggle-btn-drawer:hover {
+  background: #E2E8F0 !important;
+  border-color: #94A3B8 !important;
+  color: #2563EB !important;
 }
 
 /* Base & Reset */
@@ -2526,4 +2532,52 @@ button, input, select, textarea {
   #checkout-page-container {
     padding-bottom: 80px;
   }
+}
+
+/* ==========================================================================
+   CUSTOMER OTP AUTHENTICATION MODAL
+   ========================================================================== */
+.otp-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.otp-modal-backdrop.active {
+  display: flex !important;
+}
+
+.otp-modal-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 440px;
+  padding: 28px 22px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  border: 1px solid #E2E8F0;
+  position: relative;
+  animation: slideUpModal 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUpModal {
+  from { opacity: 0; transform: translateY(20px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.otp-alert-box {
+  background: #F0FDF4;
+  border: 1.5px solid #86EFAC;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin: 12px 0 16px;
+  text-align: center;
 }

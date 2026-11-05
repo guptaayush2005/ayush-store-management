@@ -672,7 +672,11 @@ export function getWhatsAppOrderUrl(order) {
     msg += `📝 *Notes:* ${order.orderNotes}\n`;
   }
   msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
-  msg += `Please confirm my order and share invoice details. Thank you!`;
+  if (order.orderId) {
+    msg += `📄 *Tax Invoice Link:* https://ayush-hardware-general-store.vercel.app/invoice.html?id=${order.orderId}\n`;
+    msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
+  }
+  msg += `Please confirm my order and dispatch soon. Thank you!`;
 
   return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
 }

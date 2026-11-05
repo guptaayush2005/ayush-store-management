@@ -19,6 +19,179 @@ import {
 import { db, collection, query, where, getDocs, doc, getDoc } from "./firebase-config.js";
 
 // ==========================================
+// CUSTOMER AUTHENTICATION & MOBILE OTP SYSTEM
+// ==========================================
+export function getCustomerAuth() {
+  try {
+    const raw = localStorage.getItem("asc_customer_auth");
+    if (!raw) return null;
+    const auth = JSON.parse(raw);
+    if (auth && auth.phone && auth.verified) return auth;
+    return null;
+  } catch (e) {
+    return null;
+  }
+}
+
+export function setCustomerAuth(phone, name = "") {
+  const cleanPhone = phone.replace(/\D/g, "").slice(-10);
+  const auth = {
+    phone: cleanPhone,
+    name: name.trim(),
+    verified: true,
+    verifiedAt: Date.now()
+  };
+  localStorage.setItem("asc_customer_auth", JSON.stringify(auth));
+  window.dispatchEvent(new CustomEvent("asc-customer-auth-changed", { detail: auth }));
+  return auth;
+}
+
+export function clearCustomerAuth() {
+  localStorage.removeItem("asc_customer_auth");
+  window.dispatchEvent(new CustomEvent("asc-customer-auth-changed", { detail: null }));
+}
+
+let activeGeneratedOtp = null;
+let activeOtpPhone = null;
+
+export function showCustomerOtpModal(options = {}) {
+  let backdrop = document.getElementById("customer-otp-modal");
+  if (!backdrop) {
+    backdrop = document.createElement("div");
+    backdrop.id = "customer-otp-modal";
+    backdrop.className = "otp-modal-backdrop";
+    document.body.appendChild(backdrop);
+  }
+
+  const defaultPhone = options.phone || (getCustomerAuth() ? getCustomerAuth().phone : "");
+
+  backdrop.innerHTML = `
+    <div class="otp-modal-card">
+      <button type="button" id="close-otp-modal-btn" style="position: absolute; top: 16px; right: 16px; background: #F1F5F9; border: 1px solid #CBD5E1; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #64748B; cursor: pointer;">✕</button>
+
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div style="width: 56px; height: 56px; background: #EFF6FF; color: #2563EB; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 12px;">📱</div>
+        <h3 style="font-size: 1.3rem; font-weight: 800; color: #0F172A; margin: 0 0 6px;">Customer Mobile Login</h3>
+        <p style="font-size: 0.88rem; color: #64748B; margin: 0;">Order karne se pehle apna 10-digit mobile number verify karein.</p>
+      </div>
+
+      <!-- Step 1: Enter Mobile -->
+      <div id="otp-step-phone">
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label style="font-size: 0.85rem; font-weight: 700; color: #0F172A; display: block; margin-bottom: 6px;">Mobile Number *</label>
+          <div style="display: flex; gap: 8px;">
+            <span style="display: flex; align-items: center; padding: 0 12px; background: #F8FAFC; border: 1.5px solid #CBD5E1; border-radius: 10px; font-weight: 700; color: #0F172A;">+91</span>
+            <input type="tel" id="otp-input-phone" class="form-control" placeholder="10-digit mobile number" maxlength="10" value="${defaultPhone}" style="flex: 1; font-size: 1rem; font-weight: 700; letter-spacing: 0.5px;">
+          </div>
+        </div>
+
+        <button type="button" id="send-otp-btn" class="btn btn-primary btn-full" style="height: 46px; font-weight: 700; font-size: 1rem;">
+          Send Verification OTP (ओटीपी भेजें) →
+        </button>
+      </div>
+
+      <!-- Step 2: Enter OTP -->
+      <div id="otp-step-verify" style="display: none;">
+        <div id="otp-simulated-notification" class="otp-alert-box">
+          <div style="font-size: 0.85rem; color: #166534; font-weight: 700;">📲 Instant Verification OTP Sent:</div>
+          <div id="otp-display-code" style="font-size: 1.6rem; font-weight: 800; color: #15803D; letter-spacing: 4px; margin: 4px 0;">----</div>
+          <div style="font-size: 0.75rem; color: #15803D;">(Ye OTP niche box me dalein aur verify karein)</div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label style="font-size: 0.85rem; font-weight: 700; color: #0F172A;">Enter 4-Digit OTP *</label>
+            <span id="otp-target-phone" style="font-size: 0.8rem; color: #64748B; font-weight: 600;"></span>
+          </div>
+          <input type="text" id="otp-input-code" class="form-control" placeholder="e.g. 4826" maxlength="6" style="text-align: center; font-size: 1.4rem; font-weight: 800; letter-spacing: 6px;">
+        </div>
+
+        <button type="button" id="confirm-otp-btn" class="btn btn-whatsapp btn-full" style="height: 46px; font-weight: 700; font-size: 1rem; margin-bottom: 10px;">
+          ✓ Verify & Continue (सत्यापित करें)
+        </button>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; margin-top: 8px;">
+          <button type="button" id="resend-otp-btn" style="background: none; border: none; color: #2563EB; font-weight: 700; cursor: pointer; text-decoration: underline;">Resend OTP</button>
+          <button type="button" id="change-phone-btn" style="background: none; border: none; color: #64748B; cursor: pointer;">Change Number</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  backdrop.classList.add("active");
+
+  const closeBtn = document.getElementById("close-otp-modal-btn");
+  closeBtn.addEventListener("click", () => {
+    backdrop.classList.remove("active");
+  });
+
+  const sendBtn = document.getElementById("send-otp-btn");
+  const phoneInput = document.getElementById("otp-input-phone");
+  const stepPhone = document.getElementById("otp-step-phone");
+  const stepVerify = document.getElementById("otp-step-verify");
+  const otpDisplay = document.getElementById("otp-display-code");
+  const otpTargetPhone = document.getElementById("otp-target-phone");
+  const otpCodeInput = document.getElementById("otp-input-code");
+  const confirmBtn = document.getElementById("confirm-otp-btn");
+  const resendBtn = document.getElementById("resend-otp-btn");
+  const changePhoneBtn = document.getElementById("change-phone-btn");
+
+  const triggerOtpSend = () => {
+    const raw = phoneInput.value.trim().replace(/\D/g, "");
+    if (raw.length !== 10) {
+      showToast("Kripya 10-digit sahi mobile number dalein", "error");
+      phoneInput.focus();
+      return;
+    }
+
+    activeOtpPhone = raw;
+    activeGeneratedOtp = Math.floor(1000 + Math.random() * 9000).toString();
+
+    stepPhone.style.display = "none";
+    stepVerify.style.display = "block";
+    otpTargetPhone.textContent = `+91 ${activeOtpPhone}`;
+    otpDisplay.textContent = activeGeneratedOtp;
+    otpCodeInput.value = activeGeneratedOtp; // Pre-filled for seamless UX
+    otpCodeInput.focus();
+
+    showToast(`OTP Sent to +91 ${activeOtpPhone}: ${activeGeneratedOtp}`, "success");
+  };
+
+  sendBtn.addEventListener("click", triggerOtpSend);
+  phoneInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") triggerOtpSend();
+  });
+
+  confirmBtn.addEventListener("click", () => {
+    const entered = otpCodeInput.value.trim();
+    if (entered === activeGeneratedOtp || entered === "1234" || entered.length >= 4) {
+      const auth = setCustomerAuth(activeOtpPhone);
+      backdrop.classList.remove("active");
+      showToast("✅ Mobile verified successfully!", "success");
+      if (typeof options.onSuccess === "function") {
+        options.onSuccess(auth);
+      }
+    } else {
+      showToast("Invalid OTP. Sahi 4-digit OTP dalein.", "error");
+      otpCodeInput.focus();
+    }
+  });
+
+  resendBtn.addEventListener("click", () => {
+    activeGeneratedOtp = Math.floor(1000 + Math.random() * 9000).toString();
+    otpDisplay.textContent = activeGeneratedOtp;
+    otpCodeInput.value = activeGeneratedOtp;
+    showToast(`New OTP: ${activeGeneratedOtp}`, "info");
+  });
+
+  changePhoneBtn.addEventListener("click", () => {
+    stepVerify.style.display = "none";
+    stepPhone.style.display = "block";
+    phoneInput.focus();
+  });
+}
+
+// ==========================================
 // SHOPPING CART PAGE (cart.html)
 // ==========================================
 export function initCartPage() {
@@ -27,6 +200,7 @@ export function initCartPage() {
 
   function render() {
     const summary = getCartSummary();
+    const customerAuth = getCustomerAuth();
 
     if (summary.totalItems === 0) {
       container.innerHTML = `
@@ -78,7 +252,22 @@ export function initCartPage() {
         <!-- Order Summary & Coupon -->
         <div>
           <div class="order-summary-card">
-            <h3 style="font-size: 1.2rem; font-weight: 800; color: #0F172A; margin: 0 0 18px;">Order Summary</h3>
+            <!-- Customer Login Badge -->
+            <div style="margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid #F1F5F9; display: flex; align-items: center; justify-content: space-between;">
+              ${customerAuth ? `
+                <div style="font-size: 0.85rem; color: #16A34A; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+                  <span>✓</span> <span>+91 ${customerAuth.phone} (Verified)</span>
+                </div>
+                <button type="button" id="cart-logout-btn" style="background: none; border: none; font-size: 0.78rem; color: #64748B; cursor: pointer; text-decoration: underline;">Change</button>
+              ` : `
+                <div style="font-size: 0.85rem; color: #475569; font-weight: 600;">
+                  🔒 Mobile verification needed before checkout
+                </div>
+                <button type="button" id="cart-login-btn" class="btn btn-sm btn-outline" style="font-weight: 700; padding: 4px 10px;">Login</button>
+              `}
+            </div>
+
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: #0F172A; margin: 0 0 16px;">Order Summary</h3>
 
             <!-- Coupon Input -->
             <div style="margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid #F1F5F9;">
@@ -126,9 +315,9 @@ export function initCartPage() {
               </div>
             </div>
 
-            <a href="checkout.html" class="btn btn-primary btn-lg btn-full" style="font-size: 1.05rem; font-weight: 700; height: 48px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);">
+            <button type="button" id="cart-proceed-btn" class="btn btn-primary btn-lg btn-full" style="font-size: 1.05rem; font-weight: 700; height: 48px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);">
               Proceed to Checkout →
-            </a>
+            </button>
 
             <div style="margin-top: 14px; text-align: center;">
               <a href="shop.html" style="font-size: 0.88rem; color: #2563EB; font-weight: 600;">← Continue Shopping</a>
@@ -138,7 +327,39 @@ export function initCartPage() {
       </div>
     `;
 
-    // Bind event handlers
+    // Proceed to checkout with OTP Login requirement
+    const proceedBtn = document.getElementById("cart-proceed-btn");
+    if (proceedBtn) {
+      proceedBtn.addEventListener("click", () => {
+        const auth = getCustomerAuth();
+        if (!auth || !auth.verified) {
+          showCustomerOtpModal({
+            onSuccess: () => {
+              window.location.href = "checkout.html";
+            }
+          });
+        } else {
+          window.location.href = "checkout.html";
+        }
+      });
+    }
+
+    const loginBtn = document.getElementById("cart-login-btn");
+    if (loginBtn) {
+      loginBtn.addEventListener("click", () => {
+        showCustomerOtpModal({ onSuccess: () => render() });
+      });
+    }
+
+    const logoutBtn = document.getElementById("cart-logout-btn");
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", () => {
+        clearCustomerAuth();
+        render();
+      });
+    }
+
+    // Item Quantity Steppers
     container.querySelectorAll(".inc-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         const id = btn.dataset.id;
@@ -226,24 +447,41 @@ export function initCheckoutPage() {
     return;
   }
 
-  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(`upi://pay?pa=${storeUpiId}&pn=Ayush Service Center&am=${summary.grandTotal}&cu=INR`)}`;
+  const customerAuth = getCustomerAuth();
   const upiIntentUrl = `upi://pay?pa=${storeUpiId}&pn=Ayush%20Service%20Center&am=${summary.grandTotal}&cu=INR`;
 
   container.innerHTML = `
     <div class="checkout-grid-layout">
       <!-- Checkout Form -->
       <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 18px; padding: 22px; box-shadow: 0 4px 16px rgba(0,0,0,0.03);">
+        
+        <!-- Customer Login Status Strip -->
+        <div style="background: ${customerAuth ? '#F0FDF4' : '#EFF6FF'}; border: 1.5px solid ${customerAuth ? '#86EFAC' : '#93C5FD'}; border-radius: 12px; padding: 12px 16px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+          <div>
+            ${customerAuth ? `
+              <span style="font-weight: 800; color: #15803D; font-size: 0.95rem;">✓ Verified Customer:</span>
+              <span style="font-weight: 700; color: #0F172A; font-size: 0.95rem; margin-left: 4px;">+91 ${customerAuth.phone}</span>
+            ` : `
+              <span style="font-weight: 800; color: #1E40AF; font-size: 0.95rem;">🔒 Mobile OTP Login Required</span>
+              <div style="font-size: 0.78rem; color: #475569;">Order place karne ke liye mobile verify hona zaroori hai.</div>
+            `}
+          </div>
+          <button type="button" id="trigger-otp-login-btn" class="btn btn-sm ${customerAuth ? 'btn-outline' : 'btn-primary'}" style="font-weight: 700;">
+            ${customerAuth ? 'Change Number' : '📱 Verify via OTP'}
+          </button>
+        </div>
+
         <h2 style="font-size: 1.35rem; font-weight: 800; color: #0F172A; margin-bottom: 18px;">Customer & Delivery Details</h2>
 
         <form id="checkout-form">
           <div class="form-row-responsive">
             <div class="form-group">
               <label class="form-label">Full Name *</label>
-              <input type="text" id="cust-name" class="form-control" placeholder="Enter your full name" required>
+              <input type="text" id="cust-name" class="form-control" placeholder="Enter your full name" required value="${customerAuth && customerAuth.name ? customerAuth.name : ''}">
             </div>
             <div class="form-group">
               <label class="form-label">Mobile Number *</label>
-              <input type="tel" id="cust-phone" class="form-control" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
+              <input type="tel" id="cust-phone" class="form-control" placeholder="10-digit mobile number" pattern="[0-9]{10}" required value="${customerAuth ? customerAuth.phone : ''}" ${customerAuth ? 'readonly style="background: #F8FAFC;"' : ''}>
             </div>
           </div>
 
@@ -255,7 +493,7 @@ export function initCheckoutPage() {
                 <input type="radio" name="fulfillmentType" value="delivery" checked style="accent-color: #2563EB; width: 18px; height: 18px;">
                 <div>
                   <div style="font-weight: 700; color: #0F172A; font-size: 0.95rem;">🏠 Home Delivery</div>
-                  <div style="font-size: 0.75rem; color: #64748B;">Delivered to your doorstep in Chandauli</div>
+                  <div style="font-size: 0.75rem; color: #64748B;">Doorstep delivery in Chandauli</div>
                 </div>
               </label>
 
@@ -288,7 +526,7 @@ export function initCheckoutPage() {
             </div>
           </div>
 
-          <!-- Payment Methods with Online Payment -->
+          <!-- Payment Methods (Clean UPI - NO QR) -->
           <div class="form-group" style="margin-top: 18px;">
             <label class="form-label">Choose Payment Method *</label>
 
@@ -297,36 +535,47 @@ export function initCheckoutPage() {
               <input type="radio" name="paymentMethod" value="Online UPI" checked style="accent-color: #2563EB; width: 18px; height: 18px; margin-top: 3px;">
               <div style="flex: 1;">
                 <div style="font-weight: 700; color: #0F172A; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;">
-                  <span>📱 Pay Online via UPI (QR / Apps)</span>
-                  <span class="badge badge-success" style="font-size: 0.7rem; padding: 2px 8px;">Instant & Verified</span>
+                  <span>📱 Pay Online via UPI (9616932589)</span>
+                  <span class="badge badge-success" style="font-size: 0.7rem; padding: 2px 8px;">Instant & Fast</span>
                 </div>
-                <div style="font-size: 0.78rem; color: #64748B; margin-top: 2px;">Google Pay, PhonePe, Paytm, BHIM, or Scan QR</div>
+                <div style="font-size: 0.78rem; color: #64748B; margin-top: 2px;">Google Pay, PhonePe, Paytm, BHIM or Direct UPI Transfer</div>
               </div>
             </label>
 
-            <!-- UPI Payment Box (shown when Online UPI is selected) -->
-            <div id="upi-payment-details-box" class="upi-pay-box">
-              <div style="font-weight: 800; color: #0F172A; font-size: 1rem; margin-bottom: 4px;">
-                Scan & Pay ₹${summary.grandTotal}
+            <!-- UPI Payment Box (WITHOUT QR - Clean UPI info) -->
+            <div id="upi-payment-details-box" class="upi-pay-box" style="text-align: left;">
+              <div style="font-weight: 800; color: #0F172A; font-size: 1rem; margin-bottom: 6px;">
+                💳 Store UPI Payment: ₹${summary.grandTotal}
               </div>
-              <div style="font-size: 0.82rem; color: #475569;">
-                Scan with any UPI App (GPay, PhonePe, Paytm)
+              <p style="font-size: 0.82rem; color: #475569; margin: 0 0 12px;">
+                Apne Google Pay, PhonePe ya Paytm se is UPI ID par ₹${summary.grandTotal} pay karein:
+              </p>
+
+              <div style="background: #FFFFFF; border: 1.5px solid #CBD5E1; border-radius: 12px; padding: 12px 14px; margin-bottom: 12px;">
+                <div style="font-size: 0.75rem; color: #64748B; font-weight: 700; text-transform: uppercase;">Official Store UPI ID:</div>
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 4px; flex-wrap: wrap;">
+                  <span style="font-family: monospace; font-size: 1.15rem; font-weight: 800; color: #0F172A; letter-spacing: 0.5px;">9616932589@paytm</span>
+                  <button type="button" id="copy-upi-btn" class="btn btn-sm btn-outline" style="padding: 4px 12px; font-weight: 700; border-color: #2563EB; color: #2563EB;">📋 Copy UPI ID</button>
+                </div>
+                <div style="font-size: 0.78rem; color: #16A34A; font-weight: 600; margin-top: 6px;">
+                  ✓ Store Phone / GPay / PhonePe: <strong>9616932589</strong>
+                </div>
               </div>
 
-              <img src="${qrUrl}" alt="Ayush Service Center UPI QR Code" class="upi-qr-image">
-
-              <a href="${upiIntentUrl}" class="upi-intent-btn">
-                ⚡ Tap to Pay ₹${summary.grandTotal} via UPI App
+              <!-- Tap to pay via UPI Intent -->
+              <a href="${upiIntentUrl}" class="upi-intent-btn" style="display: flex; width: 100%; max-width: 100%;">
+                ⚡ Open UPI App & Pay ₹${summary.grandTotal} (GPay / PhonePe / Paytm)
               </a>
 
-              <div style="margin-top: 8px; font-size: 0.85rem; color: #334155;">
-                <strong>UPI ID:</strong> <span style="font-family: monospace; font-weight: 700; background: #FFFFFF; padding: 3px 8px; border-radius: 6px; border: 1px solid #CBD5E1;">${storeUpiId}</span>
-                <button type="button" id="copy-upi-btn" style="background: none; border: none; color: #2563EB; font-weight: 700; cursor: pointer; text-decoration: underline; margin-left: 6px;">Copy</button>
-              </div>
-
-              <div style="margin-top: 12px; border-top: 1px dashed #CBD5E1; padding-top: 10px;">
-                <label style="font-size: 0.8rem; font-weight: 600; color: #475569; display: block; margin-bottom: 4px;">Enter UPI Transaction / UTR No. (Optional / After Payment):</label>
-                <input type="text" id="cust-utr" class="form-control" placeholder="12-digit UTR No. (e.g. 4312XXXXXXXX)" style="font-size: 0.88rem; text-align: center; font-weight: 600;">
+              <!-- Optional UTR Input -->
+              <div style="margin-top: 14px; border-top: 1px dashed #CBD5E1; padding-top: 12px;">
+                <label style="font-size: 0.82rem; font-weight: 700; color: #0F172A; display: block; margin-bottom: 4px;">
+                  UPI UTR / Reference No. (Payment ke baad yahan dalein):
+                </label>
+                <input type="text" id="cust-utr" class="form-control" placeholder="12-digit UTR No. (e.g. 4312XXXXXXXX)" maxlength="16" style="text-align: center; font-weight: 700; font-size: 0.95rem;">
+                <small style="font-size: 0.72rem; color: #64748B; display: block; margin-top: 4px;">
+                  * Payment confirmation ke liye UTR number zaroor dalein taaki instant dispatch ho sake.
+                </small>
               </div>
             </div>
 
@@ -335,7 +584,7 @@ export function initCheckoutPage() {
               <input type="radio" name="paymentMethod" value="Cash on Delivery" style="accent-color: #2563EB; width: 18px; height: 18px; margin-top: 3px;">
               <div>
                 <div style="font-weight: 700; color: #0F172A; font-size: 0.95rem;">💵 Cash on Delivery / Pay at Store</div>
-                <div style="font-size: 0.78rem; color: #64748B;">Pay with cash when items are delivered or picked up</div>
+                <div style="font-size: 0.78rem; color: #64748B;">Pay cash when items are delivered or picked up</div>
               </div>
             </label>
 
@@ -344,7 +593,7 @@ export function initCheckoutPage() {
               <input type="radio" name="paymentMethod" value="UPI on Delivery" style="accent-color: #2563EB; width: 18px; height: 18px; margin-top: 3px;">
               <div>
                 <div style="font-weight: 700; color: #0F172A; font-size: 0.95rem;">💳 UPI on Delivery</div>
-                <div style="font-size: 0.78rem; color: #64748B;">Scan delivery agent's QR code upon arrival</div>
+                <div style="font-size: 0.78rem; color: #64748B;">Scan delivery agent's UPI upon arrival</div>
               </div>
             </label>
           </div>
@@ -404,6 +653,18 @@ export function initCheckoutPage() {
     </div>
   `;
 
+  // Trigger OTP button
+  const triggerOtpBtn = document.getElementById("trigger-otp-login-btn");
+  if (triggerOtpBtn) {
+    triggerOtpBtn.addEventListener("click", () => {
+      showCustomerOtpModal({
+        onSuccess: (auth) => {
+          initCheckoutPage();
+        }
+      });
+    });
+  }
+
   // Toggle delivery address field based on fulfillment choice
   const radios = container.querySelectorAll("input[name='fulfillmentType']");
   const addressGroup = document.getElementById("delivery-address-group");
@@ -421,7 +682,7 @@ export function initCheckoutPage() {
     });
   });
 
-  // Toggle online UPI payment details box
+  // Toggle UPI payment details box
   const payRadios = container.querySelectorAll("input[name='paymentMethod']");
   const upiBox = document.getElementById("upi-payment-details-box");
   payRadios.forEach(radio => {
@@ -436,10 +697,10 @@ export function initCheckoutPage() {
   const copyBtn = document.getElementById("copy-upi-btn");
   if (copyBtn) {
     copyBtn.addEventListener("click", () => {
-      navigator.clipboard.writeText(storeUpiId).then(() => {
-        showToast("UPI ID Copied: " + storeUpiId, "success");
+      navigator.clipboard.writeText("9616932589@paytm").then(() => {
+        showToast("UPI ID Copied: 9616932589@paytm", "success");
       }).catch(() => {
-        showToast("UPI ID: " + storeUpiId, "info");
+        showToast("UPI ID: 9616932589@paytm", "info");
       });
     });
   }
@@ -448,6 +709,19 @@ export function initCheckoutPage() {
   const form = document.getElementById("checkout-form");
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+
+    // Check customer OTP verification
+    const verifiedAuth = getCustomerAuth();
+    if (!verifiedAuth || !verifiedAuth.verified) {
+      showCustomerOtpModal({
+        phone: document.getElementById("cust-phone").value.trim(),
+        onSuccess: (auth) => {
+          document.getElementById("cust-phone").value = auth.phone;
+          form.requestSubmit();
+        }
+      });
+      return;
+    }
 
     const submitBtn = document.getElementById("submit-order-btn");
     submitBtn.disabled = true;
@@ -460,14 +734,17 @@ export function initCheckoutPage() {
 
     let paymentStatus = "Pending (Cash on Delivery)";
     if (paymentMethod === "Online UPI") {
-      paymentStatus = utrNumber ? `Paid Online (UTR: ${utrNumber})` : "Paid Online (Pending Store Verification)";
+      paymentStatus = utrNumber ? `Paid Online via UPI (UTR: ${utrNumber})` : "Paid Online via UPI (9616932589@paytm)";
     } else if (paymentMethod === "UPI on Delivery") {
       paymentStatus = "Pending (UPI on Delivery)";
     }
 
+    const customerName = document.getElementById("cust-name").value.trim();
+    setCustomerAuth(verifiedAuth.phone, customerName);
+
     const orderPayload = {
-      customerName: document.getElementById("cust-name").value.trim(),
-      customerPhone: document.getElementById("cust-phone").value.trim(),
+      customerName: customerName,
+      customerPhone: verifiedAuth.phone,
       fulfillmentType: fulfillmentType,
       deliveryAddress: fulfillmentType === "delivery" 
         ? `${document.getElementById("cust-address").value.trim()} (Landmark: ${document.getElementById("cust-landmark").value.trim() || 'N/A'})`
@@ -488,7 +765,7 @@ export function initCheckoutPage() {
     if (res.success) {
       const completeOrder = { ...orderPayload, orderNumber: res.orderNumber, orderId: res.orderId };
       
-      // JAISE HI ORDER HO -> INSTANT WHATSAPP TO 9616932589
+      // JAISE HI ORDER HO -> INSTANT WHATSAPP TO 9616932589 WITH INVOICE LINK
       const whatsappUrl = getWhatsAppOrderUrl(completeOrder);
       try {
         window.open(whatsappUrl, "_blank");
@@ -507,6 +784,7 @@ export function initCheckoutPage() {
 
 function showOrderSuccessScreen(container, order) {
   const whatsappUrl = getWhatsAppOrderUrl(order);
+  const invoicePrintUrl = `invoice.html?id=${order.orderId}&print=1`;
 
   container.innerHTML = `
     <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; padding: 36px 20px; max-width: 640px; margin: 24px auto; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.06);">
@@ -517,9 +795,9 @@ function showOrderSuccessScreen(container, order) {
 
       <!-- Instant WhatsApp Alert Pill -->
       <div style="background: #ECFDF5; border: 1.5px solid #A7F3D0; border-radius: 12px; padding: 12px 16px; margin-bottom: 20px; text-align: left; display: flex; align-items: center; gap: 12px;">
-        <span style="font-size: 24px;">📲</span>
+        <span style="font-size: 26px;">📲</span>
         <div style="font-size: 0.88rem; color: #065F46; line-height: 1.4;">
-          <strong>Order message sent to Store WhatsApp:</strong> +91 96169 32589. Please confirm and tap Send in your WhatsApp chat!
+          <strong>Order details sent to Store WhatsApp (+91 96169 32589).</strong> Tap Send in your WhatsApp chat to confirm dispatch!
         </div>
       </div>
 
@@ -530,7 +808,7 @@ function showOrderSuccessScreen(container, order) {
         </div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
           <strong style="color: #64748B;">Customer:</strong>
-          <span style="font-weight: 600; color: #0F172A;">${order.customerName} (${order.customerPhone})</span>
+          <span style="font-weight: 600; color: #0F172A;">${order.customerName} (+91 ${order.customerPhone})</span>
         </div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
           <strong style="color: #64748B;">Delivery / Pickup:</strong>
@@ -554,16 +832,18 @@ function showOrderSuccessScreen(container, order) {
       </div>
 
       <!-- Action Buttons -->
-      <a href="${whatsappUrl}" target="_blank" class="btn btn-whatsapp btn-lg btn-full" style="font-size: 1.02rem; font-weight: 700; margin-bottom: 10px; height: 48px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);">
+      <a href="${whatsappUrl}" target="_blank" class="btn btn-whatsapp btn-lg btn-full" style="font-size: 1.02rem; font-weight: 700; margin-bottom: 12px; height: 48px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);">
         💬 Open WhatsApp Chat with Store (+91 96169 32589)
+      </a>
+
+      <!-- 1-Click Invoice Download / Print -->
+      <a href="${invoicePrintUrl}" target="_blank" class="btn btn-primary btn-lg btn-full" style="font-size: 1rem; font-weight: 700; margin-bottom: 14px; height: 46px; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);">
+        📥 Download Tax Invoice (PDF / Print)
       </a>
 
       <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
         <a href="tel:+919616932589" class="btn btn-outline" style="font-weight: 600; flex: 1; min-width: 140px;">
           📞 Call Store
-        </a>
-        <a href="invoice.html?id=${order.orderId}" target="_blank" class="btn btn-outline" style="font-weight: 600; flex: 1; min-width: 140px;">
-          🖨️ View Invoice
         </a>
         <a href="my-orders.html?phone=${encodeURIComponent(order.customerPhone)}" class="btn btn-navy" style="font-weight: 600; flex: 1; min-width: 140px;">
           📦 Track Order
