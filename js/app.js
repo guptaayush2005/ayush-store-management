@@ -9,11 +9,9 @@ import {
   getWhatsAppProductInquiryUrl 
 } from "./store.js";
 import { initLanguageSwitcher } from "./i18n.js";
-import { initThemeSwitcher } from "./theme.js";
 
 // Initialize UI elements across all public pages
 document.addEventListener("DOMContentLoaded", async () => {
-  initThemeSwitcher();
   initLanguageSwitcher();
   initHeader();
   initCartBadges();

@@ -962,6 +962,12 @@ function renderOrdersTable() {
       <td>${(o.items || []).length} items</td>
       <td><strong>₹${o.grandTotal}</strong></td>
       <td>
+        <span class="badge ${o.paymentMethod && o.paymentMethod.includes('Online') ? 'badge-success' : 'badge-cyan'}" style="font-size: 0.75rem;">
+          ${o.paymentMethod || 'Cash'}
+        </span>
+        ${o.utrNumber ? `<div style="font-size: 0.72rem; color: #64748B; margin-top: 2px;">UTR: ${o.utrNumber}</div>` : ''}
+      </td>
+      <td>
         <select onchange="window.updateOrderStatus('${o.id}', this.value)" style="padding: 4px 8px; border-radius: 6px; font-weight: 600; font-size: 0.8rem; border: 1px solid #CBD5E1;">
           <option value="Pending" ${o.status === 'Pending' ? 'selected' : ''}>Pending</option>
           <option value="Confirmed" ${o.status === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
@@ -1011,8 +1017,10 @@ window.viewOrder = (id) => {
       </div>
       <div style="text-align: right;">
         <p><strong>Date:</strong> ${new Date(ord.createdAt).toLocaleString()}</p>
-        <p><strong>Payment:</strong> ${ord.paymentMethod}</p>
-        <p><strong>Status:</strong> <span class="badge badge-primary">${ord.status}</span></p>
+        <p><strong>Payment:</strong> <span class="badge ${ord.paymentMethod && ord.paymentMethod.includes('Online') ? 'badge-success' : 'badge-cyan'}">${ord.paymentMethod}</span></p>
+        ${ord.utrNumber ? `<p><strong>UPI UTR / Ref:</strong> <code style="color: #2563EB; font-weight: 700;">${ord.utrNumber}</code></p>` : ''}
+        ${ord.paymentStatus ? `<p><strong>Payment Status:</strong> ${ord.paymentStatus}</p>` : ''}
+        <p><strong>Order Status:</strong> <span class="badge badge-primary">${ord.status}</span></p>
       </div>
     </div>
 

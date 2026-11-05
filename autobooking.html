@@ -14,14 +14,6 @@
   <link rel="stylesheet" href="css/style.css">
   
   <link rel="icon" type="image/x-icon" href="images/1autobooking.jpg">
-  <script>
-    (function() {
-      try {
-        const stored = localStorage.getItem('asc_theme') || 'light';
-        document.documentElement.setAttribute('data-theme', stored);
-      } catch(e) {}
-    })();
-  </script>
 </head>
 <body>
 
@@ -61,7 +53,6 @@
       <div class="header-actions">
         <!-- Language Switcher Button -->
         <button type="button" class="lang-toggle-btn" id="lang-toggle-btn" title="English / हिंदी" aria-label="Toggle Language">🌐</button>
-        <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle APX Dark Theme" aria-label="Toggle Theme">🌙</button>
 
         <!-- Theme Toggle Button -->
 
@@ -112,12 +103,9 @@
     <div class="drawer-body">
       <!-- Quick Language toggle inside drawer -->
       <div style="margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.1);">
-        <div style="display: flex; gap: 8px;">
-          <button type="button" class="lang-toggle-btn lang-toggle-btn-drawer">
+        <button type="button" class="lang-toggle-btn lang-toggle-btn-drawer">
           <span style="font-size: 18px;">🌐</span> <span style="font-weight: 700;">हिंदी / English</span>
         </button>
-          <button type="button" class="theme-toggle-btn theme-toggle-btn-drawer" style="width: auto; flex: 1;">🌙 <span>Dark</span></button>
-        </div>
       </div>
 
       <ul class="drawer-nav-list">

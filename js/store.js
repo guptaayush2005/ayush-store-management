@@ -646,6 +646,12 @@ export function getWhatsAppOrderUrl(order) {
     msg += `🏠 *Address:* ${order.deliveryAddress}\n`;
   }
   msg += `💳 *Payment:* ${order.paymentMethod}\n`;
+  if (order.utrNumber) {
+    msg += `🔢 *UPI UTR / Ref:* ${order.utrNumber}\n`;
+  }
+  if (order.paymentStatus) {
+    msg += `💰 *Payment Status:* ${order.paymentStatus}\n`;
+  }
   msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
   msg += `📦 *ITEMS ORDERED:*\n`;
 

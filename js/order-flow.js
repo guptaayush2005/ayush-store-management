@@ -30,44 +30,46 @@ export function initCartPage() {
 
     if (summary.totalItems === 0) {
       container.innerHTML = `
-        <div style="text-align: center; padding: 80px 20px; background: #FFFFFF; border-radius: 20px; border: 1px solid #E2E8F0; max-width: 600px; margin: 40px auto; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
-          <div style="font-size: 4rem; margin-bottom: 16px;">🛒</div>
-          <h2 style="font-size: 1.5rem; font-weight: 800; color: #0F172A; margin-bottom: 8px;">Your Shopping Cart is Empty</h2>
-          <p style="color: #64748B; font-size: 0.95rem; margin-bottom: 24px;">Explore our steel utensils, plasticware, mobile accessories, cold drinks and more!</p>
-          <a href="shop.html" class="btn btn-primary btn-lg">Browse Products Now</a>
+        <div style="text-align: center; padding: 60px 20px; background: #FFFFFF; border-radius: 20px; border: 1px solid #E2E8F0; max-width: 580px; margin: 30px auto; box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
+          <div style="font-size: 3.5rem; margin-bottom: 14px;">🛒</div>
+          <h2 style="font-size: 1.4rem; font-weight: 800; color: #0F172A; margin-bottom: 8px;">Your Shopping Cart is Empty</h2>
+          <p style="color: #64748B; font-size: 0.95rem; margin-bottom: 24px; line-height: 1.5;">Explore our steel utensils, plasticware, mobile gadgets, cold drinks and auto bookings!</p>
+          <a href="shop.html" class="btn btn-primary btn-lg" style="font-weight: 700;">🛍️ Browse Store Catalog</a>
         </div>
       `;
       return;
     }
 
     container.innerHTML = `
-      <div style="display: grid; grid-template-columns: 1fr; gap: 32px;" class="cart-grid-layout">
+      <div class="cart-grid-layout">
         <!-- Cart Items List -->
         <div>
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h2 style="font-size: 1.4rem; font-weight: 800; color: #0F172A; margin: 0;">Cart Items (${summary.totalQty})</h2>
-            <button class="btn btn-sm btn-outline" id="clear-cart-btn" style="color: #EF4444; border-color: #FCA5A5;">Clear Cart</button>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <h2 style="font-size: 1.3rem; font-weight: 800; color: #0F172A; margin: 0;">Cart Items (${summary.totalQty})</h2>
+            <button class="btn btn-sm btn-outline" id="clear-cart-btn" style="color: #EF4444; border-color: #FCA5A5; font-weight: 600;">Clear Cart</button>
           </div>
 
-          <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.03);">
+          <div class="cart-items-wrapper">
             ${summary.items.map(item => `
-              <div style="display: flex; align-items: center; gap: 16px; padding: 18px 20px; border-bottom: 1px solid #F1F5F9;" class="cart-item-row" data-id="${item.id}" data-variant="${item.variantKey || ''}">
-                <img src="${item.image}" alt="${item.name}" style="width: 72px; height: 72px; object-fit: cover; border-radius: 10px; background: #F8FAFC;">
-                <div style="flex: 1; min-width: 0;">
-                  <h4 style="font-size: 1rem; font-weight: 700; color: #0F172A; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.name}</h4>
-                  <div style="font-size: 0.8rem; color: #64748B; margin-bottom: 6px;">${item.category} • ₹${item.price} / ${item.unit}</div>
-                  <div style="font-size: 1rem; font-weight: 800; color: #2563EB;">₹${item.price * item.quantity}</div>
+              <div class="cart-item-card" data-id="${item.id}" data-variant="${item.variantKey || ''}">
+                <div class="cart-item-header">
+                  <img src="${item.image}" alt="${item.name}" class="cart-item-img" onerror="this.src='images/poster.jpg'">
+                  <div class="cart-item-details">
+                    <h4 class="cart-item-title">${item.name}</h4>
+                    <div class="cart-item-meta">${item.category} • ₹${item.price} / ${item.unit}</div>
+                    <div class="cart-item-unit-price">₹${item.price} each</div>
+                  </div>
+                  <button type="button" class="cart-item-remove-btn" data-id="${item.id}" data-variant="${item.variantKey || ''}" title="Remove item">✕</button>
                 </div>
 
-                <!-- Quantity Controls -->
-                <div style="display: flex; align-items: center; border: 1px solid #CBD5E1; border-radius: 8px; overflow: hidden; background: #FFFFFF;">
-                  <button type="button" class="cart-qty-btn dec-btn" data-id="${item.id}" data-variant="${item.variantKey || ''}" style="width: 34px; height: 34px; background: none; border: none; font-size: 18px; cursor: pointer;">−</button>
-                  <span style="width: 36px; text-align: center; font-weight: 700; font-size: 0.95rem;">${item.quantity}</span>
-                  <button type="button" class="cart-qty-btn inc-btn" data-id="${item.id}" data-variant="${item.variantKey || ''}" style="width: 34px; height: 34px; background: none; border: none; font-size: 18px; cursor: pointer;">+</button>
+                <div class="cart-item-footer">
+                  <div class="cart-qty-stepper">
+                    <button type="button" class="cart-qty-btn dec-btn" data-id="${item.id}" data-variant="${item.variantKey || ''}" aria-label="Decrease quantity">−</button>
+                    <span class="cart-qty-value">${item.quantity}</span>
+                    <button type="button" class="cart-qty-btn inc-btn" data-id="${item.id}" data-variant="${item.variantKey || ''}" aria-label="Increase quantity">+</button>
+                  </div>
+                  <div class="cart-item-subtotal">₹${item.price * item.quantity}</div>
                 </div>
-
-                <!-- Remove -->
-                <button type="button" class="cart-remove-btn" data-id="${item.id}" data-variant="${item.variantKey || ''}" style="background: none; border: none; color: #94A3B8; font-size: 20px; cursor: pointer; padding: 6px;" title="Remove">✕</button>
               </div>
             `).join("")}
           </div>
@@ -75,42 +77,42 @@ export function initCartPage() {
 
         <!-- Order Summary & Coupon -->
         <div>
-          <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; padding: 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.05); position: sticky; top: 90px;">
-            <h3 style="font-size: 1.2rem; font-weight: 800; color: #0F172A; margin-bottom: 20px;">Order Summary</h3>
+          <div class="order-summary-card">
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: #0F172A; margin: 0 0 18px;">Order Summary</h3>
 
             <!-- Coupon Input -->
-            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #F1F5F9;">
-              <label style="font-size: 0.85rem; font-weight: 600; color: #0F172A; margin-bottom: 8px; display: block;">Have a Discount Coupon?</label>
+            <div style="margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid #F1F5F9;">
+              <label style="font-size: 0.85rem; font-weight: 600; color: #0F172A; margin-bottom: 8px; display: block;">Discount Coupon</label>
               <div style="display: flex; gap: 8px;">
-                <input type="text" id="cart-coupon-input" placeholder="e.g. FESTIVE10" value="${summary.coupon ? summary.coupon.code : ''}" style="flex: 1; padding: 10px 14px; border: 1px solid #CBD5E1; border-radius: 8px; text-transform: uppercase; font-weight: 700;">
-                <button class="btn btn-navy btn-sm" id="cart-coupon-btn">
+                <input type="text" id="cart-coupon-input" placeholder="e.g. FESTIVE10" value="${summary.coupon ? summary.coupon.code : ''}" style="flex: 1; padding: 10px 12px; border: 1px solid #CBD5E1; border-radius: 8px; text-transform: uppercase; font-weight: 700; font-size: 0.9rem;">
+                <button class="btn btn-navy btn-sm" id="cart-coupon-btn" style="font-weight: 700; white-space: nowrap;">
                   ${summary.coupon ? 'Change' : 'Apply'}
                 </button>
               </div>
               ${summary.coupon ? `
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px; font-size: 0.82rem; color: #16A34A; font-weight: 600;">
                   <span>✓ ${summary.coupon.code} Applied</span>
-                  <button type="button" id="remove-coupon-btn" style="background: none; border: none; color: #EF4444; cursor: pointer; text-decoration: underline;">Remove</button>
+                  <button type="button" id="remove-coupon-btn" style="background: none; border: none; color: #EF4444; cursor: pointer; text-decoration: underline; font-size: 0.82rem;">Remove</button>
                 </div>
               ` : ''}
             </div>
 
             <!-- Price Breakdown -->
-            <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; font-size: 0.95rem;">
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; font-size: 0.92rem;">
               <div style="display: flex; justify-content: space-between; color: #475569;">
                 <span>Subtotal (${summary.totalQty} items)</span>
-                <span style="font-weight: 600; color: #0F172A;">₹${summary.subtotal}</span>
+                <span style="font-weight: 700; color: #0F172A;">₹${summary.subtotal}</span>
               </div>
               ${summary.retailSavings > 0 ? `
                 <div style="display: flex; justify-content: space-between; color: #16A34A;">
                   <span>Retail MRP Savings</span>
-                  <span style="font-weight: 600;">−₹${summary.retailSavings}</span>
+                  <span style="font-weight: 700;">−₹${summary.retailSavings}</span>
                 </div>
               ` : ''}
               ${summary.couponDiscount > 0 ? `
                 <div style="display: flex; justify-content: space-between; color: #16A34A;">
                   <span>Coupon Discount</span>
-                  <span style="font-weight: 600;">−₹${summary.couponDiscount}</span>
+                  <span style="font-weight: 700;">−₹${summary.couponDiscount}</span>
                 </div>
               ` : ''}
               <div style="display: flex; justify-content: space-between; color: #475569;">
@@ -118,17 +120,17 @@ export function initCartPage() {
                 <span>${summary.deliveryFee === 0 ? '<strong style="color: #16A34A;">FREE</strong>' : `₹${summary.deliveryFee}`}</span>
               </div>
               <div style="height: 1px; background: #E2E8F0; margin: 4px 0;"></div>
-              <div style="display: flex; justify-content: space-between; font-size: 1.25rem; font-weight: 800; color: #0F172A;">
+              <div style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 800; color: #0F172A;">
                 <span>Grand Total</span>
                 <span style="color: #2563EB;">₹${summary.grandTotal}</span>
               </div>
             </div>
 
-            <a href="checkout.html" class="btn btn-primary btn-lg btn-full" style="font-size: 1.05rem;">
+            <a href="checkout.html" class="btn btn-primary btn-lg btn-full" style="font-size: 1.05rem; font-weight: 700; height: 48px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);">
               Proceed to Checkout →
             </a>
 
-            <div style="margin-top: 16px; text-align: center;">
+            <div style="margin-top: 14px; text-align: center;">
               <a href="shop.html" style="font-size: 0.88rem; color: #2563EB; font-weight: 600;">← Continue Shopping</a>
             </div>
           </div>
@@ -161,7 +163,7 @@ export function initCartPage() {
       });
     });
 
-    container.querySelectorAll(".cart-remove-btn").forEach(btn => {
+    container.querySelectorAll(".cart-item-remove-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         removeFromCart(btn.dataset.id, btn.dataset.variant);
         render();
@@ -209,26 +211,32 @@ export function initCheckoutPage() {
 
   const summary = getCartSummary();
   const settings = getCachedSettings();
+  const storeUpiId = (settings.upiId || "9616932589@paytm").trim();
+  const storePhone = (settings.whatsappNumber || "9616932589").replace(/\D/g, "");
 
   if (summary.totalItems === 0) {
     container.innerHTML = `
-      <div style="text-align: center; padding: 80px 20px;">
-        <h2>Your Cart is Empty</h2>
-        <p style="color: #64748B; margin-bottom: 24px;">Please add items to your cart before proceeding to checkout.</p>
-        <a href="shop.html" class="btn btn-primary">Return to Shop</a>
+      <div style="text-align: center; padding: 60px 20px; background: #FFFFFF; border-radius: 20px; border: 1px solid #E2E8F0; max-width: 580px; margin: 30px auto;">
+        <div style="font-size: 3rem; margin-bottom: 12px;">💳</div>
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: #0F172A; margin-bottom: 8px;">Your Cart is Empty</h2>
+        <p style="color: #64748B; margin-bottom: 20px;">Please add items to your cart before proceeding to checkout.</p>
+        <a href="shop.html" class="btn btn-primary" style="font-weight: 700;">Return to Shop</a>
       </div>
     `;
     return;
   }
 
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(`upi://pay?pa=${storeUpiId}&pn=Ayush Service Center&am=${summary.grandTotal}&cu=INR`)}`;
+  const upiIntentUrl = `upi://pay?pa=${storeUpiId}&pn=Ayush%20Service%20Center&am=${summary.grandTotal}&cu=INR`;
+
   container.innerHTML = `
-    <div style="display: grid; grid-template-columns: 1fr; gap: 32px;" class="checkout-grid-layout">
+    <div class="checkout-grid-layout">
       <!-- Checkout Form -->
-      <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; padding: 28px; box-shadow: 0 4px 16px rgba(0,0,0,0.03);">
-        <h2 style="font-size: 1.4rem; font-weight: 800; color: #0F172A; margin-bottom: 20px;">Customer & Delivery Details</h2>
+      <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 18px; padding: 22px; box-shadow: 0 4px 16px rgba(0,0,0,0.03);">
+        <h2 style="font-size: 1.35rem; font-weight: 800; color: #0F172A; margin-bottom: 18px;">Customer & Delivery Details</h2>
 
         <form id="checkout-form">
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;" class="form-row-2">
+          <div class="form-row-responsive">
             <div class="form-group">
               <label class="form-label">Full Name *</label>
               <input type="text" id="cust-name" class="form-control" placeholder="Enter your full name" required>
@@ -240,22 +248,22 @@ export function initCheckoutPage() {
           </div>
 
           <!-- Fulfillment Choice -->
-          <div class="form-group" style="margin-top: 10px;">
+          <div class="form-group" style="margin-top: 14px;">
             <label class="form-label">Order Fulfillment Preference *</label>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-              <label style="border: 2px solid #2563EB; background: #EFF6FF; border-radius: 12px; padding: 14px; cursor: pointer; display: flex; align-items: center; gap: 10px;">
+            <div class="fulfillment-grid">
+              <label class="fulfillment-card">
                 <input type="radio" name="fulfillmentType" value="delivery" checked style="accent-color: #2563EB; width: 18px; height: 18px;">
                 <div>
-                  <div style="font-weight: 700; color: #0F172A; font-size: 0.95rem;">Home Delivery</div>
-                  <div style="font-size: 0.75rem; color: #64748B;">Local delivery in Chandauli</div>
+                  <div style="font-weight: 700; color: #0F172A; font-size: 0.95rem;">🏠 Home Delivery</div>
+                  <div style="font-size: 0.75rem; color: #64748B;">Delivered to your doorstep in Chandauli</div>
                 </div>
               </label>
 
-              <label style="border: 1px solid #CBD5E1; background: #FFFFFF; border-radius: 12px; padding: 14px; cursor: pointer; display: flex; align-items: center; gap: 10px;">
+              <label class="fulfillment-card">
                 <input type="radio" name="fulfillmentType" value="pickup" style="accent-color: #2563EB; width: 18px; height: 18px;">
                 <div>
-                  <div style="font-weight: 700; color: #0F172A; font-size: 0.95rem;">Store Pickup</div>
-                  <div style="font-size: 0.75rem; color: #64748B;">Tarajeevanpur Chauraha</div>
+                  <div style="font-weight: 700; color: #0F172A; font-size: 0.95rem;">🏪 Store Pickup</div>
+                  <div style="font-size: 0.75rem; color: #64748B;">Tarajeevanpur Chauraha Store</div>
                 </div>
               </label>
             </div>
@@ -268,10 +276,10 @@ export function initCheckoutPage() {
               <textarea id="cust-address" class="form-control" rows="2" placeholder="House / Village / Mohalla / Chauraha address" required></textarea>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;" class="form-row-2">
+            <div class="form-row-responsive">
               <div class="form-group">
                 <label class="form-label">Landmark</label>
-                <input type="text" id="cust-landmark" class="form-control" placeholder="e.g. Near School or Temple">
+                <input type="text" id="cust-landmark" class="form-control" placeholder="e.g. Near Budhiya Mai Mandir">
               </div>
               <div class="form-group">
                 <label class="form-label">City / Pincode</label>
@@ -280,44 +288,89 @@ export function initCheckoutPage() {
             </div>
           </div>
 
-          <!-- Payment Method -->
-          <div class="form-group" style="margin-top: 14px;">
-            <label class="form-label">Payment Method *</label>
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-              <label style="border: 1px solid #CBD5E1; border-radius: 10px; padding: 12px 16px; cursor: pointer; display: flex; align-items: center; gap: 12px;">
-                <input type="radio" name="paymentMethod" value="Cash" checked style="accent-color: #2563EB; width: 18px; height: 18px;">
-                <span style="font-weight: 600; font-size: 0.95rem;">💵 Cash on Delivery / Pay at Store</span>
-              </label>
+          <!-- Payment Methods with Online Payment -->
+          <div class="form-group" style="margin-top: 18px;">
+            <label class="form-label">Choose Payment Method *</label>
 
-              <label style="border: 1px solid #CBD5E1; border-radius: 10px; padding: 12px 16px; cursor: pointer; display: flex; align-items: center; gap: 12px;">
-                <input type="radio" name="paymentMethod" value="UPI" style="accent-color: #2563EB; width: 18px; height: 18px;">
-                <span style="font-weight: 600; font-size: 0.95rem;">📱 UPI Payment (Google Pay / PhonePe / Paytm on delivery)</span>
-              </label>
+            <!-- Option 1: Online UPI -->
+            <label class="payment-card">
+              <input type="radio" name="paymentMethod" value="Online UPI" checked style="accent-color: #2563EB; width: 18px; height: 18px; margin-top: 3px;">
+              <div style="flex: 1;">
+                <div style="font-weight: 700; color: #0F172A; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;">
+                  <span>📱 Pay Online via UPI (QR / Apps)</span>
+                  <span class="badge badge-success" style="font-size: 0.7rem; padding: 2px 8px;">Instant & Verified</span>
+                </div>
+                <div style="font-size: 0.78rem; color: #64748B; margin-top: 2px;">Google Pay, PhonePe, Paytm, BHIM, or Scan QR</div>
+              </div>
+            </label>
+
+            <!-- UPI Payment Box (shown when Online UPI is selected) -->
+            <div id="upi-payment-details-box" class="upi-pay-box">
+              <div style="font-weight: 800; color: #0F172A; font-size: 1rem; margin-bottom: 4px;">
+                Scan & Pay ₹${summary.grandTotal}
+              </div>
+              <div style="font-size: 0.82rem; color: #475569;">
+                Scan with any UPI App (GPay, PhonePe, Paytm)
+              </div>
+
+              <img src="${qrUrl}" alt="Ayush Service Center UPI QR Code" class="upi-qr-image">
+
+              <a href="${upiIntentUrl}" class="upi-intent-btn">
+                ⚡ Tap to Pay ₹${summary.grandTotal} via UPI App
+              </a>
+
+              <div style="margin-top: 8px; font-size: 0.85rem; color: #334155;">
+                <strong>UPI ID:</strong> <span style="font-family: monospace; font-weight: 700; background: #FFFFFF; padding: 3px 8px; border-radius: 6px; border: 1px solid #CBD5E1;">${storeUpiId}</span>
+                <button type="button" id="copy-upi-btn" style="background: none; border: none; color: #2563EB; font-weight: 700; cursor: pointer; text-decoration: underline; margin-left: 6px;">Copy</button>
+              </div>
+
+              <div style="margin-top: 12px; border-top: 1px dashed #CBD5E1; padding-top: 10px;">
+                <label style="font-size: 0.8rem; font-weight: 600; color: #475569; display: block; margin-bottom: 4px;">Enter UPI Transaction / UTR No. (Optional / After Payment):</label>
+                <input type="text" id="cust-utr" class="form-control" placeholder="12-digit UTR No. (e.g. 4312XXXXXXXX)" style="font-size: 0.88rem; text-align: center; font-weight: 600;">
+              </div>
             </div>
+
+            <!-- Option 2: Cash on Delivery -->
+            <label class="payment-card">
+              <input type="radio" name="paymentMethod" value="Cash on Delivery" style="accent-color: #2563EB; width: 18px; height: 18px; margin-top: 3px;">
+              <div>
+                <div style="font-weight: 700; color: #0F172A; font-size: 0.95rem;">💵 Cash on Delivery / Pay at Store</div>
+                <div style="font-size: 0.78rem; color: #64748B;">Pay with cash when items are delivered or picked up</div>
+              </div>
+            </label>
+
+            <!-- Option 3: UPI on Delivery -->
+            <label class="payment-card">
+              <input type="radio" name="paymentMethod" value="UPI on Delivery" style="accent-color: #2563EB; width: 18px; height: 18px; margin-top: 3px;">
+              <div>
+                <div style="font-weight: 700; color: #0F172A; font-size: 0.95rem;">💳 UPI on Delivery</div>
+                <div style="font-size: 0.78rem; color: #64748B;">Scan delivery agent's QR code upon arrival</div>
+              </div>
+            </label>
           </div>
 
           <!-- Order Notes -->
-          <div class="form-group">
+          <div class="form-group" style="margin-top: 14px;">
             <label class="form-label">Special Delivery Note or Request (Optional)</label>
-            <input type="text" id="cust-notes" class="form-control" placeholder="e.g. Call before delivery or deliver in the evening">
+            <input type="text" id="cust-notes" class="form-control" placeholder="e.g. Call before delivery or deliver in evening">
           </div>
 
-          <button type="submit" class="btn btn-primary btn-lg btn-full" id="submit-order-btn" style="margin-top: 24px; font-size: 1.1rem;">
-            Place Order Now (₹${summary.grandTotal})
+          <button type="submit" class="btn btn-primary btn-lg btn-full" id="submit-order-btn" style="margin-top: 22px; font-size: 1.08rem; font-weight: 700; height: 50px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);">
+            Place Order Now (₹${summary.grandTotal}) →
           </button>
         </form>
       </div>
 
       <!-- Order Review Sidebar -->
       <div>
-        <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; padding: 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.03); position: sticky; top: 90px;">
-          <h3 style="font-size: 1.2rem; font-weight: 800; color: #0F172A; margin-bottom: 16px;">Order Summary (${summary.totalQty} Items)</h3>
+        <div class="order-summary-card">
+          <h3 style="font-size: 1.2rem; font-weight: 800; color: #0F172A; margin: 0 0 16px;">Order Summary (${summary.totalQty} Items)</h3>
           
           <div style="max-height: 240px; overflow-y: auto; margin-bottom: 16px; border-bottom: 1px solid #F1F5F9; padding-bottom: 10px;">
             ${summary.items.map(item => `
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 0.9rem;">
-                <div style="flex: 1; padding-right: 12px;">
-                  <div style="font-weight: 600; color: #0F172A;">${item.name}</div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 0.88rem;">
+                <div style="flex: 1; padding-right: 10px; min-width: 0;">
+                  <div style="font-weight: 600; color: #0F172A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.name}</div>
                   <div style="font-size: 0.75rem; color: #64748B;">Qty: ${item.quantity} × ₹${item.price}</div>
                 </div>
                 <div style="font-weight: 700; color: #0F172A;">₹${item.price * item.quantity}</div>
@@ -327,7 +380,7 @@ export function initCheckoutPage() {
 
           <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem; margin-bottom: 16px;">
             <div style="display: flex; justify-content: space-between; color: #475569;">
-              <span>Subtotal:</span> <span>₹${summary.subtotal}</span>
+              <span>Subtotal:</span> <span style="font-weight: 600; color: #0F172A;">₹${summary.subtotal}</span>
             </div>
             ${summary.couponDiscount > 0 ? `
               <div style="display: flex; justify-content: space-between; color: #16A34A; font-weight: 600;">
@@ -335,7 +388,7 @@ export function initCheckoutPage() {
               </div>
             ` : ''}
             <div style="display: flex; justify-content: space-between; color: #475569;">
-              <span>Delivery Fee:</span> <span>${summary.deliveryFee === 0 ? 'FREE' : '₹' + summary.deliveryFee}</span>
+              <span>Delivery Fee:</span> <span>${summary.deliveryFee === 0 ? '<strong style="color: #16A34A;">FREE</strong>' : '₹' + summary.deliveryFee}</span>
             </div>
             <div style="height: 1px; background: #E2E8F0; margin: 4px 0;"></div>
             <div style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 800; color: #0F172A;">
@@ -343,8 +396,8 @@ export function initCheckoutPage() {
             </div>
           </div>
 
-          <div style="background: #F8FAFC; border-radius: 10px; padding: 12px; font-size: 0.8rem; color: #64748B; line-height: 1.5;">
-            📍 <strong>Pickup/Store Address:</strong> Budhiya Mai Mandir Ke Paas, Tarajeevanpur Chauraha, Chandauli • Call: +91 96169 32589
+          <div style="background: #F8FAFC; border-radius: 10px; padding: 12px; font-size: 0.8rem; color: #64748B; line-height: 1.5; border: 1px solid #E2E8F0;">
+            📍 <strong>Store Landmark:</strong> Budhiya Mai Mandir Ke Paas, Tarajeevanpur Chauraha, Chandauli • Call: +91 96169 32589
           </div>
         </div>
       </div>
@@ -368,6 +421,29 @@ export function initCheckoutPage() {
     });
   });
 
+  // Toggle online UPI payment details box
+  const payRadios = container.querySelectorAll("input[name='paymentMethod']");
+  const upiBox = document.getElementById("upi-payment-details-box");
+  payRadios.forEach(radio => {
+    radio.addEventListener("change", (e) => {
+      if (upiBox) {
+        upiBox.style.display = e.target.value === "Online UPI" ? "block" : "none";
+      }
+    });
+  });
+
+  // Copy UPI ID button
+  const copyBtn = document.getElementById("copy-upi-btn");
+  if (copyBtn) {
+    copyBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(storeUpiId).then(() => {
+        showToast("UPI ID Copied: " + storeUpiId, "success");
+      }).catch(() => {
+        showToast("UPI ID: " + storeUpiId, "info");
+      });
+    });
+  }
+
   // Handle Checkout submission
   const form = document.getElementById("checkout-form");
   form.addEventListener("submit", async (e) => {
@@ -375,10 +451,19 @@ export function initCheckoutPage() {
 
     const submitBtn = document.getElementById("submit-order-btn");
     submitBtn.disabled = true;
-    submitBtn.innerHTML = "Processing Order...";
+    submitBtn.innerHTML = "Placing Order & Connecting to WhatsApp...";
 
     const fulfillmentType = container.querySelector("input[name='fulfillmentType']:checked").value;
     const paymentMethod = container.querySelector("input[name='paymentMethod']:checked").value;
+    const utrInput = document.getElementById("cust-utr");
+    const utrNumber = (utrInput && paymentMethod === "Online UPI") ? utrInput.value.trim() : "";
+
+    let paymentStatus = "Pending (Cash on Delivery)";
+    if (paymentMethod === "Online UPI") {
+      paymentStatus = utrNumber ? `Paid Online (UTR: ${utrNumber})` : "Paid Online (Pending Store Verification)";
+    } else if (paymentMethod === "UPI on Delivery") {
+      paymentStatus = "Pending (UPI on Delivery)";
+    }
 
     const orderPayload = {
       customerName: document.getElementById("cust-name").value.trim(),
@@ -388,6 +473,8 @@ export function initCheckoutPage() {
         ? `${document.getElementById("cust-address").value.trim()} (Landmark: ${document.getElementById("cust-landmark").value.trim() || 'N/A'})`
         : "Store Pickup - Tarajeevanpur Chauraha",
       paymentMethod: paymentMethod,
+      paymentStatus: paymentStatus,
+      utrNumber: utrNumber,
       orderNotes: document.getElementById("cust-notes").value.trim(),
       items: summary.items,
       subtotal: summary.subtotal,
@@ -399,11 +486,21 @@ export function initCheckoutPage() {
 
     const res = await createOrder(orderPayload);
     if (res.success) {
-      showOrderSuccessScreen(container, { ...orderPayload, orderNumber: res.orderNumber, orderId: res.orderId });
+      const completeOrder = { ...orderPayload, orderNumber: res.orderNumber, orderId: res.orderId };
+      
+      // JAISE HI ORDER HO -> INSTANT WHATSAPP TO 9616932589
+      const whatsappUrl = getWhatsAppOrderUrl(completeOrder);
+      try {
+        window.open(whatsappUrl, "_blank");
+      } catch (err) {
+        console.warn("Popup blocked or not supported:", err);
+      }
+
+      showOrderSuccessScreen(container, completeOrder);
     } else {
       showToast("Order creation error. Please try again.", "error");
       submitBtn.disabled = false;
-      submitBtn.innerHTML = `Place Order Now (₹${summary.grandTotal})`;
+      submitBtn.innerHTML = `Place Order Now (₹${summary.grandTotal}) →`;
     }
   });
 }
@@ -412,45 +509,64 @@ function showOrderSuccessScreen(container, order) {
   const whatsappUrl = getWhatsAppOrderUrl(order);
 
   container.innerHTML = `
-    <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 24px; padding: 48px 24px; max-width: 680px; margin: 40px auto; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.06);">
-      <div style="width: 80px; height: 80px; background: #DCFCE7; color: #16A34A; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; margin: 0 auto 20px;">✓</div>
+    <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; padding: 36px 20px; max-width: 640px; margin: 24px auto; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.06);">
+      <div style="width: 72px; height: 72px; background: #DCFCE7; color: #16A34A; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; margin: 0 auto 16px;">✓</div>
       
-      <h1 style="font-size: 1.8rem; font-weight: 800; color: #0F172A; margin-bottom: 8px;">Order Placed Successfully!</h1>
-      <p style="font-size: 1.05rem; color: #64748B; margin-bottom: 24px;">Thank you for shopping at Ayush Service Center.</p>
+      <h1 style="font-size: 1.6rem; font-weight: 800; color: #0F172A; margin: 0 0 6px;">Order Placed Successfully!</h1>
+      <p style="font-size: 0.95rem; color: #64748B; margin: 0 0 18px;">Thank you for shopping at Ayush Service Center.</p>
 
-      <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 16px; padding: 20px; text-align: left; margin-bottom: 28px;">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.95rem;">
+      <!-- Instant WhatsApp Alert Pill -->
+      <div style="background: #ECFDF5; border: 1.5px solid #A7F3D0; border-radius: 12px; padding: 12px 16px; margin-bottom: 20px; text-align: left; display: flex; align-items: center; gap: 12px;">
+        <span style="font-size: 24px;">📲</span>
+        <div style="font-size: 0.88rem; color: #065F46; line-height: 1.4;">
+          <strong>Order message sent to Store WhatsApp:</strong> +91 96169 32589. Please confirm and tap Send in your WhatsApp chat!
+        </div>
+      </div>
+
+      <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 14px; padding: 16px; text-align: left; margin-bottom: 22px;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
           <strong style="color: #64748B;">Order Number:</strong>
           <span style="font-weight: 800; color: #2563EB;">#${order.orderNumber}</span>
         </div>
-        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.95rem;">
-          <strong style="color: #64748B;">Customer Name:</strong>
-          <span style="font-weight: 600; color: #0F172A;">${order.customerName}</span>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
+          <strong style="color: #64748B;">Customer:</strong>
+          <span style="font-weight: 600; color: #0F172A;">${order.customerName} (${order.customerPhone})</span>
         </div>
-        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.95rem;">
-          <strong style="color: #64748B;">Phone:</strong>
-          <span style="font-weight: 600; color: #0F172A;">${order.customerPhone}</span>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
+          <strong style="color: #64748B;">Delivery / Pickup:</strong>
+          <span style="font-weight: 600; color: #0F172A;">${order.fulfillmentType === 'delivery' ? 'Home Delivery' : 'Store Pickup'}</span>
         </div>
-        <div style="display: flex; justify-content: space-between; font-size: 1.1rem; border-top: 1px solid #E2E8F0; padding-top: 10px; margin-top: 10px;">
+        ${order.deliveryAddress ? `
+          <div style="margin-bottom: 8px; font-size: 0.85rem; color: #475569;">
+            <strong style="color: #64748B;">Address:</strong> ${order.deliveryAddress}
+          </div>
+        ` : ''}
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
+          <strong style="color: #64748B;">Payment:</strong>
+          <span style="font-weight: 700; color: ${order.paymentMethod.includes('Online') ? '#16A34A' : '#2563EB'};">
+            ${order.paymentMethod} ${order.utrNumber ? `(UTR: ${order.utrNumber})` : ''}
+          </span>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 1.15rem; border-top: 1px solid #E2E8F0; padding-top: 10px; margin-top: 10px;">
           <strong style="color: #0F172A;">Total Amount:</strong>
           <span style="font-weight: 800; color: #2563EB;">₹${order.grandTotal}</span>
         </div>
       </div>
 
-      <!-- WhatsApp Action -->
-      <a href="${whatsappUrl}" target="_blank" class="btn btn-whatsapp btn-lg btn-full" style="font-size: 1.05rem; margin-bottom: 12px;">
-        💬 Send Confirmation & Invoice on WhatsApp
+      <!-- Action Buttons -->
+      <a href="${whatsappUrl}" target="_blank" class="btn btn-whatsapp btn-lg btn-full" style="font-size: 1.02rem; font-weight: 700; margin-bottom: 10px; height: 48px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);">
+        💬 Open WhatsApp Chat with Store (+91 96169 32589)
       </a>
 
-      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-        <a href="invoice.html?id=${order.orderId}" target="_blank" class="btn btn-outline">
-          🖨️ View / Print Invoice
+      <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+        <a href="tel:+919616932589" class="btn btn-outline" style="font-weight: 600; flex: 1; min-width: 140px;">
+          📞 Call Store
         </a>
-        <a href="my-orders.html?phone=${encodeURIComponent(order.customerPhone)}" class="btn btn-navy">
+        <a href="invoice.html?id=${order.orderId}" target="_blank" class="btn btn-outline" style="font-weight: 600; flex: 1; min-width: 140px;">
+          🖨️ View Invoice
+        </a>
+        <a href="my-orders.html?phone=${encodeURIComponent(order.customerPhone)}" class="btn btn-navy" style="font-weight: 600; flex: 1; min-width: 140px;">
           📦 Track Order
-        </a>
-        <a href="shop.html" class="btn btn-outline">
-          🏠 Return to Store
         </a>
       </div>
     </div>
