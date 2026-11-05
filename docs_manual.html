@@ -556,12 +556,11 @@
   </div>
 
   <div class="card card-warning" style="margin-top: 10px;">
-    <div class="card-title">⚙️ फायरबेस कंसोल सेटिंग एवं टेस्ट फॉलबैक (Console Setup & Fallback):</div>
+    <div class="card-title">⚙️ फायरबेस कंसोल सेटिंग्स (Firebase Live Configuration):</div>
     <p style="font-size: 8.5pt;">
-      1. लाइव एसएमएस के लिए फायरबेस कंसोल (<a href="https://console.firebase.google.com/project/ayush-service-center/authentication/providers">Firebase Providers</a>) 
-      में जाकर <strong>Phone</strong> प्रोवाइडर को <strong>ON</strong> रखें।<br>
-      2. यदि कंसोल में टॉगल पेंडिंग भी हो या टेस्टिंग करनी हो, तो सिस्टम में सेफ टेस्ट कोड <code>123456</code> इनबिल्ट है, 
-      ताकि कभी भी टेस्टिंग न रुके।
+      1. लाइव टेलीकॉम एसएमएस के लिए फायरबेस कंसोल (<a href="https://console.firebase.google.com/project/ayush-service-center/authentication/providers">Firebase Providers</a>) 
+      में <strong>Phone</strong> प्रोवाइडर सक्षम (Enabled) रहता है।<br>
+      2. वर्सेल प्रोडक्शन डोमेन (<code>ayush-hardware-general-store.vercel.app</code>) फायरबेस कंसोल के <strong>Authorized Domains</strong> में लिस्टेड होना अनिवार्य है ताकि reCAPTCHA और लाइव SMS OTP बिना किसी रुकावट के कार्य करें।
     </p>
   </div>
 
