@@ -52,7 +52,8 @@
 /* ==========================================================================
    COMPACT GLOBE LANGUAGE TOGGLE SWITCHER
    ========================================================================== */
-.lang-toggle-btn {
+.lang-toggle-btn,
+.theme-toggle-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -70,13 +71,15 @@
   flex-shrink: 0;
 }
 
-.lang-toggle-btn:hover {
+.lang-toggle-btn:hover,
+.theme-toggle-btn:hover {
   background: rgba(37, 99, 235, 0.18);
   border-color: var(--primary);
   transform: scale(1.06);
 }
 
-.lang-toggle-btn-drawer {
+.lang-toggle-btn-drawer,
+.theme-toggle-btn-drawer {
   width: 100%;
   border-radius: 12px;
   height: 44px;
@@ -91,7 +94,8 @@
   color: #FFFFFF;
 }
 
-.lang-toggle-btn-drawer:hover {
+.lang-toggle-btn-drawer:hover,
+.theme-toggle-btn-drawer:hover {
   background: rgba(255, 255, 255, 0.2);
   color: #FFFFFF;
 }
@@ -2190,4 +2194,245 @@ button, input, select, textarea {
   .trust-badge-val {
     font-size: 1.15rem;
   }
+}
+
+/* ==========================================================================
+   APX DIGITAL OBSIDIAN DARK THEME (Inspired by apx-digital.vercel.app)
+   ========================================================================== */
+[data-theme="dark"],
+body.dark-mode {
+  --bg-primary: #08090B;
+  --bg-secondary: #111318;
+  --bg-surface: #161820;
+  --bg-card: #111318;
+  --navy: #08090B;
+  --bg-light: #08090B;
+  --white: #111318;
+  --text-main: #FFFFFF;
+  --text-light: #94A3B8;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-light: rgba(255, 255, 255, 0.05);
+  --primary-light: rgba(37, 99, 235, 0.25);
+  background-color: #08090B !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] body {
+  background-color: #08090B !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] p {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .main-header {
+  background-color: #08090B !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .top-bar {
+  background-color: #040507 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+[data-theme="dark"] .desktop-nav {
+  background-color: #0D0F14 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .desktop-nav .nav-link {
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .desktop-nav .nav-link:hover,
+[data-theme="dark"] .desktop-nav .nav-link.active {
+  color: #60A5FA !important;
+  background-color: rgba(37, 99, 235, 0.15) !important;
+}
+
+[data-theme="dark"] .lang-toggle-btn,
+[data-theme="dark"] .theme-toggle-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .lang-toggle-btn:hover,
+[data-theme="dark"] .theme-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #60A5FA;
+}
+
+[data-theme="dark"] .header-action-btn {
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .product-card,
+[data-theme="dark"] .sg-product-card {
+  background-color: #111318 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .product-card:hover,
+[data-theme="dark"] .sg-product-card:hover {
+  border-color: rgba(96, 165, 250, 0.5) !important;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.8), 0 0 20px rgba(37, 99, 235, 0.2) !important;
+}
+
+[data-theme="dark"] .product-image-container {
+  background-color: #0D0F14 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+[data-theme="dark"] .product-title {
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .product-price {
+  color: #60A5FA !important;
+}
+
+[data-theme="dark"] .product-mrp {
+  color: #64748B !important;
+}
+
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select,
+[data-theme="dark"] .search-input {
+  background-color: #111318 !important;
+  color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="dark"] .search-suggestions-dropdown {
+  background-color: #111318 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="dark"] .search-suggestion-item:hover {
+  background-color: #161820 !important;
+}
+
+[data-theme="dark"] .mobile-bottom-nav {
+  background-color: #08090B !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .bottom-nav-item {
+  color: #64748B !important;
+}
+
+[data-theme="dark"] .bottom-nav-item.active {
+  color: #60A5FA !important;
+}
+
+[data-theme="dark"] .mobile-drawer {
+  background-color: #08090B !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme="dark"] .mobile-drawer .drawer-nav-item a {
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .mobile-drawer .drawer-nav-item a:hover {
+  background-color: #111318 !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .features-strip {
+  background-color: #08090B !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .feature-box,
+[data-theme="dark"] .about-stat-card,
+[data-theme="dark"] .contact-card-interactive,
+[data-theme="dark"] .fleet-card,
+[data-theme="dark"] .spec-box,
+[data-theme="dark"] .cart-panel-box,
+[data-theme="dark"] .coupon-ticket-card {
+  background-color: #111318 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .coupon-code-box {
+  background-color: #08090B !important;
+  color: #60A5FA !important;
+}
+
+[data-theme="dark"] main {
+  background-color: #08090B !important;
+}
+
+[data-theme="dark"] .brand-text h1 {
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .page-hero-compact,
+[data-theme="dark"] .offers-hero-banner,
+[data-theme="dark"] .about-hero-banner,
+[data-theme="dark"] .contact-hero-banner,
+[data-theme="dark"] .ab-hero-banner,
+[data-theme="dark"] .home-hero-banner {
+  background: linear-gradient(135deg, #050608 0%, #0F172A 50%, #08090B 100%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .footer {
+  background-color: #040507 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .footer-bottom {
+  background-color: #020304 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+[data-theme="dark"] .leader-card,
+[data-theme="dark"] .service-card,
+[data-theme="dark"] .booking-form-box,
+[data-theme="dark"] .order-summary-box,
+[data-theme="dark"] .modal-content,
+[data-theme="dark"] .review-card,
+[data-theme="dark"] .quick-view-modal {
+  background-color: #111318 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .tab-btn,
+[data-theme="dark"] .filter-btn,
+[data-theme="dark"] .department-pill {
+  background-color: #111318 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .tab-btn.active,
+[data-theme="dark"] .filter-btn.active,
+[data-theme="dark"] .department-pill.active {
+  background-color: #2563EB !important;
+  border-color: #2563EB !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .table {
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .table th,
+[data-theme="dark"] .table td {
+  border-color: rgba(255, 255, 255, 0.08) !important;
 }

@@ -9,6 +9,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <script>
+    (function() {
+      try {
+        const stored = localStorage.getItem('asc_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', stored);
+      } catch(e) {}
+    })();
+  </script>
 </head>
 <body>
 
@@ -76,7 +84,7 @@
   <footer class="main-footer">
     <div class="container footer-bottom-inner" style="padding: 20px 0;">
       <div>© 2026 Ayush Service Center. All rights reserved.</div>
-      <div>Developed by Ayush Gupta (T.WILL) • 9519099011</div>
+      <div>Developed by Ayush Gupta (<a href="https://apx-digital.vercel.app/" target="_blank" style="color: inherit; text-decoration: underline;">Founder, APX DIGITAL</a>) • 9519099011</div>
     </div>
   </footer>
 

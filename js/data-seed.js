@@ -31,7 +31,7 @@ export const INITIAL_STORE_SETTINGS = {
   announcementText: "✨ Budhiya Mai Mandir Ke Paas, Tarajeevanpur Chauraha • Call/WhatsApp: +91 96169 32589 • Best Quality & Rates Guaranteed!",
   developerCredit: {
     name: "Ayush Gupta",
-    role: "Co-Founder, T.WILL",
+    role: "Founder, APX DIGITAL",
     phone: "+91 95190 99011",
     email: "guptaayush932589@gmail.com"
   }

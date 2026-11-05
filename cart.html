@@ -19,6 +19,14 @@
       }
     }
   </style>
+  <script>
+    (function() {
+      try {
+        const stored = localStorage.getItem('asc_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', stored);
+      } catch(e) {}
+    })();
+  </script>
 </head>
 <body>
 
@@ -49,6 +57,7 @@
       <div class="header-actions">
         <!-- Language Switcher Button -->
         <button type="button" class="lang-toggle-btn" id="lang-toggle-btn" title="English / हिंदी" aria-label="Toggle Language">🌐</button>
+        <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle APX Dark Theme" aria-label="Toggle Theme">🌙</button>
 
         <!-- Theme Toggle Button -->
 
@@ -103,7 +112,7 @@
     <div class="footer-bottom">
       <div class="container footer-bottom-inner">
         <div>© 2026 Ayush Service Center. All rights reserved.</div>
-        <div>Developed by Ayush Gupta (T.WILL) • 9519099011</div>
+        <div>Developed by Ayush Gupta (<a href="https://apx-digital.vercel.app/" target="_blank" style="color: inherit; text-decoration: underline;">Founder, APX DIGITAL</a>) • 9519099011</div>
       </div>
     </div>
   </footer>
