@@ -644,6 +644,13 @@ button, input, select, textarea {
   gap: 12px;
 }
 
+@media (max-width: 359px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
 @media (min-width: 640px) {
   .product-grid {
     grid-template-columns: repeat(3, 1fr);

@@ -48,60 +48,50 @@ let salesChart = null;
 // ==========================================
 // AUTHENTICATION & ACCESS CONTROL
 // ==========================================
-async function initAdminAuth() {
-  const savedSession = localStorage.getItem("asc_admin_user");
-  let localAdmin = null;
-  if (savedSession) {
-    try {
-      localAdmin = JSON.parse(savedSession);
-    } catch(e) {}
+const AUTHORIZED_ADMIN_EMAILS = [
+  "vinodkumargupta290@gmail.com",
+  "ayush44129@gmail.com"
+];
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.href = "login.html";
+    return;
   }
 
-  onAuthStateChanged(auth, async (user) => {
-    if (!user && !localAdmin) {
-      window.location.href = "login.html";
-      return;
-    }
+  // Check custom claim or whitelist
+  const tokenResult = await user.getIdTokenResult().catch(() => null);
+  const isAdminClaim = tokenResult && tokenResult.claims && tokenResult.claims.admin;
+  const isAuthorized = isAdminClaim || AUTHORIZED_ADMIN_EMAILS.includes((user.email || "").toLowerCase());
 
-    currentUser = user || localAdmin;
-    const userEmail = (user && user.email) || (localAdmin && localAdmin.email) || "ayush44129@gmail.com";
-    const userInitials = (userEmail[0] || "A").toUpperCase();
-
-    const avatarEl = document.getElementById("sidebar-user-avatar");
-    const emailEl = document.getElementById("sidebar-user-email");
-    const nameEl = document.getElementById("sidebar-user-name");
-
-    if (avatarEl) avatarEl.textContent = userInitials;
-    if (emailEl) emailEl.textContent = userEmail;
-    if (nameEl) nameEl.textContent = (user && user.displayName) || (localAdmin && localAdmin.name) || (userEmail.includes("ayush") ? "Ayush Gupta (Admin)" : "Vinod Kumar Gupta");
-
-    // Load all operational data
-    await loadAllAdminData();
-    logAuditAction("LOGIN", `Admin ${userEmail} accessed dashboard`);
-  });
-
-  // Fast start if localAdmin is cached
-  if (localAdmin && !currentUser) {
-    currentUser = localAdmin;
-    const userEmail = localAdmin.email || "ayush44129@gmail.com";
-    const avatarEl = document.getElementById("sidebar-user-avatar");
-    const emailEl = document.getElementById("sidebar-user-email");
-    const nameEl = document.getElementById("sidebar-user-name");
-
-    if (avatarEl) avatarEl.textContent = (userEmail[0] || "A").toUpperCase();
-    if (emailEl) emailEl.textContent = userEmail;
-    if (nameEl) nameEl.textContent = localAdmin.name || "Ayush Gupta (Admin)";
-    loadAllAdminData();
+  if (!isAuthorized) {
+    alert("Access Denied: You do not have administrator permissions.");
+    await signOut(auth);
+    window.location.href = "login.html";
+    return;
   }
-}
 
-initAdminAuth();
+  currentUser = user;
+  const userEmail = user.email || "admin@ayushservicecenter.com";
+  const userInitials = (userEmail[0] || "A").toUpperCase();
+
+  const avatarEl = document.getElementById("sidebar-user-avatar");
+  const emailEl = document.getElementById("sidebar-user-email");
+  const nameEl = document.getElementById("sidebar-user-name");
+
+  if (avatarEl) avatarEl.textContent = userInitials;
+  if (emailEl) emailEl.textContent = userEmail;
+  if (nameEl) nameEl.textContent = user.displayName || (userEmail.includes("ayush") ? "Ayush Gupta" : "Vinod Kumar Gupta");
+
+  // Load all operational data
+  await loadAllAdminData();
+  logAuditAction("LOGIN", `Admin ${userEmail} accessed dashboard`);
+});
 
 // Logout handler
 document.getElementById("admin-logout-btn").addEventListener("click", async () => {
   if (confirm("Are you sure you want to log out of the admin panel?")) {
     logAuditAction("LOGOUT", `Admin logged out`);
-    localStorage.removeItem("asc_admin_user");
     try {
       await signOut(auth);
     } catch(e) {}
