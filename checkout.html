@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout & Order Enquiry - Ayush Service Center</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    @media (min-width: 900px) {
+      .checkout-grid-layout {
+        grid-template-columns: 1.6fr 1fr !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-bar">
+    <div class="container top-bar-content">
+      <div>✨ <strong>Budhiya Mai Mandir Ke Paas</strong>, Tarajeevanpur Chauraha, Chandauli • Call: +91 96169 32589</div>
+      <div class="top-bar-links">
+        <a href="tel:+919616932589" class="dynamic-phone-link">📞 +91 96169 32589</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="main-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">ASC</div>
+        <div class="brand-text">
+          <h1 class="dynamic-store-name">Ayush Service Center</h1>
+          <p>Secure Checkout & Confirmation</p>
+        </div>
+      </a>
+      <div class="header-actions">
+        <a href="cart.html" class="btn btn-sm btn-outline">
+          ← Back to Cart
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="mobile-bottom-nav">
+    <div class="mobile-bottom-nav-inner">
+      <a href="index.html" class="bottom-nav-item"><span>🏠</span><span>Home</span></a>
+      <a href="shop.html" class="bottom-nav-item"><span>🛍️</span><span>Shop</span></a>
+      <a href="autobooking.html" class="bottom-nav-item"><span>🚗</span><span>Auto</span></a>
+      <a href="cart.html" class="bottom-nav-item"><span>🛒</span><span>Cart</span></a>
+      <a href="https://wa.me/919616932589" target="_blank" class="bottom-nav-item" style="color: #25D366;"><span>💬</span><span>WA</span></a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main style="padding: 36px 0 60px;">
+    <div class="container" id="checkout-page-container">
+      <div style="text-align: center; padding: 60px 0; color: #64748B;">
+        <div style="font-size: 2.5rem; margin-bottom: 8px;">💳</div>
+        <div>Loading checkout options...</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container footer-top">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3 style="color: #FFF; font-size: 1.25rem; margin-bottom: 12px;">Ayush Service Center</h3>
+          <p style="font-size: 0.9rem; line-height: 1.6;">Budhiya Mai Mandir Ke Paas, Tarajeevanpur Chauraha, Chandauli • Call: +91 96169 32589</p>
+        </div>
+        <div class="footer-col">
+          <h4>Guaranteed Trust</h4>
+          <p style="font-size: 0.88rem; color: #CBD5E1;">Pay cash or UPI upon delivery / pickup. 100% verified authentic goods.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <div>© 2026 Ayush Service Center. All rights reserved.</div>
+        <div>Developed by Ayush Gupta (T.WILL) • 9519099011</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="js/app.js"></script>
+  <script type="module">
+    import { initCheckoutPage } from "./js/order-flow.js";
+    document.addEventListener("DOMContentLoaded", () => {
+      initCheckoutPage();
+    });
+  </script>
+</body>
+</html>
+

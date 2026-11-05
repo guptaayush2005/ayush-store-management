@@ -1,0 +1,137 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to check if user is an authorized admin
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.admin == true ||
+        request.auth.token.email == "vinodkumargupta290@gmail.com" ||
+        exists(/databases/$(database)/documents/staff_profiles/$(request.auth.uid)) ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.token.email))
+      );
+    }
+
+    // Products: Public can read active products; Admins have full access
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Categories: Public can read; Admins have full access
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Banners & Promotional Offers: Public can read; Admins have full access
+    match /banners/{bannerId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    match /offers/{offerId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Store Settings & Website Content: Public can read; Admins have full access
+    match /store_settings/{settingId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    match /website_content/{contentId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Customer Reviews: Public can read approved reviews and submit new reviews
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if request.resource.data.name is string && 
+                       request.resource.data.review is string;
+      allow update, delete: if isAdmin();
+    }
+
+    // Customer Orders:
+    // Public can create orders; anyone with the order phone/ID can read their own order; Admins have full access
+    match /orders/{orderId} {
+      allow create: if request.resource.data.customerPhone is string &&
+                       request.resource.data.items is list;
+      allow read: if isAdmin() || (
+        resource != null && (
+          (request.auth != null && request.auth.uid == resource.data.customerId) ||
+          request.query.limit <= 20
+        )
+      );
+      allow update, delete: if isAdmin();
+    }
+
+    // Auto Bookings:
+    // Public can create bookings; Admins have full management access
+    match /auto_bookings/{bookingId} {
+      allow create: if request.resource.data.customerPhone is string &&
+                       request.resource.data.pickupLocation is string;
+      allow read: if isAdmin() || (
+        resource != null && request.auth != null && request.auth.uid == resource.data.customerId
+      );
+      allow update, delete: if isAdmin();
+    }
+
+    // Customer Enquiries & Contact submissions
+    match /enquiries/{enquiryId} {
+      allow create: if request.resource.data.phone is string || request.resource.data.email is string;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // POS Sales Records: Admin only
+    match /sales/{saleId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Inventory Movements & Stock Audit: Admin only
+    match /inventory_movements/{movementId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Store Expenses: Admin only
+    match /expenses/{expenseId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Suppliers: Admin only
+    match /suppliers/{supplierId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Customers directory: Admin only (for CRM)
+    match /customers/{customerId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Staff profiles & Admin list: Admin only
+    match /staff_profiles/{staffId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    match /admins/{adminEmail} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    // Audit logs: Admin only
+    match /audit_logs/{logId} {
+      allow read: if isAdmin();
+      allow create: if isAuthenticated();
+      allow update, delete: if false; // Immutable audit log
+    }
+  }
+}
+

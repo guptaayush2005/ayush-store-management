@@ -1,124 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal Login - Ayush Service Center</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/admin.css">
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: radial-gradient(circle at 50% 20%, #1E293B 0%, #0F172A 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-<style>
-body{
-    background:#f5f7fa;
-}
+    .login-card {
+      background: #FFFFFF;
+      border-radius: 24px;
+      max-width: 440px;
+      width: 100%;
+      padding: 36px 32px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
 
-.login-box{
-    max-width:500px;
-    margin:100px auto;
-    background:white;
-    padding:30px;
-    border-radius:15px;
-    box-shadow:0 0 20px rgba(0,0,0,0.1);
-}
-
-h2{
-    text-align:center;
-    margin-bottom:25px;
-}
-</style>
-
+    .login-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #2563EB, #06B6D4);
+    }
+  </style>
 </head>
 <body>
 
-<div class="login-box">
+  <div class="login-card">
+    <div style="text-align: center; margin-bottom: 28px;">
+      <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #2563EB, #06B6D4); color: #FFF; border-radius: 16px; display: inline-flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 800; margin-bottom: 12px; box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);">
+        ASC
+      </div>
+      <h1 style="font-size: 1.45rem; font-weight: 800; color: #0F172A; margin-bottom: 4px;">Ayush Service Center</h1>
+      <p style="font-size: 0.85rem; color: #64748B;">Staff & Management Dashboard Portal</p>
+    </div>
 
-    <h2>Admin Login</h2>
+    <!-- Alert Message Area -->
+    <div id="login-alert" style="display: none; padding: 12px 14px; border-radius: 10px; font-size: 0.85rem; margin-bottom: 20px;"></div>
 
-    <form id="loginForm">
+    <form id="admin-login-form">
+      <div class="form-group">
+        <label class="form-label" for="login-email">Admin Email Address</label>
+        <input type="email" id="login-email" class="form-control" placeholder="admin@ayushservicecenter.com" required autocomplete="email">
+      </div>
 
-        <input
-            type="email"
-            id="email"
-            class="form-control mb-3"
-            placeholder="Enter Email"
-            required
-        >
+      <div class="form-group">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <label class="form-label" for="login-password" style="margin: 0;">Password</label>
+          <a href="#" id="forgot-password-link" style="font-size: 0.8rem; color: #2563EB; font-weight: 600;">Forgot Password?</a>
+        </div>
+        <div style="position: relative;">
+          <input type="password" id="login-password" class="form-control" placeholder="••••••••" required autocomplete="current-password" style="padding-right: 44px;">
+          <button type="button" id="toggle-password-btn" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #64748B; cursor: pointer; font-size: 16px;">
+            👁️
+          </button>
+        </div>
+      </div>
 
-        <input
-            type="password"
-            id="password"
-            class="form-control mb-3"
-            placeholder="Enter Password"
-            required
-        >
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 24px;">
+        <input type="checkbox" id="remember-me" checked style="accent-color: #2563EB; width: 16px; height: 16px;">
+        <label for="remember-me" style="font-size: 0.85rem; color: #475569; cursor: pointer;">Keep me logged in</label>
+      </div>
 
-        <button
-            type="submit"
-            class="btn btn-primary w-100">
-            Login
-        </button>
-
+      <button type="submit" class="btn btn-primary btn-lg btn-full" id="login-submit-btn">
+        Sign In to Dashboard →
+      </button>
     </form>
 
-</div>
+    <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid #E2E8F0; text-align: center;">
+      <a href="../index.html" style="font-size: 0.85rem; color: #64748B; font-weight: 500; display: inline-flex; align-items: center; gap: 6px;">
+        ← Back to Customer Website
+      </a>
+    </div>
+  </div>
 
-<script type="module">
+  <script type="module">
+    import { auth, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } from "../js/firebase-config.js";
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    // Auto-redirect if already signed in
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        window.location.href = "dashboard.html";
+      }
+    });
 
-import {
-getAuth,
-signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    const form = document.getElementById("admin-login-form");
+    const emailInput = document.getElementById("login-email");
+    const passwordInput = document.getElementById("login-password");
+    const submitBtn = document.getElementById("login-submit-btn");
+    const alertBox = document.getElementById("login-alert");
+    const togglePassBtn = document.getElementById("toggle-password-btn");
+    const forgotLink = document.getElementById("forgot-password-link");
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCawNBZMV3mV_s-ZgBfEkNzJlh6G74k9xs",
-  authDomain: "ayush-service-center.firebaseapp.com",
-  projectId: "ayush-service-center",
-  storageBucket: "ayush-service-center.firebasestorage.app",
-  messagingSenderId: "720883452589",
-  appId: "1:720883452589:web:c0ebb799460cb06654d424",
-  measurementId: "G-Y7HHVQHYM4"
-};
+    // Toggle Password Visibility
+    togglePassBtn.addEventListener("click", () => {
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        togglePassBtn.textContent = "🔒";
+      } else {
+        passwordInput.type = "password";
+        togglePassBtn.textContent = "👁️";
+      }
+    });
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+    // Handle Login
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      alertBox.style.display = "none";
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Verifying Credentials...";
 
-document
-.getElementById("loginForm")
-.addEventListener("submit", async (e)=>{
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
 
-    e.preventDefault();
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        alertBox.className = "badge-success";
+        alertBox.style.cssText = "display: block; background: #DCFCE7; color: #166534; padding: 12px; border-radius: 8px; margin-bottom: 20px;";
+        alertBox.textContent = "Authentication successful! Redirecting to dashboard...";
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 500);
+      } catch (error) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Sign In to Dashboard →";
+        alertBox.style.cssText = "display: block; background: #FEE2E2; color: #991B1B; padding: 12px; border-radius: 8px; margin-bottom: 20px;";
+        
+        if (error.code === "auth/invalid-credential" || error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
+          alertBox.textContent = "Invalid email or password. Please verify your credentials.";
+        } else if (error.code === "auth/too-many-requests") {
+          alertBox.textContent = "Access temporarily disabled due to many failed attempts. Try again later or reset password.";
+        } else {
+          alertBox.textContent = error.message;
+        }
+      }
+    });
 
-    const email =
-    document.getElementById("email").value;
+    // Forgot Password
+    forgotLink.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const email = emailInput.value.trim() || prompt("Enter your registered admin email address:");
+      if (!email) return;
 
-    const password =
-    document.getElementById("password").value;
-
-    try{
-
-        await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
-        );
-
-        alert("Login Successful");
-
-        window.location.href =
-        "dashboard.html";
-
-    }
-    catch(error){
-
-        alert(error.message);
-
-    }
-
-});
-
-</script>
-
+      try {
+        await sendPasswordResetEmail(auth, email);
+        alert(`Password reset instructions sent to ${email}. Please check your inbox.`);
+      } catch (err) {
+        alert("Password reset error: " + err.message);
+      }
+    });
+  </script>
 </body>
 </html>

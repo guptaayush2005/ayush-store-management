@@ -1,0 +1,173 @@
+/* ==========================================================================
+   AYUSH SERVICE CENTER — PRINT & INVOICE STYLESHEET
+   Supports A4 Tax Invoices and 80mm/58mm POS Thermal Receipts
+   ========================================================================== */
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  
+  #printable-invoice-area,
+  #printable-invoice-area * {
+    visibility: visible;
+  }
+
+  #printable-invoice-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Standalone invoice page / modal styles */
+.invoice-wrapper {
+  background: #FFFFFF;
+  padding: 30px;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: 'Inter', -apple-system, sans-serif;
+  color: #1E293B;
+}
+
+/* A4 Layout */
+.a4-invoice {
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 36px;
+}
+
+.invoice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 2px solid #2563EB;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+}
+
+.invoice-brand h2 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0 0 4px;
+}
+
+.invoice-brand p {
+  font-size: 13px;
+  color: #64748B;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.invoice-meta {
+  text-align: right;
+}
+
+.invoice-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #2563EB;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.invoice-meta-item {
+  font-size: 13px;
+  color: #475569;
+}
+
+.invoice-bill-to {
+  background: #F8FAFC;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.invoice-table th {
+  background: #0F172A;
+  color: #FFFFFF;
+  padding: 10px 14px;
+  text-align: left;
+}
+
+.invoice-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.invoice-summary-box {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 30px;
+}
+
+.summary-table {
+  width: 300px;
+  border-collapse: collapse;
+}
+
+.summary-table td {
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+.summary-table .total-row td {
+  font-size: 18px;
+  font-weight: 800;
+  color: #2563EB;
+  border-top: 2px solid #0F172A;
+  padding-top: 10px;
+}
+
+/* Thermal 80mm layout */
+.thermal-receipt {
+  max-width: 320px;
+  margin: 0 auto;
+  padding: 16px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  line-height: 1.35;
+  color: #000;
+  background: #FFF;
+  border: 1px dashed #999;
+}
+
+.thermal-receipt h3 {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  margin: 0 0 4px;
+}
+
+.thermal-center {
+  text-align: center;
+}
+
+.thermal-line {
+  border-top: 1px dashed #000;
+  margin: 8px 0;
+}
+
+.thermal-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+

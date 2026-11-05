@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Printable Invoice - Ayush Service Center</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/print.css">
+
+  <style>
+    body {
+      background: #F1F5F9;
+      padding: 24px 16px;
+    }
+    .invoice-action-bar {
+      max-width: 800px;
+      margin: 0 auto 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Non-printable Action Controls -->
+  <div class="invoice-action-bar no-print">
+    <div style="display: flex; gap: 8px;">
+      <button type="button" class="btn btn-primary" onclick="window.print()">
+        🖨️ Print Invoice
+      </button>
+      <button type="button" class="btn btn-outline" id="btn-toggle-thermal">
+        🧾 Switch to Thermal Layout (80mm)
+      </button>
+    </div>
+
+    <div style="display: flex; gap: 8px;">
+      <button type="button" class="btn btn-outline" onclick="window.close()">
+        ✕ Close
+      </button>
+    </div>
+  </div>
+
+  <!-- Printable Invoice Content Area -->
+  <div class="invoice-wrapper" id="invoice-render-area">
+    <div style="text-align: center; padding: 48px; color: #64748B;">
+      Loading invoice details...
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+  <script type="module">
+    import { initInvoicePage } from "./js/order-flow.js";
+    document.addEventListener("DOMContentLoaded", () => {
+      initInvoicePage();
+
+      const toggleBtn = document.getElementById("btn-toggle-thermal");
+      if (toggleBtn) {
+        let isThermal = false;
+        toggleBtn.addEventListener("click", () => {
+          const printable = document.getElementById("printable-invoice-area");
+          if (!printable) return;
+
+          if (!isThermal) {
+            printable.className = "thermal-receipt";
+            toggleBtn.textContent = "📄 Switch to A4 Layout";
+            isThermal = true;
+          } else {
+            printable.className = "a4-invoice";
+            toggleBtn.textContent = "🧾 Switch to Thermal Layout (80mm)";
+            isThermal = false;
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
+

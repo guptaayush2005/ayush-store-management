@@ -1,28 +1,230 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Auto Booking - Ayush Service Center</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto Booking Services - Ayush Service Center | Chandauli</title>
+  <meta name="description" content="Book auto and passenger transport in Chandauli, Tarajeevanpur Chauraha. Passenger Autos, E-Rickshaws & Commercial Loaders available 24/7. Call: +91 96169 32589.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<h1>🚗 Auto Booking Service</h1>
+  <!-- Top Announcement Bar -->
+  <div class="top-bar">
+    <div class="container top-bar-content">
+      <div>✨ <strong>Budhiya Mai Mandir Ke Paas</strong>, Tarajeevanpur Chauraha, Chandauli • Call: +91 96169 32589</div>
+      <div class="top-bar-links">
+        <a href="tel:+919616932589" class="dynamic-phone-link">📞 +91 96169 32589</a>
+        <span>|</span>
+        <a href="my-orders.html">📦 Track Order</a>
+      </div>
+    </div>
+  </div>
 
-<img src="images/1autobooking.jpg" width="300">
+  <!-- Main Header -->
+  <header class="main-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">ASC</div>
+        <div class="brand-text">
+          <h1 class="dynamic-store-name">Ayush Service Center</h1>
+          <p>ऑटो बुकिंग सेवा • Chandauli</p>
+        </div>
+      </a>
+      <div class="header-actions">
+        <a href="tel:+919616932589" class="btn btn-navy btn-sm">
+          📞 Call Driver Directly
+        </a>
+        <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
+      </div>
+    </div>
+  </header>
 
-<h3>Book Your Auto Easily</h3>
+  <!-- Secondary Desktop Nav -->
+  <nav class="desktop-nav">
+    <div class="container desktop-nav-inner">
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="shop.html" class="nav-link">Shop All</a></li>
+        <li><a href="categories.html" class="nav-link">Categories</a></li>
+        <li><a href="offers.html" class="nav-link">Offers & Deals</a></li>
+        <li><a href="autobooking.html" class="nav-link active">Auto Booking</a></li>
+        <li><a href="about.html" class="nav-link">About Us</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="my-orders.html" class="nav-link">Track Order</a></li>
+      </ul>
+      <div class="nav-quick-cta">
+        <a href="https://wa.me/919616932589?text=Hello%20Ayush%20Service%20Center,%20I%20need%20to%20book%20an%20auto" target="_blank" class="btn btn-sm btn-whatsapp">💬 WhatsApp Auto</a>
+      </div>
+    </div>
+  </nav>
 
-<p>
-For Auto Booking, contact us on WhatsApp.
-</p>
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop"></div>
+  <aside class="mobile-drawer" id="mobile-drawer">
+    <div class="drawer-header">
+      <span style="font-weight: 700;">Menu</span>
+      <button type="button" id="drawer-close-btn" style="background: none; border: none; color: #FFF; font-size: 22px;">✕</button>
+    </div>
+    <div class="drawer-body">
+      <ul class="drawer-nav-list">
+        <li class="drawer-nav-item"><a href="index.html">🏠 Home</a></li>
+        <li class="drawer-nav-item"><a href="shop.html">🛍️ Shop Catalog</a></li>
+        <li class="drawer-nav-item"><a href="categories.html">🏷️ All Categories</a></li>
+        <li class="drawer-nav-item"><a href="autobooking.html" class="active">🚗 Auto Booking</a></li>
+        <li class="drawer-nav-item"><a href="about.html">✨ About Store</a></li>
+        <li class="drawer-nav-item"><a href="contact.html">📞 Contact & Map</a></li>
+        <li class="drawer-nav-item"><a href="cart.html">🛒 View Cart</a></li>
+      </ul>
+    </div>
+  </aside>
 
-<a href="https://wa.me/919616932589?text=Hello%20I%20want%20to%20order%20${product.name}"
-class="btn btn-success">
-Order on WhatsApp
-</a>
+  <!-- Mobile Bottom Nav -->
+  <nav class="mobile-bottom-nav">
+    <div class="mobile-bottom-nav-inner">
+      <a href="index.html" class="bottom-nav-item"><span>🏠</span><span>Home</span></a>
+      <a href="shop.html" class="bottom-nav-item"><span>🛍️</span><span>Shop</span></a>
+      <a href="autobooking.html" class="bottom-nav-item active"><span>🚗</span><span>Auto</span></a>
+      <a href="cart.html" class="bottom-nav-item">
+        <span>🛒</span>
+        <span class="bottom-cart-badge cart-count-badge" style="display: none;">0</span>
+        <span>Cart</span>
+      </a>
+      <a href="https://wa.me/919616932589" target="_blank" class="bottom-nav-item" style="color: #25D366;"><span>💬</span><span>WA</span></a>
+    </div>
+  </nav>
 
-<br><br>
+  <!-- Main Content -->
+  <main style="padding: 40px 0 60px;">
+    <div class="container" id="booking-container">
+      
+      <!-- Intro Grid -->
+      <div style="display: grid; grid-template-columns: 1fr; gap: 36px; align-items: center; margin-bottom: 40px;" class="ab-hero-grid">
+        <div>
+          <span class="badge badge-primary" style="margin-bottom: 10px;">FAST LOCAL TRANSPORT</span>
+          <h1 style="font-size: 2.2rem; font-weight: 800; color: #0F172A; margin-bottom: 12px; line-height: 1.25;">
+            🚗 Reliable Auto Booking in Chandauli
+          </h1>
+          <p style="font-size: 1.05rem; color: #475569; line-height: 1.6; margin-bottom: 20px;">
+            Book safe, comfortable, and affordable passenger autos, E-rickshaws, and goods transport for personal travel, family trips, hospital visits, or railway station drops.
+          </p>
 
-<a href="services.html">⬅ Back to Services</a>
+          <div style="background: #EFF6FF; border-left: 4px solid #2563EB; border-radius: 8px; padding: 14px 18px; margin-bottom: 24px; font-size: 0.92rem; color: #1E3A8A;">
+            <strong>Immediate Service Available:</strong> Need an urgent ride right now? Call driver directly at <strong>+91 96169 32589</strong>.
+          </div>
+        </div>
 
+        <div style="text-align: center;">
+          <img src="images/1autobooking.jpg" alt="Ayush Auto Booking" style="width: 100%; max-height: 340px; object-fit: cover; border-radius: 20px; box-shadow: var(--shadow-xl); border: 2px solid #E2E8F0;">
+        </div>
+      </div>
+
+      <!-- Booking Form Card -->
+      <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 24px; padding: 36px 28px; max-width: 800px; margin: 0 auto; box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
+        <h2 style="font-size: 1.45rem; font-weight: 800; color: #0F172A; margin-bottom: 6px;">Reserve Your Auto Online</h2>
+        <p style="font-size: 0.9rem; color: #64748B; margin-bottom: 24px;">Fill in your travel details below and our team will immediately arrange your ride.</p>
+
+        <form id="auto-booking-form">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;" class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Full Name *</label>
+              <input type="text" id="ab-name" class="form-control" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Contact Mobile Number *</label>
+              <input type="tel" id="ab-phone" class="form-control" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;" class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Pickup Location *</label>
+              <input type="text" id="ab-pickup" class="form-control" placeholder="e.g. Tarajeevanpur Chauraha or Village name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Destination *</label>
+              <input type="text" id="ab-destination" class="form-control" placeholder="e.g. Chandauli Station, Baburi, Sakaldiha" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;" class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Date of Journey *</label>
+              <input type="date" id="ab-date" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Pickup Time *</label>
+              <input type="time" id="ab-time" class="form-control" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;" class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Vehicle Type Preference</label>
+              <select id="ab-vehicle" class="form-select">
+                <option value="Passenger Auto (3-4 Seater)">Passenger Auto (3-4 Seater)</option>
+                <option value="E-Rickshaw">E-Rickshaw (Eco Friendly Local)</option>
+                <option value="Commercial Goods Loader">Commercial Goods Loader (Chhota Hathi)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Passenger Count</label>
+              <select id="ab-passengers" class="form-select">
+                <option value="1">1 Passenger</option>
+                <option value="2">2 Passengers</option>
+                <option value="3">3 Passengers</option>
+                <option value="4+">4 or More Passengers</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Additional Message / Luggage Details (Optional)</label>
+            <input type="text" id="ab-notes" class="form-control" placeholder="e.g. Heavy luggage, return trip required, flight/train timing...">
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg btn-full" id="ab-submit-btn" style="margin-top: 16px; font-size: 1.05rem;">
+            Submit Auto Booking Request →
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container footer-top">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3 style="color: #FFF; font-size: 1.25rem; margin-bottom: 12px;">Ayush Service Center</h3>
+          <p style="font-size: 0.9rem; line-height: 1.6;">Budhiya Mai Mandir Ke Paas, Tarajeevanpur Chauraha, Chandauli • Call: +91 96169 32589</p>
+        </div>
+        <div class="footer-col">
+          <h4>24/7 Availability</h4>
+          <p style="font-size: 0.88rem; color: #CBD5E1;">Our autos and drivers are available on pre-booking and emergency calls anytime.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <div>© 2026 Ayush Service Center. All rights reserved.</div>
+        <div>Developed by Ayush Gupta (T.WILL) • 9519099011</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="js/app.js"></script>
+  <script type="module">
+    import { initAutoBookingPage } from "./js/order-flow.js";
+    document.addEventListener("DOMContentLoaded", () => {
+      initAutoBookingPage();
+    });
+  </script>
 </body>
 </html>

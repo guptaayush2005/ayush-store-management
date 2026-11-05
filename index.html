@@ -1,75 +1,627 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ayush Service Center - Premium Retail Store | Tarajeevanpur Chauraha, Chandauli</title>
+  
+  <meta name="description" content="Ayush Service Center at Tarajeevanpur Chauraha, Chandauli: Stainless steel utensils, plastic household items, mobile accessories, cold drinks, cosmetics, dona-pattal & reliable auto booking. Call/WhatsApp: +91 96169 32589.">
+  <meta name="keywords" content="Ayush Service Center, Tarajeevanpur Chauraha, Chandauli, bartan shop, steel utensils, plastic bucket, mobile charger, auto booking chandauli">
+  <link rel="canonical" href="https://ayush-service-center.web.app/">
 
-<title>Ayush Service Center</title>
+  <!-- Open Graph / Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Ayush Service Center - Premium Retail Store in Chandauli">
+  <meta property="og:description" content="Shop steel utensils, plasticware, mobile accessories, cold drinks, cosmetics, and auto booking at Budhiya Mai Mandir, Tarajeevanpur Chauraha, Chandauli.">
+  <meta property="og:image" content="images/poster.jpg">
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+  <!-- Schema.org LocalBusiness -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Ayush Service Center",
+    "image": "https://ayush-service-center.web.app/images/poster.jpg",
+    "telephone": "+91 96169 32589",
+    "email": "vinodkumargupta290@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Budhiya Mai Mandir Ke Paas, Tarajeevanpur Chauraha",
+      "addressLocality": "Chandauli",
+      "addressRegion": "Uttar Pradesh",
+      "postalCode": "232120",
+      "addressCountry": "IN"
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      "opens": "07:00",
+      "closes": "21:00"
+    },
+    "founder": {
+      "@type": "Person",
+      "name": "Vinod Kumar Gupta"
+    }
+  }
+  </script>
 
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-<div class="container">
+  <!-- Top Announcement Bar -->
+  <div class="top-bar">
+    <div class="container top-bar-content">
+      <div>
+        ✨ <strong>Budhiya Mai Mandir Ke Paas</strong>, Tarajeevanpur Chauraha, Chandauli • Open 7:00 AM – 9:00 PM
+      </div>
+      <div class="top-bar-links">
+        <a href="tel:+919616932589" class="dynamic-phone-link">📞 +91 96169 32589</a>
+        <span>|</span>
+        <a href="my-orders.html">📦 Track Order</a>
+        <span>|</span>
+        <a href="admin/login.html" style="opacity: 0.8;">Admin Portal</a>
+      </div>
+    </div>
+  </div>
 
-<a class="navbar-brand fw-bold" href="index.html">
-Ayush Service Center
-</a>
+  <!-- Main Header -->
+  <header class="main-header">
+    <div class="container header-inner">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">ASC</div>
+        <div class="brand-text">
+          <h1 class="dynamic-store-name">Ayush Service Center</h1>
+          <p>विश्वास एवं गुणवत्ता • Est. 2000</p>
+        </div>
+      </a>
 
-<div class="navbar-nav ms-auto">
-<a class="nav-link text-white" href="index.html">Home</a>
-<a class="nav-link text-white" href="about.html">About</a>
-<a class="nav-link text-white" href="services.html">Services</a>
-<a class="nav-link text-white" href="reviews.html">Reviews</a>
-<a class="nav-link text-white" href="contact.html">Contact</a>
-</div>
+      <!-- Live Search Bar -->
+      <div class="header-search">
+        <form id="header-search-form" class="search-input-wrapper">
+          <input type="text" id="header-search-input" class="search-input" placeholder="Search steel cookers, plasticware, chargers, drinks..." autocomplete="off">
+          <button type="submit" class="search-btn" title="Search">🔍</button>
+        </form>
+        <div id="header-search-dropdown" class="search-suggestions-dropdown"></div>
+      </div>
 
-</div>
-</nav>
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <a href="tel:+919616932589" class="header-action-btn hide-on-mobile">
+          <span style="font-size: 20px;">📞</span>
+          <div style="text-align: left; line-height: 1.2;">
+            <div style="font-size: 0.7rem; color: var(--text-muted);">Call Store</div>
+            <div style="font-size: 0.88rem; font-weight: 700;">+91 96169 32589</div>
+          </div>
+        </a>
 
-<!-- Hero Section -->
-<h1 class="welcome-title text-center mt-4">
-✨ आपका स्वागत है ✨
-<br>
-Ayush Service Center में
-</h1>
+        <a href="cart.html" class="header-action-btn" title="Shopping Cart">
+          <span style="font-size: 22px;">🛒</span>
+          <span class="cart-badge cart-count-badge" style="display: none;">0</span>
+          <span class="hide-on-mobile" style="font-weight: 700;">Cart</span>
+        </a>
 
-<p class="welcome-text text-center">
-स्टील बर्तन, प्लास्टिक सामान, मोबाइल एक्सेसरीज,
-कोल्ड ड्रिंक, कॉस्मेटिक्स, दोना-पत्तल एवं
-ऑटो बुकिंग की सभी सुविधाएं एक ही स्थान पर।
-</p>
+        <!-- Mobile Hamburger Toggle -->
+        <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle" title="Menu">
+          ☰
+        </button>
+      </div>
 
-<section class="container py-4 text-center">
+    </div>
+  </header>
 
-<img
-src="images/poster.jpg"
-class="hero-poster img-fluid rounded shadow"
-alt="Ayush Service Center">
+  <!-- Secondary Navigation Bar -->
+  <nav class="desktop-nav">
+    <div class="container desktop-nav-inner">
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link active">Home</a></li>
+        <li><a href="shop.html" class="nav-link">Shop All</a></li>
+        <li><a href="categories.html" class="nav-link">Categories</a></li>
+        <li><a href="offers.html" class="nav-link">Offers & Deals</a></li>
+        <li><a href="autobooking.html" class="nav-link">Auto Booking</a></li>
+        <li><a href="about.html" class="nav-link">About Us</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="my-orders.html" class="nav-link">Track Order</a></li>
+      </ul>
 
-<br>
+      <div class="nav-quick-cta">
+        <a href="https://wa.me/919616932589?text=Hello%20Ayush%20Service%20Center,%20I%20have%20an%20enquiry" target="_blank" class="btn btn-sm btn-whatsapp">
+          💬 WhatsApp Chat
+        </a>
+      </div>
+    </div>
+  </nav>
 
-<a href="contact.html"
-class="btn btn-success btn-lg mt-4">
-📞 Contact Now
-</a>
+  <!-- Mobile Slide-out Drawer -->
+  <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop"></div>
+  <aside class="mobile-drawer" id="mobile-drawer">
+    <div class="drawer-header">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="width: 32px; height: 32px; background: #2563EB; color: #FFF; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-weight: 800;">ASC</span>
+        <span style="font-weight: 700; font-size: 1.05rem;">Menu</span>
+      </div>
+      <button type="button" id="drawer-close-btn" style="background: none; border: none; color: #FFF; font-size: 22px; cursor: pointer;">✕</button>
+    </div>
+    
+    <div class="drawer-body">
+      <ul class="drawer-nav-list">
+        <li class="drawer-nav-item"><a href="index.html" class="active">🏠 Home</a></li>
+        <li class="drawer-nav-item"><a href="shop.html">🛍️ Shop Catalog</a></li>
+        <li class="drawer-nav-item"><a href="categories.html">🏷️ All Categories</a></li>
+        <li class="drawer-nav-item"><a href="offers.html">🎟️ Special Offers</a></li>
+        <li class="drawer-nav-item"><a href="autobooking.html">🚗 Auto Booking</a></li>
+        <li class="drawer-nav-item"><a href="about.html">✨ About Store</a></li>
+        <li class="drawer-nav-item"><a href="contact.html">📞 Contact & Map</a></li>
+        <li class="drawer-nav-item"><a href="my-orders.html">📦 Track My Order</a></li>
+        <li class="drawer-nav-item"><a href="cart.html">🛒 View Cart</a></li>
+        <li class="drawer-nav-item" style="border-top: 1px solid #E2E8F0; margin-top: 10px; padding-top: 10px;">
+          <a href="admin/login.html" style="color: #64748B;">⚙️ Admin Login</a>
+        </li>
+      </ul>
+    </div>
 
-</section>
+    <div class="drawer-footer">
+      <div style="font-size: 0.8rem; color: #64748B; margin-bottom: 8px;">
+        📍 Budhiya Mai Mandir Ke Paas, Tarajeevanpur Chauraha
+      </div>
+      <a href="tel:+919616932589" class="btn btn-primary btn-full btn-sm">
+        📞 Call +91 96169 32589
+      </a>
+    </div>
+  </aside>
 
-<!-- Footer -->
-<footer class="bg-dark text-white text-center py-4 mt-5">
+  <!-- Mobile Bottom Navigation Bar (< 768px) -->
+  <nav class="mobile-bottom-nav">
+    <div class="mobile-bottom-nav-inner">
+      <a href="index.html" class="bottom-nav-item active">
+        <span>🏠</span>
+        <span>Home</span>
+      </a>
+      <a href="shop.html" class="bottom-nav-item">
+        <span>🛍️</span>
+        <span>Shop</span>
+      </a>
+      <a href="autobooking.html" class="bottom-nav-item">
+        <span>🚗</span>
+        <span>Auto</span>
+      </a>
+      <a href="cart.html" class="bottom-nav-item">
+        <span>🛒</span>
+        <span class="bottom-cart-badge cart-count-badge" style="display: none;">0</span>
+        <span>Cart</span>
+      </a>
+      <a href="https://wa.me/919616932589?text=Hello%20Ayush%20Service%20Center" target="_blank" class="bottom-nav-item" style="color: #25D366;">
+        <span>💬</span>
+        <span>WhatsApp</span>
+      </a>
+    </div>
+  </nav>
 
-<h5>Ayush Service Center</h5>
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/919616932589?text=Hello%20Ayush%20Service%20Center,%20I%20would%20like%20to%20order" target="_blank" class="whatsapp-float-btn" title="Contact us on WhatsApp">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12.031 2C6.5 2 2 6.5 2 12.031c0 2.227.73 4.285 1.969 5.953L2 22l4.156-1.922C7.781 21.234 9.82 22 12.031 22 17.562 22 22 17.5 22 12.031 22 6.5 17.562 2 12.031 2zm5.75 14.125c-.25.703-1.453 1.344-2.015 1.39-.547.047-1.235.079-3.563-.875-2.969-1.218-4.875-4.25-5.015-4.437-.141-.188-1.188-1.578-1.188-3.016s.75-2.141 1.015-2.438c.266-.297.578-.375.782-.375.188 0 .375 0 .546.016.188.015.438-.078.688.516.25.61.86 2.094.938 2.25.078.156.125.344.031.547-.078.188-.125.312-.25.469-.125.14-.265.312-.375.422-.125.125-.265.265-.11.531.157.266.704 1.156 1.516 1.875 1.047.922 1.938 1.219 2.203 1.359.266.141.422.125.578-.062.157-.188.672-.782.844-1.047.172-.266.36-.219.594-.125.25.078 1.563.734 1.828.875.266.14.438.219.5.328.063.11.063.64-.187 1.344z"/>
+    </svg>
+  </a>
 
-<p>📞 +91 96169 32589</p>
+  <!-- ================= HERO SECTION ================= -->
+  <section class="hero-slider-section">
+    <div class="container hero-slide">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(37, 99, 235, 0.2); border: 1px solid rgba(37, 99, 235, 0.4); padding: 6px 14px; border-radius: var(--radius-full); margin-bottom: 16px; font-size: 0.85rem; font-weight: 600; color: #93C5FD;">
+            ✨ 24+ Years of Trust & Service • Est. 2000
+          </div>
+          <h2>
+            ✨ आपका स्वागत है ✨<br>
+            <span style="color: #60A5FA;">Ayush Service Center</span> में
+          </h2>
+          <p>
+            स्टील बर्तन, प्लास्टिक सामान, मोबाइल एक्सेसरीज, कोल्ड ड्रिंक, कॉस्मेटिक्स, दोना-पत्तल एवं ऑटो बुकिंग की सभी सुविधाएं एक ही स्थान पर।
+          </p>
+          <div class="hero-cta-group">
+            <a href="shop.html" class="btn btn-primary btn-lg">
+              🛒 Shop Catalog Now
+            </a>
+            <a href="https://wa.me/919616932589?text=Hello%20Ayush%20Service%20Center,%20I%20want%20to%20order" target="_blank" class="btn btn-whatsapp btn-lg">
+              💬 Order on WhatsApp
+            </a>
+            <a href="autobooking.html" class="btn btn-outline btn-lg" style="color: #FFF; border-color: rgba(255,255,255,0.3);">
+              🚗 Book Auto
+            </a>
+          </div>
+        </div>
 
-<p>📍 Tarajeevanpur Chauraha, Chandauli</p>
+        <div class="hero-image-wrapper">
+          <img src="images/poster.jpg" alt="Ayush Service Center Storefront" class="hero-poster">
+          <div style="position: absolute; bottom: -12px; right: 20px; background: #0F172A; border: 2px solid #2563EB; border-radius: 12px; padding: 10px 16px; text-align: left; box-shadow: var(--shadow-lg);">
+            <div style="font-size: 0.72rem; color: #94A3B8; text-transform: uppercase;">Store Location</div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: #FFF;">Tarajeevanpur Chauraha</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-</footer>
+  <!-- ================= TRUST FEATURES STRIP ================= -->
+  <section class="features-strip">
+    <div class="container">
+      <div class="features-grid">
+        <div class="feature-box">
+          <div class="feature-icon">🏪</div>
+          <div>
+            <h4>24+ Years Trust</h4>
+            <p>Serving since 2000 in Chandauli</p>
+          </div>
+        </div>
+        <div class="feature-box">
+          <div class="feature-icon">🛡️</div>
+          <div>
+            <h4>100% Genuine Quality</h4>
+            <p>Verified utensils & branded items</p>
+          </div>
+        </div>
+        <div class="feature-box">
+          <div class="feature-icon">💰</div>
+          <div>
+            <h4>Wholesale & Retail</h4>
+            <p>Guaranteed best local prices</p>
+          </div>
+        </div>
+        <div class="feature-box">
+          <div class="feature-icon">⚡</div>
+          <div>
+            <h4>Local Pickup & Delivery</h4>
+            <p>Fast delivery or store pickup</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- ================= PRODUCT CATEGORIES ================= -->
+  <section style="padding: 60px 0; background: #F8FAFC;">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <span style="font-size: 0.85rem; font-weight: 700; color: #2563EB; text-transform: uppercase; letter-spacing: 0.5px;">Explore Products</span>
+          <h2 style="font-size: 1.8rem; font-weight: 800; color: #0F172A; margin: 4px 0 0;">Popular Store Categories</h2>
+        </div>
+        <a href="categories.html" style="font-size: 0.95rem; font-weight: 600; color: #2563EB; display: flex; align-items: center; gap: 4px;">
+          View All Categories →
+        </a>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;" class="cat-grid-wrapper" id="home-categories-grid">
+        <!-- Dynamically rendered or pre-hydrated -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FEATURED PRODUCTS ================= -->
+  <section style="padding: 60px 0; background: #FFFFFF; border-top: 1px solid #E2E8F0; border-bottom: 1px solid #E2E8F0;">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <span style="font-size: 0.85rem; font-weight: 700; color: #16A34A; text-transform: uppercase; letter-spacing: 0.5px;">Handpicked Deals</span>
+          <h2 style="font-size: 1.8rem; font-weight: 800; color: #0F172A; margin: 4px 0 0;">Featured Products</h2>
+        </div>
+        <a href="shop.html" style="font-size: 0.95rem; font-weight: 600; color: #2563EB;">
+          Browse All →
+        </a>
+      </div>
+
+      <div class="product-grid" id="home-featured-grid">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROMOTIONAL BANNER ================= -->
+  <section style="padding: 40px 0; background: #0F172A; color: #FFFFFF;">
+    <div class="container">
+      <div style="background: linear-gradient(135deg, #1E3A8A 0%, #065F46 100%); border-radius: 20px; padding: 40px 32px; display: grid; grid-template-columns: 1fr; gap: 24px; align-items: center;" class="promo-banner-grid">
+        <div>
+          <span class="badge badge-warning" style="margin-bottom: 12px;">LIMITED TIME OFFER</span>
+          <h2 style="font-size: 2rem; color: #FFFFFF; margin-bottom: 10px;">Steel Utensils & Kitchenware Sale</h2>
+          <p style="color: #E2E8F0; font-size: 1rem; max-width: 580px; margin-bottom: 20px;">
+            Upgrade your kitchen with heavy gauge stainless steel cookers, thalis, and storage containers. Get extra discounts on full family sets.
+          </p>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="shop.html?category=Steel" class="btn btn-primary">Shop Steel Collection</a>
+            <a href="offers.html" class="btn btn-outline" style="color: #FFF; border-color: rgba(255,255,255,0.4);">View All Coupons</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BEST SELLERS ================= -->
+  <section style="padding: 60px 0; background: #F8FAFC;">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <span style="font-size: 0.85rem; font-weight: 700; color: #D97706; text-transform: uppercase;">Customer Favorites</span>
+          <h2 style="font-size: 1.8rem; font-weight: 800; color: #0F172A; margin: 4px 0 0;">Best Sellers in Chandauli</h2>
+        </div>
+        <a href="shop.html" style="font-size: 0.95rem; font-weight: 600; color: #2563EB;">View Full Shop →</a>
+      </div>
+
+      <div class="product-grid" id="home-bestsellers-grid">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= AUTO BOOKING HIGHLIGHT ================= -->
+  <section style="padding: 60px 0; background: #FFFFFF; border-top: 1px solid #E2E8F0;">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center;" class="auto-highlight-grid">
+        <div>
+          <span class="badge badge-primary" style="margin-bottom: 12px;">FAST LOCAL TRANSPORT</span>
+          <h2 style="font-size: 2rem; font-weight: 800; color: #0F172A; margin-bottom: 16px;">
+            🚗 Reliable Auto Booking in Chandauli
+          </h2>
+          <p style="font-size: 1.05rem; color: #475569; line-height: 1.6; margin-bottom: 20px;">
+            Need an auto for passenger travel, railway station drop, market visit, or goods transport? We provide immediate auto service at affordable, fair rates across Tarajeevanpur and surrounding areas.
+          </p>
+          <ul style="list-style: none; margin-bottom: 28px; display: flex; flex-direction: column; gap: 10px; font-size: 0.95rem; color: #1E293B;">
+            <li>✓ Passenger Autos (3-4 Seaters) for family travel</li>
+            <li>✓ E-Rickshaws for quick local commutation</li>
+            <li>✓ Commercial Loader Autos for heavy retail/goods transport</li>
+            <li>✓ 24/7 on-call availability & advance booking</li>
+          </ul>
+          <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+            <a href="autobooking.html" class="btn btn-primary btn-lg">Book Auto Online</a>
+            <a href="tel:+919616932589" class="btn btn-navy btn-lg">📞 Call +91 96169 32589</a>
+          </div>
+        </div>
+
+        <div style="text-align: center;">
+          <img src="images/1autobooking.jpg" alt="Auto Booking Services" style="width: 100%; max-height: 380px; object-fit: cover; border-radius: 20px; box-shadow: var(--shadow-xl); border: 1px solid #CBD5E1;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOUNDER & STORE STORY ================= -->
+  <section style="padding: 60px 0; background: #F8FAFC; border-top: 1px solid #E2E8F0;">
+    <div class="container">
+      <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 24px; padding: 40px; display: grid; grid-template-columns: 1fr; gap: 32px; align-items: center;" class="story-grid">
+        <div style="text-align: center;">
+          <img src="images/owner.jpg" alt="Vinod Kumar Gupta - Founder" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; margin: 0 auto 16px; border: 6px solid #2563EB; box-shadow: var(--shadow-lg);">
+          <h3 style="font-size: 1.35rem; font-weight: 800; color: #0F172A; margin-bottom: 2px;">Vinod Kumar Gupta</h3>
+          <p style="font-size: 0.85rem; color: #2563EB; font-weight: 600;">Founder & Owner • Ayush Service Center</p>
+        </div>
+        <div>
+          <span class="badge badge-primary" style="margin-bottom: 10px;">ESTABLISHED 2000</span>
+          <h2 style="font-size: 1.8rem; font-weight: 800; color: #0F172A; margin-bottom: 14px;">
+            आपकी सेवा में समर्पित — 24 वर्षों का विश्वास
+          </h2>
+          <p style="font-size: 1rem; color: #475569; line-height: 1.7; margin-bottom: 20px;">
+            हमारी दुकान वर्ष 2000 से आपकी सेवा में निरंतर कार्यरत है। हमारा उद्देश्य है कि आपको एक ही स्थान पर उत्तम गुणवत्ता वाले बर्तन, प्लास्टिक सामान, मोबाइल पार्ट्स, ठंडा पेय और ऑटो बुकिंग उचित मूल्य और ईमानदारी के साथ उपलब्ध कराई जाए।
+          </p>
+          <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+            <div>
+              <div style="font-size: 1.8rem; font-weight: 800; color: #2563EB;">2000</div>
+              <div style="font-size: 0.8rem; color: #64748B;">स्थापना वर्ष</div>
+            </div>
+            <div>
+              <div style="font-size: 1.8rem; font-weight: 800; color: #2563EB;">24+</div>
+              <div style="font-size: 0.8rem; color: #64748B;">वर्षों का अनुभव</div>
+            </div>
+            <div>
+              <div style="font-size: 1.8rem; font-weight: 800; color: #2563EB;">10,000+</div>
+              <div style="font-size: 0.8rem; color: #64748B;">संतुष्ट ग्राहक</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STORE LOCATION & MAP ================= -->
+  <section style="padding: 60px 0; background: #FFFFFF; border-top: 1px solid #E2E8F0;">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: 1fr; gap: 32px;" class="map-grid">
+        <div>
+          <span class="badge badge-primary" style="margin-bottom: 10px;">VISIT OUR STORE</span>
+          <h2 style="font-size: 1.8rem; font-weight: 800; color: #0F172A; margin-bottom: 14px;">
+            Come Visit Ayush Service Center
+          </h2>
+          <p style="font-size: 1rem; color: #475569; margin-bottom: 24px; line-height: 1.6;">
+            Located right near Budhiya Mai Mandir at Tarajeevanpur Chauraha. Easily accessible with ample parking.
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px; font-size: 0.95rem;">
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <span style="font-size: 20px; color: #2563EB;">📍</span>
+              <div>
+                <strong>Physical Address:</strong><br>
+                Ayush Service Center, Budhiya Mai Mandir Ke Paas,<br>
+                Tarajeevanpur Chauraha, Chandauli, Uttar Pradesh 232120
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <span style="font-size: 20px; color: #2563EB;">📞</span>
+              <div>
+                <strong>Phone & WhatsApp:</strong> <a href="tel:+919616932589" style="color: #2563EB; font-weight: 600;">+91 96169 32589</a>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <span style="font-size: 20px; color: #2563EB;">⏰</span>
+              <div>
+                <strong>Opening Hours:</strong> 7:00 AM – 9:00 PM (Monday – Sunday)
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="https://maps.google.com/maps?q=Budhiya%20Mai%20Mandir%20Tarajeevanpur%20Chauraha%20Chandauli%20Uttar%20Pradesh" target="_blank" class="btn btn-primary">
+              🗺️ Open in Google Maps
+            </a>
+            <a href="contact.html" class="btn btn-outline">
+              Contact Page
+            </a>
+          </div>
+        </div>
+
+        <div style="border-radius: 20px; overflow: hidden; border: 1px solid #E2E8F0; box-shadow: var(--shadow-md); min-height: 340px;">
+          <iframe
+            src="https://maps.google.com/maps?q=Budhiya%20Mai%20Mandir%20Tarajeevanpur%20Chauraha%20Chandauli%20Uttar%20Pradesh&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            width="100%"
+            height="100%"
+            style="border:0; min-height: 340px;"
+            allowfullscreen=""
+            loading="lazy">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROFESSIONAL FOOTER ================= -->
+  <footer class="main-footer">
+    <div class="container footer-top">
+      <div class="footer-grid">
+        
+        <!-- Col 1: Brand Info -->
+        <div class="footer-col">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+            <span style="width: 38px; height: 38px; background: #2563EB; color: #FFF; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px;">ASC</span>
+            <h3 style="color: #FFF; font-size: 1.25rem; margin: 0;">Ayush Service Center</h3>
+          </div>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px;">
+            Tarajeevanpur Chauraha's most trusted retail center since 2000. Stainless steel utensils, plasticware, mobile accessories, cold refreshments & reliable auto booking.
+          </p>
+          <div style="font-size: 0.85rem; color: #CBD5E1;">
+            Owner: <strong>Vinod Kumar Gupta</strong>
+          </div>
+        </div>
+
+        <!-- Col 2: Categories -->
+        <div class="footer-col">
+          <h4>Product Categories</h4>
+          <ul class="footer-links">
+            <li><a href="shop.html?category=Steel">Steel Utensils (बर्तन)</a></li>
+            <li><a href="shop.html?category=Plastic">Plastic Products</a></li>
+            <li><a href="shop.html?category=Mobile">Mobile Accessories</a></li>
+            <li><a href="shop.html?category=Cold Drink">Cold Drinks & Beverages</a></li>
+            <li><a href="shop.html?category=Cosmetics">Cosmetics & Personal Care</a></li>
+            <li><a href="shop.html?category=Dona Pattal">Dona & Pattal</a></li>
+            <li><a href="shop.html?category=Gas">Gas Stoves & Parts</a></li>
+            <li><a href="autobooking.html">Auto Booking Service</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Quick Links -->
+        <div class="footer-col">
+          <h4>Customer Service</h4>
+          <ul class="footer-links">
+            <li><a href="shop.html">Shop Catalog</a></li>
+            <li><a href="offers.html">Deals & Coupons</a></li>
+            <li><a href="cart.html">Shopping Cart</a></li>
+            <li><a href="my-orders.html">Track Your Order</a></li>
+            <li><a href="about.html">About Store Heritage</a></li>
+            <li><a href="contact.html">Store Location & Map</a></li>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms & Conditions</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Contact & Hours -->
+        <div class="footer-col">
+          <h4>Store Details</h4>
+          <div class="footer-contact-item">
+            <span>📍</span>
+            <div>
+              Budhiya Mai Mandir Ke Paas, Tarajeevanpur Chauraha, Chandauli, UP 232120
+            </div>
+          </div>
+          <div class="footer-contact-item">
+            <span>📞</span>
+            <div>
+              <a href="tel:+919616932589" style="color: #FFF;">+91 96169 32589</a>
+            </div>
+          </div>
+          <div class="footer-contact-item">
+            <span>✉️</span>
+            <div>
+              vinodkumargupta290@gmail.com
+            </div>
+          </div>
+          <div class="footer-contact-item">
+            <span>⏰</span>
+            <div>
+              Daily: 7:00 AM – 9:00 PM
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom Credits -->
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <div>
+          © 2026 Ayush Service Center. All rights reserved.
+        </div>
+        <div>
+          Website Built & Managed with Excellence by <strong>Ayush Gupta</strong> (Co-Founder, T.WILL) • 📞 9519099011
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="js/app.js"></script>
+  <script type="module">
+    import { fetchProducts, fetchCategories } from "./js/store.js";
+    import { renderProductCard } from "./js/catalog.js";
+
+    // Hydrate Homepage Categories & Products
+    document.addEventListener("DOMContentLoaded", async () => {
+      // 1. Categories
+      const categories = await fetchCategories();
+      const catContainer = document.getElementById("home-categories-grid");
+      if (catContainer) {
+        catContainer.innerHTML = categories.slice(0, 8).map(c => `
+          <div class="category-card" onclick="window.location.href='shop.html?category=${encodeURIComponent(c.name)}'" style="cursor: pointer;">
+            <div class="category-icon-wrapper">
+              <img src="${c.image || 'images/poster.jpg'}" alt="${c.name}">
+            </div>
+            <h3>${c.name}</h3>
+            ${c.nameHindi ? `<p style="color: #2563EB; font-weight: 600;">${c.nameHindi}</p>` : ''}
+          </div>
+        `).join("");
+      }
+
+      // 2. Featured Products
+      const allProds = await fetchProducts();
+      const featured = allProds.filter(p => p.isFeatured).slice(0, 8);
+      const featContainer = document.getElementById("home-featured-grid");
+      if (featContainer) {
+        featContainer.innerHTML = (featured.length > 0 ? featured : allProds.slice(0, 8)).map(renderProductCard).join("");
+      }
+
+      // 3. Best Sellers
+      const bestSellers = allProds.slice(4, 12);
+      const bsContainer = document.getElementById("home-bestsellers-grid");
+      if (bsContainer) {
+        bsContainer.innerHTML = bestSellers.map(renderProductCard).join("");
+      }
+    });
+  </script>
 </body>
-</html>user lo
+</html>

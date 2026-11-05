@@ -1,117 +1,1059 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Admin Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard & POS - Ayush Service Center</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts & Chart.js -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<style>
-
-body{
-    background:#f5f7fa;
-}
-
-.dashboard-box{
-    max-width:700px;
-    margin:50px auto;
-}
-
-</style>
-
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="../css/print.css">
 </head>
-<body>
+<body class="admin-body">
 
-<div class="container">
+  <div class="admin-layout">
+    
+    <!-- Collapsible Sidebar (18 Modules) -->
+    <aside class="admin-sidebar" id="admin-sidebar">
+      <div class="admin-sidebar-header">
+        <div class="admin-brand">
+          <span style="width: 32px; height: 32px; background: linear-gradient(135deg, #2563EB, #06B6D4); color: #FFF; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800;">ASC</span>
+          <span>Ayush Center</span>
+        </div>
+        <button type="button" id="sidebar-close-btn" style="background: none; border: none; color: #94A3B8; font-size: 20px; cursor: pointer; display: none;">✕</button>
+      </div>
 
-<div class="dashboard-box">
+      <nav class="admin-sidebar-nav">
+        <div class="nav-section-title">CORE OPERATIONS</div>
+        <a class="admin-nav-item active" data-tab="tab-overview">
+          <span class="nav-left">📊 Overview</span>
+        </a>
+        <a class="admin-nav-item" data-tab="tab-pos">
+          <span class="nav-left">⚡ Billing / POS</span>
+          <span class="badge badge-cyan">Fast</span>
+        </a>
+        <a class="admin-nav-item" data-tab="tab-orders">
+          <span class="nav-left">🛍️ Customer Orders</span>
+          <span class="badge badge-warning" id="sidebar-pending-orders-badge">0</span>
+        </a>
+        <a class="admin-nav-item" data-tab="tab-autobooking">
+          <span class="nav-left">🚗 Auto Bookings</span>
+          <span class="badge badge-primary" id="sidebar-bookings-badge">0</span>
+        </a>
 
-<h2 class="text-center mb-4">
-⚙️ Admin Dashboard
-</h2>
+        <div class="nav-section-title">CATALOG & INVENTORY</div>
+        <a class="admin-nav-item" data-tab="tab-products">
+          <span class="nav-left">📦 Products</span>
+        </a>
+        <a class="admin-nav-item" data-tab="tab-categories">
+          <span class="nav-left">🏷️ Categories</span>
+        </a>
+        <a class="admin-nav-item" data-tab="tab-inventory">
+          <span class="nav-left">📋 Inventory & Stock</span>
+        </a>
 
-<div class="d-grid gap-3">
+        <div class="nav-section-title">FINANCE & REPORTS</div>
+        <a class="admin-nav-item" data-tab="tab-sales">
+          <span class="nav-left">📈 Sales Reports</span>
+        </a>
+        <a class="admin-nav-item" data-tab="tab-expenses">
+          <span class="nav-left">💸 Store Expenses</span>
+        </a>
+        <a class="admin-nav-item" data-tab="tab-customers">
+          <span class="nav-left">👥 Customers CRM</span>
+        </a>
 
-<a href="add-product.html"
-class="btn btn-success btn-lg py-3">
+        <div class="nav-section-title">STOREFRONT & CMS</div>
+        <a class="admin-nav-item" data-tab="tab-offers">
+          <span class="nav-left">🎟️ Offers & Coupons</span>
+        </a>
+        <a class="admin-nav-item" data-tab="tab-banners">
+          <span class="nav-left">🖼️ Homepage Banners</span>
+        </a>
+        <a class="admin-nav-item" data-tab="tab-media">
+          <span class="nav-left">📁 Media Library</span>
+        </a>
+        <a class="admin-nav-item" data-tab="tab-cms">
+          <span class="nav-left">📝 Website Content</span>
+        </a>
 
-➕ Add Product
+        <div class="nav-section-title">SETTINGS & SECURITY</div>
+        <a class="admin-nav-item" data-tab="tab-settings">
+          <span class="nav-left">⚙️ Store Settings</span>
+        </a>
+        <a class="admin-nav-item" data-tab="tab-staff">
+          <span class="nav-left">🛡️ Staff Management</span>
+        </a>
+        <a class="admin-nav-item" data-tab="tab-audit">
+          <span class="nav-left">📜 Activity Logs</span>
+        </a>
+      </nav>
 
-</a>
+      <div class="admin-sidebar-footer">
+        <div class="admin-user-info">
+          <div class="admin-avatar" id="sidebar-user-avatar">A</div>
+          <div class="admin-user-details">
+            <h5 id="sidebar-user-name">Store Admin</h5>
+            <p id="sidebar-user-email">admin@ayush.com</p>
+          </div>
+        </div>
+        <button type="button" id="admin-logout-btn" style="background: none; border: none; color: #EF4444; font-size: 20px; cursor: pointer;" title="Logout">
+          🚪
+        </button>
+      </div>
+    </aside>
 
-<a href="manage-products.html"
-class="btn btn-primary btn-lg py-3">
+    <!-- Main Container -->
+    <main class="admin-main">
+      
+      <!-- Topbar -->
+      <header class="admin-topbar">
+        <div class="topbar-left">
+          <button type="button" class="sidebar-toggle-btn" id="sidebar-open-btn">☰</button>
+          <div style="font-weight: 700; color: #0F172A; font-size: 1.1rem;" id="topbar-page-title">
+            Dashboard Overview
+          </div>
+        </div>
+        <div class="topbar-right">
+          <a href="../index.html" target="_blank" class="btn btn-sm btn-outline">
+            🌐 View Live Store
+          </a>
+          <button type="button" class="btn btn-sm btn-primary" id="topbar-quick-pos-btn">
+            ⚡ Open POS
+          </button>
+        </div>
+      </header>
 
-📦 Manage Products
+      <!-- Content Area (Tabs) -->
+      <div class="admin-content-body">
 
-</a>
+        <!-- 1. OVERVIEW TAB -->
+        <section class="admin-tab-pane active" id="tab-overview">
+          <!-- 10 KPI Statistics Grid -->
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Total Products</span>
+                <span class="kpi-icon" style="background: #EFF6FF; color: #2563EB;">📦</span>
+              </div>
+              <div class="kpi-value" id="kpi-total-products">0</div>
+              <div class="kpi-subtitle">Catalog items</div>
+            </div>
 
-<a href="admin-reviews.html"
-class="btn btn-warning btn-lg py-3">
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Total Stock</span>
+                <span class="kpi-icon" style="background: #F0FDF4; color: #16A34A;">📊</span>
+              </div>
+              <div class="kpi-value" id="kpi-total-stock">0</div>
+              <div class="kpi-subtitle">Units available</div>
+            </div>
 
-⭐ Manage Reviews
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Low Stock Alert</span>
+                <span class="kpi-icon" style="background: #FEF3C7; color: #D97706;">⚠️</span>
+              </div>
+              <div class="kpi-value" id="kpi-low-stock" style="color: #D97706;">0</div>
+              <div class="kpi-subtitle">&lt; min threshold</div>
+            </div>
 
-</a>
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Out of Stock</span>
+                <span class="kpi-icon" style="background: #FEE2E2; color: #DC2626;">🚫</span>
+              </div>
+              <div class="kpi-value" id="kpi-out-stock" style="color: #DC2626;">0</div>
+              <div class="kpi-subtitle">Needs restock</div>
+            </div>
 
-<button
-class="btn btn-danger btn-lg py-3"
-onclick="logout()">
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Today's Sales</span>
+                <span class="kpi-icon" style="background: #ECFEFF; color: #0891B2;">💰</span>
+              </div>
+              <div class="kpi-value" id="kpi-today-sales" style="color: #2563EB;">₹0</div>
+              <div class="kpi-subtitle">Completed today</div>
+            </div>
 
-🚪 Logout
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Monthly Sales</span>
+                <span class="kpi-icon" style="background: #EFF6FF; color: #2563EB;">📅</span>
+              </div>
+              <div class="kpi-value" id="kpi-month-sales">₹0</div>
+              <div class="kpi-subtitle">Current month</div>
+            </div>
 
-</button>
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Total Orders</span>
+                <span class="kpi-icon" style="background: #F5F3FF; color: #7C3AED;">🛍️</span>
+              </div>
+              <div class="kpi-value" id="kpi-total-orders">0</div>
+              <div class="kpi-subtitle">Customer enquiries</div>
+            </div>
 
-</div>
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Pending Orders</span>
+                <span class="kpi-icon" style="background: #FEF3C7; color: #B45309;">⏳</span>
+              </div>
+              <div class="kpi-value" id="kpi-pending-orders" style="color: #B45309;">0</div>
+              <div class="kpi-subtitle">Awaiting action</div>
+            </div>
 
-</div>
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Inventory Value</span>
+                <span class="kpi-icon" style="background: #F1F5F9; color: #475569;">🏷️</span>
+              </div>
+              <div class="kpi-value" id="kpi-inventory-val">₹0</div>
+              <div class="kpi-subtitle">At cost price</div>
+            </div>
 
-</div>
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Gross Profit Est.</span>
+                <span class="kpi-icon" style="background: #DCFCE7; color: #15803D;">📈</span>
+              </div>
+              <div class="kpi-value" id="kpi-gross-profit" style="color: #15803D;">₹0</div>
+              <div class="kpi-subtitle">Retail margin</div>
+            </div>
+          </div>
 
-<script type="module">
+          <!-- Quick Action Bar -->
+          <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 14px; padding: 16px 20px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 24px;">
+            <strong style="color: #0F172A; font-size: 0.92rem;">Quick Operations:</strong>
+            <button type="button" class="btn btn-sm btn-primary" id="btn-quick-new-sale">⚡ Create POS Bill</button>
+            <button type="button" class="btn btn-sm btn-navy" id="btn-quick-add-prod">➕ Add Product</button>
+            <button type="button" class="btn btn-sm btn-outline" id="btn-quick-stock-in">📥 Stock Adjustment</button>
+            <button type="button" class="btn btn-sm btn-outline" id="btn-quick-seed-db" style="margin-left: auto; color: #0891B2; border-color: #A5F3FC;">
+              🌱 Seed Initial Database
+            </button>
+          </div>
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+          <!-- Sales Chart & Recent Orders -->
+          <div style="display: grid; grid-template-columns: 1fr; gap: 24px;" class="overview-charts-grid">
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h3>Revenue & Sales Activity</h3>
+                <span style="font-size: 0.8rem; color: #64748B;">Last 7 Days</span>
+              </div>
+              <div class="admin-card-body">
+                <div style="height: 280px; position: relative;">
+                  <canvas id="salesTrendsChart"></canvas>
+                </div>
+              </div>
+            </div>
 
-import {
-getAuth,
-onAuthStateChanged,
-signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+            <!-- Low Stock Alerts Table -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h3 style="color: #D97706;">⚠️ Low Stock Inventory Warnings</h3>
+                <button type="button" class="btn btn-sm btn-outline" id="view-all-inventory-btn">View All</button>
+              </div>
+              <div class="admin-card-body" style="padding: 0;">
+                <div class="table-responsive">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Current Stock</th>
+                        <th>Min Threshold</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="overview-low-stock-tbody">
+                      <tr><td colspan="5" style="text-align: center; padding: 24px; color: #64748B;">No low-stock items detected.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCawNBZMV3mV_s-ZgBfEkNzJlh6G74k9xs",
-  authDomain: "ayush-service-center.firebaseapp.com",
-  projectId: "ayush-service-center",
-  storageBucket: "ayush-service-center.firebasestorage.app",
-  messagingSenderId: "720883452589",
-  appId: "1:720883452589:web:c0ebb799460cb06654d424"
-};
+        <!-- 2. BILLING & POS TAB -->
+        <section class="admin-tab-pane" id="tab-pos">
+          <div class="pos-container">
+            <!-- Left: Catalog & Barcode Scanner Input -->
+            <div class="pos-catalog-panel">
+              <div class="admin-card" style="margin-bottom: 0;">
+                <div class="admin-card-body" style="padding: 16px;">
+                  <div style="display: grid; grid-template-columns: 1fr auto auto; gap: 10px; margin-bottom: 12px;">
+                    <input type="text" id="pos-barcode-input" class="form-control" placeholder="🔍 Scan barcode or search product name..." autofocus>
+                    <select id="pos-category-select" class="form-select" style="width: 170px;">
+                      <option value="all">All Categories</option>
+                    </select>
+                    <button type="button" class="btn btn-outline" id="pos-add-custom-item-btn">+ Custom Item</button>
+                  </div>
+                  
+                  <!-- POS Product Grid -->
+                  <div id="pos-product-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 10px; max-height: 520px; overflow-y: auto; padding: 4px;">
+                    <!-- Populated dynamically -->
+                  </div>
+                </div>
+              </div>
+            </div>
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+            <!-- Right: POS Current Bill & Checkout -->
+            <div class="pos-cart-panel">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid #E2E8F0; padding-bottom: 10px;">
+                <h3 style="font-size: 1.1rem; font-weight: 800; margin: 0; color: #0F172A;">Current Bill</h3>
+                <button type="button" class="btn btn-sm btn-outline" id="pos-clear-bill-btn" style="color: #EF4444;">Clear</button>
+              </div>
 
-onAuthStateChanged(auth, (user) => {
+              <!-- Customer Details -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;">
+                <input type="text" id="pos-cust-name" class="form-control form-control-sm" placeholder="Customer Name (Optional)">
+                <input type="tel" id="pos-cust-phone" class="form-control form-control-sm" placeholder="Mobile No. (for WhatsApp)">
+              </div>
 
-    if (!user) {
+              <!-- Bill Items Table -->
+              <div class="pos-cart-items" id="pos-cart-items-container">
+                <div style="text-align: center; padding: 30px 10px; color: #94A3B8; font-size: 0.88rem;">
+                  Scan barcode or tap products on the left to add items to bill.
+                </div>
+              </div>
 
-        window.location.href = "login.html";
+              <!-- POS Calculations -->
+              <div style="border-top: 1px solid #E2E8F0; padding-top: 12px; margin-top: auto; font-size: 0.88rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span>Subtotal:</span>
+                  <span id="pos-subtotal" style="font-weight: 700;">₹0</span>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <span>Discount (₹):</span>
+                  <input type="number" id="pos-discount-input" value="0" min="0" style="width: 80px; text-align: right; padding: 4px; border: 1px solid #CBD5E1; border-radius: 6px;">
+                </div>
 
-    }
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                  <span>Tax / GST:</span>
+                  <select id="pos-tax-select" style="padding: 4px; border: 1px solid #CBD5E1; border-radius: 6px;">
+                    <option value="0">0% (Exempt)</option>
+                    <option value="5">5% GST</option>
+                    <option value="12">12% GST</option>
+                    <option value="18">18% GST</option>
+                  </select>
+                </div>
 
-});
+                <div style="display: flex; justify-content: space-between; font-size: 1.35rem; font-weight: 800; color: #2563EB; border-top: 2px solid #0F172A; padding-top: 8px; margin-bottom: 14px;">
+                  <span>Total Payable:</span>
+                  <span id="pos-grand-total">₹0</span>
+                </div>
 
-window.logout = async function(){
+                <!-- Payment Method Buttons -->
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 12px;">
+                  <button type="button" class="btn btn-sm btn-outline pos-paymode-btn active" data-mode="Cash">💵 Cash</button>
+                  <button type="button" class="btn btn-sm btn-outline pos-paymode-btn" data-mode="UPI">📱 UPI QR</button>
+                  <button type="button" class="btn btn-sm btn-outline pos-paymode-btn" data-mode="Card">💳 Card/Khata</button>
+                </div>
 
-    await signOut(auth);
+                <button type="button" class="btn btn-primary btn-lg btn-full" id="pos-checkout-btn">
+                  ✓ Complete & Print Bill
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
 
-    alert("Logged Out Successfully");
+        <!-- 3. CUSTOMER ORDERS TAB -->
+        <section class="admin-tab-pane" id="tab-orders">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3>Customer Orders Management</h3>
+              <div style="display: flex; gap: 8px;">
+                <select id="orders-status-filter" class="form-select form-select-sm" style="width: 160px;">
+                  <option value="all">All Statuses</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Confirmed">Confirmed</option>
+                  <option value="Preparing">Preparing</option>
+                  <option value="Ready for Pickup">Ready for Pickup</option>
+                  <option value="Out for Delivery">Out for Delivery</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+              </div>
+            </div>
+            <div class="admin-card-body" style="padding: 0;">
+              <div class="table-responsive">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Order ID</th>
+                      <th>Date</th>
+                      <th>Customer</th>
+                      <th>Phone</th>
+                      <th>Items</th>
+                      <th>Total</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-orders-tbody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
 
-    window.location.href = "login.html";
+        <!-- 4. AUTO BOOKINGS TAB -->
+        <section class="admin-tab-pane" id="tab-autobooking">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3>Auto & Vehicle Booking Requests</h3>
+              <select id="bookings-status-filter" class="form-select form-select-sm" style="width: 160px;">
+                <option value="all">All Bookings</option>
+                <option value="Pending">Pending</option>
+                <option value="Confirmed">Confirmed</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+            </div>
+            <div class="admin-card-body" style="padding: 0;">
+              <div class="table-responsive">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Booking #</th>
+                      <th>Customer</th>
+                      <th>Phone</th>
+                      <th>Pickup Point</th>
+                      <th>Destination</th>
+                      <th>Date & Time</th>
+                      <th>Vehicle</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-bookings-tbody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
 
-}
+        <!-- 5. PRODUCTS TAB -->
+        <section class="admin-tab-pane" id="tab-products">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3>Products Catalog</h3>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <input type="text" id="admin-prod-search" class="form-control form-control-sm" placeholder="Search products..." style="width: 200px;">
+                <select id="admin-prod-cat-filter" class="form-select form-select-sm" style="width: 150px;">
+                  <option value="all">All Categories</option>
+                </select>
+                <button type="button" class="btn btn-sm btn-outline" id="btn-export-products-csv">📥 Export CSV</button>
+                <button type="button" class="btn btn-sm btn-primary" id="btn-add-product-modal">➕ Add Product</button>
+              </div>
+            </div>
+            <div class="admin-card-body" style="padding: 0;">
+              <div class="table-responsive">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Image</th>
+                      <th>Name / SKU</th>
+                      <th>Category</th>
+                      <th>Price</th>
+                      <th>MRP</th>
+                      <th>Cost</th>
+                      <th>Stock</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-products-tbody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
 
-</script>
+        <!-- 6. CATEGORIES TAB -->
+        <section class="admin-tab-pane" id="tab-categories">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3>Product Categories</h3>
+              <button type="button" class="btn btn-sm btn-primary" id="btn-add-category-modal">➕ Add Category</button>
+            </div>
+            <div class="admin-card-body" style="padding: 0;">
+              <div class="table-responsive">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Icon / Image</th>
+                      <th>Category Name</th>
+                      <th>Hindi Name</th>
+                      <th>Slug</th>
+                      <th>Order</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-categories-tbody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
 
+        <!-- 7. INVENTORY TAB -->
+        <section class="admin-tab-pane" id="tab-inventory">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3>Stock Movements & Inventory Log</h3>
+              <button type="button" class="btn btn-sm btn-primary" id="btn-open-stock-adjust-modal">📋 Adjust Stock</button>
+            </div>
+            <div class="admin-card-body" style="padding: 0;">
+              <div class="table-responsive">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Timestamp</th>
+                      <th>Product</th>
+                      <th>Movement Type</th>
+                      <th>Qty Change</th>
+                      <th>Reason / Reference</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-inventory-movements-tbody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 8. SALES REPORTS TAB -->
+        <section class="admin-tab-pane" id="tab-sales">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3>Sales & Revenue Reports</h3>
+              <button type="button" class="btn btn-sm btn-outline" id="btn-export-sales-csv">📥 Export Sales CSV</button>
+            </div>
+            <div class="admin-card-body" style="padding: 0;">
+              <div class="table-responsive">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Invoice #</th>
+                      <th>Date</th>
+                      <th>Customer</th>
+                      <th>Payment Mode</th>
+                      <th>Items</th>
+                      <th>Subtotal</th>
+                      <th>Grand Total</th>
+                      <th>Receipt</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-sales-tbody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 9. EXPENSES TAB -->
+        <section class="admin-tab-pane" id="tab-expenses">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3>Daily Store Expenses</h3>
+              <button type="button" class="btn btn-sm btn-primary" id="btn-add-expense-modal">➕ Log Expense</button>
+            </div>
+            <div class="admin-card-body" style="padding: 0;">
+              <div class="table-responsive">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Category</th>
+                      <th>Amount (₹)</th>
+                      <th>Description</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-expenses-tbody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 10. CUSTOMERS CRM TAB -->
+        <section class="admin-tab-pane" id="tab-customers">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3>Customers Directory (CRM)</h3>
+              <input type="text" id="admin-customer-search" class="form-control form-control-sm" placeholder="Search customer..." style="width: 220px;">
+            </div>
+            <div class="admin-card-body" style="padding: 0;">
+              <div class="table-responsive">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Customer Name</th>
+                      <th>Phone Number</th>
+                      <th>Address</th>
+                      <th>Total Orders</th>
+                      <th>Total Spent</th>
+                      <th>Quick Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-customers-tbody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 11. OFFERS & COUPONS TAB -->
+        <section class="admin-tab-pane" id="tab-offers">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3>Promotions & Discount Coupons</h3>
+              <button type="button" class="btn btn-sm btn-primary" id="btn-add-offer-modal">➕ Create Offer</button>
+            </div>
+            <div class="admin-card-body" style="padding: 0;">
+              <div class="table-responsive">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Coupon Code</th>
+                      <th>Title</th>
+                      <th>Discount</th>
+                      <th>Min Order</th>
+                      <th>Valid Until</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-offers-tbody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 12. HOMEPAGE BANNERS TAB -->
+        <section class="admin-tab-pane" id="tab-banners">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3>Homepage Hero Banners & Sliders</h3>
+              <button type="button" class="btn btn-sm btn-primary" id="btn-add-banner-modal">➕ Add Banner</button>
+            </div>
+            <div class="admin-card-body" style="padding: 0;">
+              <div class="table-responsive">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Banner Preview</th>
+                      <th>Headline</th>
+                      <th>Subtitle</th>
+                      <th>Button Link</th>
+                      <th>Order</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-banners-tbody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 13. MEDIA LIBRARY TAB -->
+        <section class="admin-tab-pane" id="tab-media">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3>Media Library</h3>
+              <span style="font-size: 0.85rem; color: #64748B;">Store assets & product imagery</span>
+            </div>
+            <div class="admin-card-body">
+              <div id="media-library-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px;">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 14. WEBSITE CONTENT CMS TAB -->
+        <section class="admin-tab-pane" id="tab-cms">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3>Website Content Management (CMS)</h3>
+              <button type="button" class="btn btn-sm btn-primary" id="btn-save-cms-content">💾 Save Changes</button>
+            </div>
+            <div class="admin-card-body">
+              <form id="cms-content-form">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;" class="form-row-2">
+                  <div class="form-group">
+                    <label class="form-label">Store Hindi Headline</label>
+                    <input type="text" id="cms-hindi-title" class="form-control" value="✨ आपका स्वागत है ✨ Ayush Service Center में">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">English Store Subtitle</label>
+                    <input type="text" id="cms-english-subtitle" class="form-control" value="24+ Years of Trust & Quality Service">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Homepage Welcome Announcement Text</label>
+                  <textarea id="cms-welcome-text" class="form-control" rows="3">स्टील बर्तन, प्लास्टिक सामान, मोबाइल एक्सेसरीज, कोल्ड ड्रिंक, कॉस्मेटिक्स, दोना-पत्तल एवं ऑटो बुकिंग की सभी सुविधाएं एक ही स्थान पर।</textarea>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">About Us Story & Mission</label>
+                  <textarea id="cms-about-text" class="form-control" rows="4">हमारी दुकान वर्ष 2000 से आपकी सेवा में निरंतर कार्यरत है। हमारा उद्देश्य है कि आपको एक ही स्थान पर उत्तम गुणवत्ता वाले उत्पाद, उचित मूल्य और बेहतरीन सेवा प्रदान की जाए।</textarea>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- 15. STORE SETTINGS TAB -->
+        <section class="admin-tab-pane" id="tab-settings">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3>Business & Store Settings</h3>
+              <button type="button" class="btn btn-sm btn-primary" id="btn-save-store-settings">💾 Save Settings</button>
+            </div>
+            <div class="admin-card-body">
+              <form id="store-settings-form">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;" class="form-row-2">
+                  <div class="form-group">
+                    <label class="form-label">Business Name</label>
+                    <input type="text" id="set-store-name" class="form-control" value="Ayush Service Center" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Owner Name</label>
+                    <input type="text" id="set-owner-name" class="form-control" value="Vinod Kumar Gupta" required>
+                  </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;" class="form-row-3">
+                  <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" id="set-phone" class="form-control" value="+91 96169 32589" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">WhatsApp Number</label>
+                    <input type="tel" id="set-whatsapp" class="form-control" value="919616932589" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">UPI ID / VPA</label>
+                    <input type="text" id="set-upi" class="form-control" value="9616932589@upi">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Store Address</label>
+                  <input type="text" id="set-address" class="form-control" value="Budhiya Mai Mandir Ke Paas, Tarajeevanpur Chauraha, Chandauli, Uttar Pradesh 232120" required>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;" class="form-row-2">
+                  <div class="form-group">
+                    <label class="form-label">Delivery Fee (₹)</label>
+                    <input type="number" id="set-delivery-fee" class="form-control" value="30">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Free Delivery Threshold (₹)</label>
+                    <input type="number" id="set-free-threshold" class="form-control" value="500">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Google Maps Embed URL</label>
+                  <input type="text" id="set-map-url" class="form-control" value="https://maps.google.com/maps?q=Budhiya%20Mai%20Mandir%20Tarajeevanpur%20Chauraha%20Chandauli%20Uttar%20Pradesh&t=&z=15&ie=UTF8&iwloc=&output=embed">
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- 16. STAFF MANAGEMENT TAB -->
+        <section class="admin-tab-pane" id="tab-staff">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3>Authorized Staff & Admins</h3>
+            </div>
+            <div class="admin-card-body" style="padding: 0;">
+              <div class="table-responsive">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Staff Name</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Vinod Kumar Gupta</strong></td>
+                      <td>vinodkumargupta290@gmail.com</td>
+                      <td><span class="badge badge-primary">Owner / SuperAdmin</span></td>
+                      <td><span class="badge badge-success">Active</span></td>
+                    </tr>
+                    <tr>
+                      <td><strong>Ayush Gupta</strong></td>
+                      <td>guptaayush932589@gmail.com</td>
+                      <td><span class="badge badge-cyan">Co-Founder & Developer</span></td>
+                      <td><span class="badge badge-success">Active</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 17. ACTIVITY & AUDIT LOGS TAB -->
+        <section class="admin-tab-pane" id="tab-audit">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h3>System Activity & Audit Logs</h3>
+            </div>
+            <div class="admin-card-body" style="padding: 0;">
+              <div class="table-responsive">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Timestamp</th>
+                      <th>Action Type</th>
+                      <th>Description</th>
+                      <th>Operator</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-audit-tbody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ================= MODALS ================= -->
+
+  <!-- Add/Edit Product Modal -->
+  <div class="admin-modal-backdrop" id="modal-product">
+    <div class="admin-modal">
+      <div class="admin-modal-header">
+        <h3 id="modal-product-title">Add New Product</h3>
+        <button type="button" class="modal-close-btn" data-modal="modal-product" style="background: none; border: none; font-size: 20px; cursor: pointer;">✕</button>
+      </div>
+      <div class="admin-modal-body">
+        <form id="form-product">
+          <input type="hidden" id="prod-form-id">
+          
+          <div class="form-group">
+            <label class="form-label">Product Name (English) *</label>
+            <input type="text" id="prod-form-name" class="form-control" required placeholder="e.g. Stainless Steel Cooker 5L">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Product Name (Hindi)</label>
+            <input type="text" id="prod-form-name-hindi" class="form-control" placeholder="e.g. स्टेनलेस स्टील कुकर">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;" class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Category *</label>
+              <select id="prod-form-category" class="form-select" required></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Unit *</label>
+              <select id="prod-form-unit" class="form-select">
+                <option value="Pcs">Pcs</option>
+                <option value="Set">Set</option>
+                <option value="Bottle">Bottle</option>
+                <option value="Packet">Packet</option>
+                <option value="Kg">Kg</option>
+                <option value="Box">Box</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;" class="form-row-3">
+            <div class="form-group">
+              <label class="form-label">Selling Price (₹) *</label>
+              <input type="number" id="prod-form-price" class="form-control" required min="1">
+            </div>
+            <div class="form-group">
+              <label class="form-label">MRP (₹)</label>
+              <input type="number" id="prod-form-mrp" class="form-control" min="1">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Cost / Purchase (₹)</label>
+              <input type="number" id="prod-form-cost" class="form-control" min="0">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;" class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Stock Quantity *</label>
+              <input type="number" id="prod-form-stock" class="form-control" required min="0">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Min Stock Threshold</label>
+              <input type="number" id="prod-form-min-stock" class="form-control" value="5">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Image Path / URL *</label>
+            <input type="text" id="prod-form-image" class="form-control" required placeholder="images/cooker.jpg or URL">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Description</label>
+            <textarea id="prod-form-desc" class="form-control" rows="2"></textarea>
+          </div>
+
+          <div style="display: flex; gap: 20px; align-items: center; margin-top: 10px;">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="checkbox" id="prod-form-featured" style="accent-color: #2563EB;">
+              <span>Featured on Homepage</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="checkbox" id="prod-form-active" checked style="accent-color: #2563EB;">
+              <span>Active for Sale</span>
+            </label>
+          </div>
+        </form>
+      </div>
+      <div class="admin-modal-footer">
+        <button type="button" class="btn btn-outline modal-close-btn" data-modal="modal-product">Cancel</button>
+        <button type="submit" form="form-product" class="btn btn-primary" id="btn-save-product">Save Product</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stock Adjustment Modal -->
+  <div class="admin-modal-backdrop" id="modal-stock-adjust">
+    <div class="admin-modal" style="max-width: 500px;">
+      <div class="admin-modal-header">
+        <h3>Adjust Product Stock</h3>
+        <button type="button" class="modal-close-btn" data-modal="modal-stock-adjust" style="background: none; border: none; font-size: 20px; cursor: pointer;">✕</button>
+      </div>
+      <div class="admin-modal-body">
+        <form id="form-stock-adjust">
+          <div class="form-group">
+            <label class="form-label">Select Product</label>
+            <select id="adjust-prod-select" class="form-select" required></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Movement Type</label>
+            <select id="adjust-type" class="form-select">
+              <option value="STOCK_IN">Stock In (Purchase / Restock)</option>
+              <option value="STOCK_OUT">Stock Out (Manual Deduction)</option>
+              <option value="DAMAGED">Damaged / Broken Goods</option>
+              <option value="RETURN">Customer Return</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Quantity</label>
+            <input type="number" id="adjust-qty" class="form-control" required min="1" value="1">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Reason / Notes</label>
+            <input type="text" id="adjust-reason" class="form-control" placeholder="e.g. Received new shipment from Varanasi">
+          </div>
+        </form>
+      </div>
+      <div class="admin-modal-footer">
+        <button type="button" class="btn btn-outline modal-close-btn" data-modal="modal-stock-adjust">Cancel</button>
+        <button type="submit" form="form-stock-adjust" class="btn btn-primary">Apply Stock Adjustment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Expense Modal -->
+  <div class="admin-modal-backdrop" id="modal-expense">
+    <div class="admin-modal" style="max-width: 480px;">
+      <div class="admin-modal-header">
+        <h3>Log Store Expense</h3>
+        <button type="button" class="modal-close-btn" data-modal="modal-expense" style="background: none; border: none; font-size: 20px; cursor: pointer;">✕</button>
+      </div>
+      <div class="admin-modal-body">
+        <form id="form-expense">
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <select id="exp-category" class="form-select">
+              <option value="Electricity / Utility">Electricity / Utility</option>
+              <option value="Shop Rent">Shop Rent</option>
+              <option value="Goods Transportation">Goods Transportation</option>
+              <option value="Packaging & Bags">Packaging & Bags</option>
+              <option value="Tea & Refreshments">Tea & Refreshments</option>
+              <option value="Repairs & Maintenance">Repairs & Maintenance</option>
+              <option value="Staff Salary">Staff Salary</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Amount (₹) *</label>
+            <input type="number" id="exp-amount" class="form-control" required min="1">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Description / Remarks</label>
+            <input type="text" id="exp-desc" class="form-control" placeholder="e.g. Monthly electricity bill">
+          </div>
+        </form>
+      </div>
+      <div class="admin-modal-footer">
+        <button type="button" class="btn btn-outline modal-close-btn" data-modal="modal-expense">Cancel</button>
+        <button type="submit" form="form-expense" class="btn btn-primary">Save Expense</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal View Order Details -->
+  <div class="admin-modal-backdrop" id="modal-order-details">
+    <div class="admin-modal" style="max-width: 640px;">
+      <div class="admin-modal-header">
+        <h3 id="modal-order-title">Order Details</h3>
+        <button type="button" class="modal-close-btn" data-modal="modal-order-details" style="background: none; border: none; font-size: 20px; cursor: pointer;">✕</button>
+      </div>
+      <div class="admin-modal-body" id="modal-order-body">
+        <!-- Dynamically populated -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Script Modules -->
+  <script type="module" src="../js/admin.js"></script>
 </body>
 </html>
