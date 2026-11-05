@@ -25,7 +25,9 @@ import {
   signInWithEmailAndPassword, 
   signOut, 
   onAuthStateChanged, 
-  sendPasswordResetEmail 
+  sendPasswordResetEmail,
+  createUserWithEmailAndPassword,
+  signInAnonymously
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { 
   getStorage, 
@@ -76,7 +78,9 @@ export {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  createUserWithEmailAndPassword,
+  signInAnonymously
 };
 
 // Export Storage utilities

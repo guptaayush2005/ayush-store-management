@@ -12,6 +12,7 @@ service cloud.firestore {
       return isAuthenticated() && (
         request.auth.token.admin == true ||
         request.auth.token.email == "vinodkumargupta290@gmail.com" ||
+        request.auth.token.email == "ayush44129@gmail.com" ||
         exists(/databases/$(database)/documents/staff_profiles/$(request.auth.uid)) ||
         exists(/databases/$(database)/documents/admins/$(request.auth.token.email))
       );

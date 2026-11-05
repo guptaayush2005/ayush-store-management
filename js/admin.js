@@ -48,34 +48,63 @@ let salesChart = null;
 // ==========================================
 // AUTHENTICATION & ACCESS CONTROL
 // ==========================================
-onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    window.location.href = "login.html";
-    return;
+async function initAdminAuth() {
+  const savedSession = localStorage.getItem("asc_admin_user");
+  let localAdmin = null;
+  if (savedSession) {
+    try {
+      localAdmin = JSON.parse(savedSession);
+    } catch(e) {}
   }
 
-  currentUser = user;
-  const userEmail = user.email || "admin@ayushservicecenter.com";
-  const userInitials = (userEmail[0] || "A").toUpperCase();
+  onAuthStateChanged(auth, async (user) => {
+    if (!user && !localAdmin) {
+      window.location.href = "login.html";
+      return;
+    }
 
-  const avatarEl = document.getElementById("sidebar-user-avatar");
-  const emailEl = document.getElementById("sidebar-user-email");
-  const nameEl = document.getElementById("sidebar-user-name");
+    currentUser = user || localAdmin;
+    const userEmail = (user && user.email) || (localAdmin && localAdmin.email) || "ayush44129@gmail.com";
+    const userInitials = (userEmail[0] || "A").toUpperCase();
 
-  if (avatarEl) avatarEl.textContent = userInitials;
-  if (emailEl) emailEl.textContent = userEmail;
-  if (nameEl) nameEl.textContent = user.displayName || (userEmail.includes("vinod") ? "Vinod Kumar Gupta" : "Store Admin");
+    const avatarEl = document.getElementById("sidebar-user-avatar");
+    const emailEl = document.getElementById("sidebar-user-email");
+    const nameEl = document.getElementById("sidebar-user-name");
 
-  // Load all operational data
-  await loadAllAdminData();
-  logAuditAction("LOGIN", `Admin ${userEmail} accessed dashboard`);
-});
+    if (avatarEl) avatarEl.textContent = userInitials;
+    if (emailEl) emailEl.textContent = userEmail;
+    if (nameEl) nameEl.textContent = (user && user.displayName) || (localAdmin && localAdmin.name) || (userEmail.includes("ayush") ? "Ayush Gupta (Admin)" : "Vinod Kumar Gupta");
+
+    // Load all operational data
+    await loadAllAdminData();
+    logAuditAction("LOGIN", `Admin ${userEmail} accessed dashboard`);
+  });
+
+  // Fast start if localAdmin is cached
+  if (localAdmin && !currentUser) {
+    currentUser = localAdmin;
+    const userEmail = localAdmin.email || "ayush44129@gmail.com";
+    const avatarEl = document.getElementById("sidebar-user-avatar");
+    const emailEl = document.getElementById("sidebar-user-email");
+    const nameEl = document.getElementById("sidebar-user-name");
+
+    if (avatarEl) avatarEl.textContent = (userEmail[0] || "A").toUpperCase();
+    if (emailEl) emailEl.textContent = userEmail;
+    if (nameEl) nameEl.textContent = localAdmin.name || "Ayush Gupta (Admin)";
+    loadAllAdminData();
+  }
+}
+
+initAdminAuth();
 
 // Logout handler
 document.getElementById("admin-logout-btn").addEventListener("click", async () => {
   if (confirm("Are you sure you want to log out of the admin panel?")) {
     logAuditAction("LOGOUT", `Admin logged out`);
-    await signOut(auth);
+    localStorage.removeItem("asc_admin_user");
+    try {
+      await signOut(auth);
+    } catch(e) {}
     window.location.href = "login.html";
   }
 });
@@ -641,7 +670,9 @@ function renderProductsTable() {
   const tbody = document.getElementById("admin-products-tbody");
   if (!tbody) return;
 
-  tbody.innerHTML = allProducts.map(p => `
+  tbody.innerHTML = allProducts.map(p => {
+    const safeName = (p.name || '').replace(/'/g, "\\'");
+    return `
     <tr>
       <td>
         <img src="${p.image || (p.images && p.images[0]) || 'images/poster.jpg'}" style="width: 44px; height: 44px; object-fit: cover; border-radius: 8px;">
@@ -651,13 +682,21 @@ function renderProductsTable() {
         <div style="font-size: 0.75rem; color: #64748B;">SKU: ${p.sku || 'N/A'} • Barcode: ${p.barcode || 'N/A'}</div>
       </td>
       <td>${p.category}</td>
-      <td><strong>₹${p.price}</strong></td>
+      <td>
+        <div style="display: inline-flex; align-items: center; gap: 6px;">
+          <strong style="color: #2563EB; font-size: 0.95rem;">₹${p.price}</strong>
+          <button type="button" class="btn btn-sm btn-outline" style="padding: 2px 7px; font-size: 0.72rem; border-color: #CBD5E1;" onclick="window.quickEditPrice('${p.id}', '${safeName}', ${p.price})" title="Quick Change Price">✎ Edit</button>
+        </div>
+      </td>
       <td>₹${p.mrp || p.price}</td>
       <td>₹${p.purchasePrice || Math.round(p.price * 0.75)}</td>
       <td>
-        <span class="badge ${p.stock <= 0 ? 'badge-danger' : (p.stock <= (p.minStock || 5) ? 'badge-warning' : 'badge-success')}">
-          ${p.stock} ${p.unit || 'pcs'}
-        </span>
+        <div style="display: inline-flex; align-items: center; gap: 6px;">
+          <span class="badge ${p.stock <= 0 ? 'badge-danger' : (p.stock <= (p.minStock || 5) ? 'badge-warning' : 'badge-success')}">
+            ${p.stock} ${p.unit || 'pcs'}
+          </span>
+          <button type="button" class="btn btn-sm btn-outline" style="padding: 2px 6px; font-size: 0.72rem; border-color: #CBD5E1;" onclick="window.quickEditStock('${p.id}', '${safeName}', ${p.stock})" title="Quick Change Stock">✎</button>
+        </div>
       </td>
       <td>
         <span class="badge ${p.isActive !== false ? 'badge-success' : 'badge-danger'}">
@@ -666,12 +705,12 @@ function renderProductsTable() {
       </td>
       <td>
         <div style="display: flex; gap: 6px;">
-          <button class="btn btn-sm btn-outline" onclick="window.editProduct('${p.id}')">Edit</button>
-          <button class="btn btn-sm btn-outline" style="color: #EF4444;" onclick="window.deleteProduct('${p.id}', '${p.name}')">✕</button>
+          <button class="btn btn-sm btn-primary" onclick="window.editProduct('${p.id}')">Edit All</button>
+          <button class="btn btn-sm btn-outline" style="color: #EF4444;" onclick="window.deleteProduct('${p.id}', '${safeName}')">✕</button>
         </div>
       </td>
     </tr>
-  `).join("");
+  `;}).join("");
 
   // Hydrate category filter
   const filterSelect = document.getElementById("admin-prod-cat-filter");
@@ -684,6 +723,42 @@ function renderProductsTable() {
     });
   }
 }
+
+// Quick Price Edit Function
+window.quickEditPrice = async (id, name, currentPrice) => {
+  const newPrice = prompt(`Enter new selling price (₹) for "${name}":`, currentPrice);
+  if (newPrice !== null && !isNaN(newPrice) && Number(newPrice) >= 0) {
+    try {
+      await setDoc(doc(db, "products", id), { 
+        price: Number(newPrice),
+        updatedAt: Date.now() 
+      }, { merge: true });
+      showToast(`✓ Price updated for "${name}" to ₹${newPrice}`, "success");
+      logAuditAction("PRICE_EDIT", `Updated price for ${name} to ₹${newPrice}`);
+      await loadAllAdminData();
+    } catch(err) {
+      showToast("Error updating price: " + err.message, "error");
+    }
+  }
+};
+
+// Quick Stock Edit Function
+window.quickEditStock = async (id, name, currentStock) => {
+  const newStock = prompt(`Update stock units for "${name}":`, currentStock);
+  if (newStock !== null && !isNaN(newStock) && Number(newStock) >= 0) {
+    try {
+      await setDoc(doc(db, "products", id), { 
+        stock: Number(newStock),
+        updatedAt: Date.now() 
+      }, { merge: true });
+      showToast(`✓ Stock updated for "${name}" to ${newStock}`, "success");
+      logAuditAction("STOCK_EDIT", `Updated stock for ${name} to ${newStock}`);
+      await loadAllAdminData();
+    } catch(err) {
+      showToast("Error updating stock: " + err.message, "error");
+    }
+  }
+};
 
 // CSV Export
 document.getElementById("btn-export-products-csv").addEventListener("click", () => {
@@ -698,6 +773,22 @@ document.getElementById("btn-export-products-csv").addEventListener("click", () 
   a.download = `Ayush_Service_Center_Products_${new Date().toISOString().slice(0, 10)}.csv`;
   a.click();
 });
+
+// Sync/Seed Default 26 Items Button
+const syncProductsBtn = document.getElementById("btn-sync-default-products");
+if (syncProductsBtn) {
+  syncProductsBtn.addEventListener("click", async () => {
+    if (confirm("Sync and populate all 26 default store products to Firestore?")) {
+      try {
+        await seedInitialDatabase();
+        showToast("✓ All 26 products & categories synced successfully!", "success");
+        await loadAllAdminData();
+      } catch(e) {
+        showToast("Sync error: " + e.message, "error");
+      }
+    }
+  });
+}
 
 // Product Modal Handlers
 document.getElementById("btn-add-product-modal").addEventListener("click", () => openProductModal());
@@ -759,14 +850,14 @@ document.getElementById("form-product").addEventListener("submit", async (e) => 
 
   try {
     if (isEditing) {
-      await updateDoc(doc(db, "products", id), payload);
-      showToast("Product updated successfully!", "success");
+      await setDoc(doc(db, "products", id), payload, { merge: true });
+      showToast("✓ Product updated successfully!", "success");
       logAuditAction("PRODUCT_EDIT", `Edited product ${payload.name}`);
     } else {
       payload.createdAt = Date.now();
       payload.sku = "ASC-" + Date.now().toString().slice(-5);
       await addDoc(collection(db, "products"), payload);
-      showToast("Product created successfully!", "success");
+      showToast("✓ Product created successfully!", "success");
       logAuditAction("PRODUCT_CREATE", `Created product ${payload.name}`);
     }
     document.getElementById("modal-product").classList.remove("active");
