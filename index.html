@@ -285,64 +285,7 @@
     </div>
   </section>
 
-  <!-- ================= 3. SHOP BY CATEGORIES (PREVIEW) ================= -->
-  <section style="padding: 56px 0; background: #F8FAFC;">
-    <div class="container">
-      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 28px; flex-wrap: wrap; gap: 12px;">
-        <div>
-          <span style="font-size: 0.85rem; font-weight: 700; color: #2563EB; text-transform: uppercase; letter-spacing: 0.5px;">Browse by Department</span>
-          <h2 style="font-size: 1.75rem; font-weight: 800; color: #0F172A; margin: 4px 0 0;">Shop by Categories</h2>
-        </div>
-        <a href="categories.html" style="font-size: 0.95rem; font-weight: 600; color: #2563EB; display: flex; align-items: center; gap: 4px;">
-          View All Categories →
-        </a>
-      </div>
-
-      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;" class="cat-grid-wrapper" id="home-categories-grid">
-        <!-- Dynamically rendered or pre-hydrated -->
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= 4. FEATURED PRODUCTS (LIMITED SELECTION) ================= -->
-  <section style="padding: 56px 0; background: #FFFFFF; border-top: 1px solid #E2E8F0; border-bottom: 1px solid #E2E8F0;">
-    <div class="container">
-      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 28px; flex-wrap: wrap; gap: 12px;">
-        <div>
-          <span style="font-size: 0.85rem; font-weight: 700; color: #16A34A; text-transform: uppercase; letter-spacing: 0.5px;">Customer Favorites</span>
-          <h2 style="font-size: 1.75rem; font-weight: 800; color: #0F172A; margin: 4px 0 0;">Featured Products</h2>
-        </div>
-        <a href="shop.html" style="font-size: 0.95rem; font-weight: 600; color: #2563EB;">
-          Explore Full Shop →
-        </a>
-      </div>
-
-      <div class="product-grid" id="home-featured-grid">
-        <!-- Dynamically rendered via JS -->
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= 5. SPECIAL OFFERS (ACTIVE DEALS) ================= -->
-  <section style="padding: 44px 0; background: #0F172A; color: #FFFFFF;">
-    <div class="container">
-      <div style="background: linear-gradient(135deg, #1E3A8A 0%, #0D9488 100%); border-radius: 20px; padding: 36px 30px; display: grid; grid-template-columns: 1fr; gap: 20px; align-items: center;" class="promo-banner-grid">
-        <div>
-          <span class="badge badge-warning" style="margin-bottom: 12px;">ACTIVE STORE OFFERS</span>
-          <h2 style="font-size: 1.85rem; color: #FFFFFF; margin-bottom: 10px; font-weight: 800;">Special Savings on Quality Kitchen & Home Essentials</h2>
-          <p style="color: #E2E8F0; font-size: 0.98rem; max-width: 600px; margin-bottom: 20px; line-height: 1.6;">
-            Save big on stainless steel pressure cookers, kitchen containers, and heavy plasticware. Use code <strong>WELCOME50</strong> on orders above ₹499!
-          </p>
-          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="offers.html" class="btn btn-primary">Browse All Coupons →</a>
-            <a href="shop.html" class="btn btn-outline" style="color: #FFF; border-color: rgba(255,255,255,0.4);">Shop Discounted Items</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= 6. SMALL WHATSAPP SHOPPING CTA ================= -->
+  <!-- ================= 3. SMALL WHATSAPP SHOPPING CTA ================= -->
   <section style="padding: 44px 0; background: #F8FAFC;">
     <div class="container" style="max-width: 860px;">
       <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; box-shadow: var(--shadow-sm);">
@@ -488,35 +431,5 @@
 
   <!-- Scripts -->
   <script type="module" src="js/app.js"></script>
-  <script type="module">
-    import { fetchProducts, fetchCategories } from "./js/store.js";
-    import { renderProductCard } from "./js/catalog.js";
-
-    // Hydrate Homepage Categories & Featured Products
-    document.addEventListener("DOMContentLoaded", async () => {
-      // 1. Categories
-      const categories = await fetchCategories();
-      const catContainer = document.getElementById("home-categories-grid");
-      if (catContainer) {
-        catContainer.innerHTML = categories.slice(0, 8).map(c => `
-          <div class="category-card" onclick="window.location.href='shop.html?category=${encodeURIComponent(c.name)}'" style="cursor: pointer;">
-            <div class="category-icon-wrapper">
-              <img src="${c.image || 'images/poster.jpg'}" alt="${c.name}">
-            </div>
-            <h3>${c.name}</h3>
-            ${c.nameHindi ? `<p style="color: #2563EB; font-weight: 600;">${c.nameHindi}</p>` : ''}
-          </div>
-        `).join("");
-      }
-
-      // 2. Featured Products (limited dynamic selection)
-      const allProds = await fetchProducts();
-      const featured = allProds.filter(p => p.isFeatured).slice(0, 8);
-      const featContainer = document.getElementById("home-featured-grid");
-      if (featContainer) {
-        featContainer.innerHTML = (featured.length > 0 ? featured : allProds.slice(0, 8)).map(renderProductCard).join("");
-      }
-    });
-  </script>
 </body>
 </html>
