@@ -278,13 +278,13 @@ export function applyTranslations() {
   // 4. Update language toggle button labels
   const langButtons = document.querySelectorAll(".lang-toggle-btn");
   langButtons.forEach(btn => {
-    if (lang === "hi") {
-      btn.innerHTML = `<span style="font-size: 16px;">🇬🇧</span> <span style="font-weight: 700; font-size: 0.85rem;">English</span>`;
-      btn.title = "Switch to English";
+    if (btn.classList.contains("lang-toggle-btn-drawer")) {
+      btn.innerHTML = lang === "hi" ? `<span style="font-size: 18px;">🌐</span> <span>Switch to English</span>` : `<span style="font-size: 18px;">🌐</span> <span>हिंदी में देखें</span>`;
     } else {
-      btn.innerHTML = `<span style="font-size: 16px;">🇮🇳</span> <span style="font-weight: 700; font-size: 0.85rem;">हिंदी</span>`;
-      btn.title = "हिंदी में बदलें";
+      btn.innerHTML = `🌐`;
     }
+    btn.title = lang === "hi" ? "Switch to English / हिंदी" : "हिंदी / English";
+    btn.setAttribute("aria-label", "Switch Language");
   });
 
   // 5. Update HTML lang attribute

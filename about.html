@@ -6,13 +6,7 @@
   <title>About Us - Ayush Service Center | 25+ Years of Trust & Quality (Est. 2000)</title>
   <meta name="description" content="Discover the 25+ years legacy of Ayush Service Center, established in 2000 by Vinod Kumar Gupta and son Ayush Gupta at Budhiya Mai Mandir, Tarajeevanpur Chauraha, Chandauli.">
 
-  <script>
-    (function() {
-      const savedTheme = localStorage.getItem("asc_theme") || "light";
-      document.documentElement.setAttribute("data-theme", savedTheme);
-      if (savedTheme === "dark") document.documentElement.classList.add("dark-mode");
-    })();
-  </script>
+
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,14 +41,9 @@
       </a>
       <div class="header-actions">
         <!-- Language Switcher Button -->
-        <button type="button" class="lang-toggle-btn" id="lang-toggle-btn" title="हिंदी / English" aria-label="Toggle Language">
-          <span style="font-size: 16px;">🇮🇳</span> <span style="font-weight: 700; font-size: 0.82rem;">हिंदी</span>
-        </button>
+        <button type="button" class="lang-toggle-btn" id="lang-toggle-btn" title="English / हिंदी" aria-label="Toggle Language">🌐</button>
 
         <!-- Theme Toggle Button -->
-        <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
-          🌙
-        </button>
 
         <a href="contact.html" class="btn btn-sm btn-outline hide-on-mobile" style="color: #2563EB; border-color: #BFDBFE;">
           📞 Contact Us
@@ -64,7 +53,7 @@
         </a>
         <a href="admin/login.html" class="header-action-btn" title="Admin Portal" style="background: rgba(37, 99, 235, 0.08); border-color: rgba(37, 99, 235, 0.3);">
           <span style="font-size: 20px;">👤</span>
-          <span style="font-weight: 700; color: #2563EB;">Admin</span>
+          <span class="hide-on-mobile" style="font-weight: 700; color: #2563EB;">Admin</span>
         </a>
         <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation">☰</button>
       </div>
@@ -97,13 +86,10 @@
       <button type="button" id="drawer-close-btn" style="background: none; border: none; color: #FFF; font-size: 22px;">✕</button>
     </div>
     <div class="drawer-body">
-      <!-- Quick Language & Theme toggles inside drawer -->
-      <div style="display: flex; gap: 10px; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.1);">
-        <button type="button" class="lang-toggle-btn" style="flex: 1; padding: 8px 12px; justify-content: center;">
-          <span style="font-size: 16px;">🇮🇳</span> <span style="font-weight: 700;">हिंदी / English</span>
-        </button>
-        <button type="button" class="theme-toggle-btn" style="flex: 1; padding: 8px 12px; justify-content: center;">
-          🌙 <span>Theme</span>
+      <!-- Quick Language toggle inside drawer -->
+      <div style="margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <button type="button" class="lang-toggle-btn lang-toggle-btn-drawer">
+          <span style="font-size: 18px;">🌐</span> <span style="font-weight: 700;">हिंदी / English</span>
         </button>
       </div>
 

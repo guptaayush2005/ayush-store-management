@@ -5,13 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Checkout & Order Enquiry - Ayush Service Center</title>
 
-  <script>
-    (function() {
-      const savedTheme = localStorage.getItem("asc_theme") || "light";
-      document.documentElement.setAttribute("data-theme", savedTheme);
-      if (savedTheme === "dark") document.documentElement.classList.add("dark-mode");
-    })();
-  </script>
+
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,14 +46,9 @@
       </a>
       <div class="header-actions">
         <!-- Language Switcher Button -->
-        <button type="button" class="lang-toggle-btn" id="lang-toggle-btn" title="हिंदी / English" aria-label="Toggle Language">
-          <span style="font-size: 16px;">🇮🇳</span> <span style="font-weight: 700; font-size: 0.82rem;">हिंदी</span>
-        </button>
+        <button type="button" class="lang-toggle-btn" id="lang-toggle-btn" title="English / हिंदी" aria-label="Toggle Language">🌐</button>
 
         <!-- Theme Toggle Button -->
-        <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
-          🌙
-        </button>
 
         <a href="cart.html" class="btn btn-sm btn-outline">
           ← Back to Cart
