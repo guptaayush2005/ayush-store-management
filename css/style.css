@@ -1818,3 +1818,124 @@ button, input, select, textarea {
   flex-direction: column;
   justify-content: space-between;
 }
+
+/* ==========================================================================
+   CLASSICAL AUTO BOOKING STYLES (FLEET CARDS, ROUTES TABLE & FORM)
+   ========================================================================== */
+.ab-hero-banner {
+  background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 50%, #0F172A 100%);
+  color: #FFFFFF;
+  padding: 56px 0 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ab-hero-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 80% 20%, rgba(37, 99, 235, 0.25) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.ab-fleet-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 640px) {
+  .ab-fleet-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ab-fleet-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+}
+
+.ab-fleet-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.ab-fleet-card:hover {
+  transform: translateY(-5px);
+  border-color: #93C5FD;
+  box-shadow: 0 16px 32px rgba(37, 99, 235, 0.12);
+}
+
+.ab-fleet-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: #F8FAFC;
+  overflow: hidden;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.ab-fleet-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 12px;
+  transition: transform 0.4s ease;
+}
+
+.ab-fleet-card:hover .ab-fleet-img-wrap img {
+  transform: scale(1.08);
+}
+
+.ab-fleet-body {
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.ab-rates-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #FFFFFF;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.ab-rates-table th {
+  background: #0F172A;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.88rem;
+  padding: 14px 16px;
+  text-align: left;
+}
+
+.ab-rates-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #F1F5F9;
+  font-size: 0.9rem;
+  color: #334155;
+}
+
+.ab-rates-table tr:nth-child(even) td {
+  background: #F8FAFC;
+}
+
+.ab-rates-table tr:hover td {
+  background: #EFF6FF;
+}

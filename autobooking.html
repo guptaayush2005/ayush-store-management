@@ -4,19 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Auto Booking Services - Ayush Service Center | Chandauli</title>
-  <meta name="description" content="Book auto and passenger transport in Chandauli, Tarajeevanpur Chauraha. Passenger Autos, E-Rickshaws & Commercial Loaders available 24/7. Call: +91 96169 32589.">
+  <meta name="description" content="Book 24/7 reliable passenger auto, e-rickshaw, and commercial goods loader in Chandauli and Tarajeevanpur Chauraha. Fixed rates, experienced local drivers. Call: +91 96169 32589.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  
+  <link rel="icon" type="image/x-icon" href="images/1autobooking.jpg">
 </head>
 <body>
 
   <!-- Top Announcement Bar -->
   <div class="top-bar">
     <div class="container top-bar-content">
-      <div>✨ <strong>Budhiya Mai Mandir Ke Paas</strong>, Tarajeevanpur Chauraha, Chandauli • Call: +91 96169 32589</div>
+      <div>✨ <strong>Budhiya Mai Mandir Ke Paas</strong>, Tarajeevanpur Chauraha, Chandauli • 24/7 Auto Booking: +91 96169 32589</div>
       <div class="top-bar-links">
         <a href="tel:+919616932589" class="dynamic-phone-link">📞 +91 96169 32589</a>
         <span>|</span>
@@ -37,15 +39,29 @@
           <p>ऑटो बुकिंग सेवा • Chandauli</p>
         </div>
       </a>
+
+      <!-- Header Search Bar -->
+      <div class="header-search">
+        <form action="shop.html" method="GET">
+          <input type="text" name="search" placeholder="Search products or auto services..." aria-label="Search" autocomplete="off">
+          <button type="submit" aria-label="Search">🔍</button>
+        </form>
+      </div>
+
       <div class="header-actions">
-        <a href="tel:+919616932589" class="btn btn-navy btn-sm hide-on-mobile">
+        <a href="tel:+919616932589" class="btn btn-navy btn-sm hide-on-mobile" style="background: #16A34A; border: none; font-weight: 700; padding: 8px 14px; gap: 6px;">
           📞 Call Driver
+        </a>
+        <a href="cart.html" class="header-action-btn" title="View Cart">
+          <span style="font-size: 22px;">🛒</span>
+          <span class="cart-badge cart-count-badge" style="display: none;">0</span>
+          <span class="hide-on-mobile" style="font-weight: 700;">Cart</span>
         </a>
         <a href="admin/login.html" class="header-action-btn" title="Admin Portal" style="background: rgba(37, 99, 235, 0.08); border-color: rgba(37, 99, 235, 0.3);">
           <span style="font-size: 20px;">👤</span>
           <span style="font-weight: 700; color: #2563EB;">Admin</span>
         </a>
-        <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
+        <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle Menu">☰</button>
       </div>
     </div>
   </header>
@@ -55,6 +71,7 @@
     <div class="container desktop-nav-inner">
       <ul class="nav-links">
         <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="shop.html" class="nav-link">Shop Catalog</a></li>
         <li><a href="categories.html" class="nav-link">Categories</a></li>
         <li><a href="offers.html" class="nav-link">Offers & Deals</a></li>
         <li><a href="autobooking.html" class="nav-link active">Auto Booking</a></li>
@@ -63,7 +80,9 @@
         <li><a href="my-orders.html" class="nav-link">Track Order</a></li>
       </ul>
       <div class="nav-quick-cta">
-        <a href="https://wa.me/919616932589?text=Hello%20Ayush%20Service%20Center,%20I%20need%20to%20book%20an%20auto" target="_blank" class="btn btn-sm btn-whatsapp">💬 WhatsApp Auto</a>
+        <a href="https://wa.me/919616932589?text=Hello%20Ayush%20Service%20Center,%20I%20need%20to%20book%20an%20auto" target="_blank" class="btn btn-sm btn-whatsapp">
+          💬 WhatsApp Auto
+        </a>
       </div>
     </div>
   </nav>
@@ -72,8 +91,8 @@
   <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop"></div>
   <aside class="mobile-drawer" id="mobile-drawer">
     <div class="drawer-header">
-      <span style="font-weight: 700;">Menu</span>
-      <button type="button" id="drawer-close-btn" style="background: none; border: none; color: #FFF; font-size: 22px;">✕</button>
+      <span style="font-weight: 700;">Store Menu</span>
+      <button type="button" id="drawer-close-btn" style="background: none; border: none; color: #FFF; font-size: 22px; cursor: pointer;">✕</button>
     </div>
     <div class="drawer-body">
       <ul class="drawer-nav-list">
@@ -81,9 +100,13 @@
         <li class="drawer-nav-item"><a href="shop.html">🛍️ Shop Catalog</a></li>
         <li class="drawer-nav-item"><a href="categories.html">🏷️ All Categories</a></li>
         <li class="drawer-nav-item"><a href="autobooking.html" class="active">🚗 Auto Booking</a></li>
+        <li class="drawer-nav-item"><a href="offers.html">🎟️ Special Offers</a></li>
         <li class="drawer-nav-item"><a href="about.html">✨ About Store</a></li>
         <li class="drawer-nav-item"><a href="contact.html">📞 Contact & Map</a></li>
         <li class="drawer-nav-item"><a href="cart.html">🛒 View Cart</a></li>
+        <li class="drawer-nav-item" style="border-top: 1px solid #E2E8F0; margin-top: 10px; padding-top: 10px;">
+          <a href="admin/login.html" style="color: #2563EB; font-weight: 700;">👤 Admin Login</a>
+        </li>
       </ul>
     </div>
   </aside>
@@ -99,45 +122,285 @@
         <span class="bottom-cart-badge cart-count-badge" style="display: none;">0</span>
         <span>Cart</span>
       </a>
-      <a href="https://wa.me/919616932589" target="_blank" class="bottom-nav-item" style="color: #25D366;"><span>💬</span><span>WA</span></a>
+      <a href="https://wa.me/919616932589?text=Hello%20Ayush%20Service%20Center,%20I%20need%20an%20auto" target="_blank" class="bottom-nav-item" style="color: #25D366;">
+        <span>💬</span><span>WhatsApp</span>
+      </a>
     </div>
   </nav>
 
-  <!-- Main Content -->
-  <main style="padding: 40px 0 60px;">
-    <div class="container" id="booking-container">
-      
-      <!-- Intro Grid -->
-      <div style="display: grid; grid-template-columns: 1fr; gap: 36px; align-items: center; margin-bottom: 40px;" class="ab-hero-grid">
-        <div>
-          <span class="badge badge-primary" style="margin-bottom: 10px;">FAST LOCAL TRANSPORT</span>
-          <h1 style="font-size: 2.2rem; font-weight: 800; color: #0F172A; margin-bottom: 12px; line-height: 1.25;">
-            🚗 Reliable Auto Booking in Chandauli
-          </h1>
-          <p style="font-size: 1.05rem; color: #475569; line-height: 1.6; margin-bottom: 20px;">
-            Book safe, comfortable, and affordable passenger autos, E-rickshaws, and goods transport for personal travel, family trips, hospital visits, or railway station drops.
-          </p>
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/919616932589?text=Hello%20Ayush%20Service%20Center,%20I%20want%20to%20book%20an%20auto" target="_blank" class="whatsapp-float-btn" title="Book on WhatsApp">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12.031 2C6.5 2 2 6.5 2 12.031c0 2.227.73 4.285 1.969 5.953L2 22l4.156-1.922C7.781 21.234 9.82 22 12.031 22 17.562 22 22 17.5 22 12.031 22 6.5 17.562 2 12.031 2zm5.75 14.125c-.25.703-1.453 1.344-2.015 1.39-.547.047-1.235.079-3.563-.875-2.969-1.218-4.875-4.25-5.015-4.437-.141-.188-1.188-1.578-1.188-3.016s.75-2.141 1.015-2.438c.266-.297.578-.375.782-.375.188 0 .375 0 .546.016.188.015.438-.078.688.516.25.61.86 2.094.938 2.25.078.156.125.344.031.547-.078.188-.125.312-.25.469-.125.14-.265.312-.375.422-.125.125-.265.265-.11.531.157.266.704 1.156 1.516 1.875 1.047.922 1.938 1.219 2.203 1.359.266.141.422.125.578-.062.157-.188.672-.782.844-1.047.172-.266.36-.219.594-.125.25.078 1.563.734 1.828.875.266.14.438.219.5.328.063.11.063.64-.187 1.344z"/>
+    </svg>
+  </a>
 
-          <div style="background: #EFF6FF; border-left: 4px solid #2563EB; border-radius: 8px; padding: 14px 18px; margin-bottom: 24px; font-size: 0.92rem; color: #1E3A8A;">
-            <strong>Immediate Service Available:</strong> Need an urgent ride right now? Call driver directly at <strong>+91 96169 32589</strong>.
+  <!-- ================= 1. CLASSICAL TRANSPORT HERO BANNER ================= -->
+  <section class="ab-hero-banner">
+    <div class="container">
+      <div style="max-width: 820px; margin: 0 auto; text-align: center;">
+        <span class="badge" style="background: rgba(37, 99, 235, 0.4); border: 1px solid #60A5FA; color: #93C5FD; font-size: 0.85rem; padding: 6px 16px; margin-bottom: 16px; display: inline-block;">
+          ✨ 24/7 DEDICATED PASSENGER & COMMERCIAL TRANSPORT • CHANDAULI
+        </span>
+        <h1 style="font-size: 2.3rem; font-weight: 800; color: #FFFFFF; line-height: 1.25; margin-bottom: 12px;">
+          Fast, Safe & Affordable Auto Booking<br>
+          <span style="color: #60A5FA;">Passenger Travel & Goods Transport</span>
+        </h1>
+        <p style="font-size: 1.05rem; color: #CBD5E1; line-height: 1.6; margin-bottom: 26px;">
+          ताराजीवनपुर चौराहा, चंदौली व आसपास के सभी क्षेत्रों के लिए 24 घंटे उपलब्ध। सवारी ऑटो, ई-रिक्शा, शादी-विवाह हलवाई सामान लोडर एवं 500KG कमर्शियल माल ढुलाई सेवा।
+        </p>
+
+        <!-- Quick Action CTAs -->
+        <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px;">
+          <a href="tel:+919616932589" class="btn btn-primary btn-lg" style="background: #16A34A; border: none; font-size: 1.05rem; padding: 14px 26px; box-shadow: 0 4px 14px rgba(22, 163, 74, 0.4);">
+            📞 Instant Call: +91 96169 32589
+          </a>
+          <a href="https://wa.me/919616932589?text=Hello%20Ayush%20Service%20Center,%20I%20need%20urgent%20auto%20booking" target="_blank" class="btn btn-whatsapp btn-lg" style="font-size: 1.05rem; padding: 14px 26px;">
+            💬 Book on WhatsApp
+          </a>
+        </div>
+
+        <!-- Four Pillars of Transport Trust -->
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; text-align: left; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 16px; padding: 18px 24px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 1.4rem;">⚡</span>
+            <div>
+              <div style="font-weight: 700; color: #FFF; font-size: 0.92rem;">Immediate 15-Min Pickup</div>
+              <div style="font-size: 0.75rem; color: #94A3B8;">Across Tarajeevanpur & nearby villages</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 1.4rem;">💰</span>
+            <div>
+              <div style="font-weight: 700; color: #FFF; font-size: 0.92rem;">Fixed Fair Pricing</div>
+              <div style="font-size: 0.75rem; color: #94A3B8;">Honest village rates, zero surge pricing</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 1.4rem;">🛡️</span>
+            <div>
+              <div style="font-weight: 700; color: #FFF; font-size: 0.92rem;">Verified Local Drivers</div>
+              <div style="font-size: 0.75rem; color: #94A3B8;">25+ years trusted family management</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 1.4rem;">📦</span>
+            <div>
+              <div style="font-weight: 700; color: #FFF; font-size: 0.92rem;">Heavy Load Certified</div>
+              <div style="font-size: 0.75rem; color: #94A3B8;">Ropes & tarpaulin for rain safety</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 2. VEHICLE FLEET SHOWCASE ================= -->
+  <section style="padding: 48px 0; background: #F8FAFC;">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 32px;">
+        <span class="badge badge-primary" style="margin-bottom: 6px;">OUR TRANSPORT FLEET</span>
+        <h2 style="font-size: 1.85rem; font-weight: 800; color: #0F172A; margin: 0;">Choose Your Ideal Vehicle</h2>
+        <p style="font-size: 0.95rem; color: #64748B; margin-top: 4px;">Clean, well-maintained commercial carriers and passenger autos ready for dispatch.</p>
+      </div>
+
+      <div class="ab-fleet-grid">
+        
+        <!-- Fleet Card 1: Mahindra Alfa Heavy Goods Loader -->
+        <div class="ab-fleet-card">
+          <div class="ab-fleet-img-wrap">
+            <img src="images/products/prod_aut_001.jpg" alt="Mahindra Alfa Cargo Loader Auto" onerror="this.onerror=null; this.src='images/1autobooking.jpg';">
+            <span style="position: absolute; top: 10px; right: 10px; background: #2563EB; color: #FFF; font-size: 0.72rem; font-weight: 700; padding: 3px 8px; border-radius: 9999px;">
+              HEAVY LOADER
+            </span>
+          </div>
+          <div class="ab-fleet-body">
+            <h3 style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin-bottom: 2px;">Mahindra Alfa Cargo Loader</h3>
+            <div style="font-size: 0.82rem; color: #2563EB; font-weight: 600; margin-bottom: 8px;">माल ढुलाई लोडर (500 KG तक)</div>
+            <p style="font-size: 0.85rem; color: #64748B; line-height: 1.5; margin-bottom: 12px;">
+              Ideal for cement, iron rods, grain sacks, furniture, hardware, and shop inventory transfers.
+            </p>
+            <div style="margin-top: auto; padding-top: 12px; border-top: 1px solid #F1F5F9; display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px;">
+              <span style="font-size: 0.82rem; color: #64748B;">Starting From</span>
+              <span style="font-size: 1.25rem; font-weight: 800; color: #0F172A;">₹350 <small style="font-size: 0.75rem; color: #64748B; font-weight: normal;">/ trip</small></span>
+            </div>
+            <a href="https://wa.me/919616932589?text=Hello%20Ayush%20Service%20Center,%20I%20want%20to%20book%20Mahindra%20Alfa%20Cargo%20Loader" target="_blank" class="btn btn-primary" style="font-size: 0.88rem; font-weight: 700; padding: 10px 14px; text-align: center;">
+              Book Loader →
+            </a>
           </div>
         </div>
 
-        <div style="text-align: center;">
-          <img src="images/1autobooking.jpg" alt="Ayush Auto Booking" style="width: 100%; max-height: 340px; object-fit: cover; border-radius: 20px; box-shadow: var(--shadow-xl); border: 2px solid #E2E8F0;">
+        <!-- Fleet Card 2: Piaggio Ape City Express Loader -->
+        <div class="ab-fleet-card">
+          <div class="ab-fleet-img-wrap">
+            <img src="images/products/prod_aut_002.jpg" alt="Piaggio Ape City Commercial Loader" onerror="this.onerror=null; this.src='images/1autobooking.jpg';">
+            <span style="position: absolute; top: 10px; right: 10px; background: #059669; color: #FFF; font-size: 0.72rem; font-weight: 700; padding: 3px 8px; border-radius: 9999px;">
+              FAST CARRIER
+            </span>
+          </div>
+          <div class="ab-fleet-body">
+            <h3 style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin-bottom: 2px;">Piaggio Ape City Loader</h3>
+            <div style="font-size: 0.82rem; color: #2563EB; font-weight: 600; margin-bottom: 8px;">हल्का कमर्शियल लोडर (350 KG तक)</div>
+            <p style="font-size: 0.85rem; color: #64748B; line-height: 1.5; margin-bottom: 12px;">
+              Quick delivery of cartons, electronic goods, cold drinks crates, and village market goods.
+            </p>
+            <div style="margin-top: auto; padding-top: 12px; border-top: 1px solid #F1F5F9; display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px;">
+              <span style="font-size: 0.82rem; color: #64748B;">Starting From</span>
+              <span style="font-size: 1.25rem; font-weight: 800; color: #0F172A;">₹300 <small style="font-size: 0.75rem; color: #64748B; font-weight: normal;">/ trip</small></span>
+            </div>
+            <a href="https://wa.me/919616932589?text=Hello%20Ayush%20Service%20Center,%20I%20want%20to%20book%20Piaggio%20Ape%20City%20Loader" target="_blank" class="btn btn-primary" style="font-size: 0.88rem; font-weight: 700; padding: 10px 14px; text-align: center;">
+              Book Carrier →
+            </a>
+          </div>
         </div>
+
+        <!-- Fleet Card 3: Wedding & Event Full-Day Loader -->
+        <div class="ab-fleet-card">
+          <div class="ab-fleet-img-wrap">
+            <img src="images/products/prod_aut_004.jpg" alt="Wedding Event Goods Transport" onerror="this.onerror=null; this.src='images/1autobooking.jpg';">
+            <span style="position: absolute; top: 10px; right: 10px; background: #D97706; color: #FFF; font-size: 0.72rem; font-weight: 700; padding: 3px 8px; border-radius: 9999px;">
+              EVENT SPECIAL
+            </span>
+          </div>
+          <div class="ab-fleet-body">
+            <h3 style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin-bottom: 2px;">Wedding & Event Full Day</h3>
+            <div style="font-size: 0.82rem; color: #2563EB; font-weight: 600; margin-bottom: 8px;">शादी-विवाह हलवाई सामान सेवा</div>
+            <p style="font-size: 0.85rem; color: #64748B; line-height: 1.5; margin-bottom: 12px;">
+              Full day reserved loader for catering utensils, tent shifting, vegetable market runs & barat bags.
+            </p>
+            <div style="margin-top: auto; padding-top: 12px; border-top: 1px solid #F1F5F9; display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px;">
+              <span style="font-size: 0.82rem; color: #64748B;">Full Day Rate</span>
+              <span style="font-size: 1.25rem; font-weight: 800; color: #0F172A;">₹1,800 <small style="font-size: 0.75rem; color: #64748B; font-weight: normal;">/ day</small></span>
+            </div>
+            <a href="https://wa.me/919616932589?text=Hello%20Ayush%20Service%20Center,%20I%20want%20to%20book%20Full%20Day%20Wedding%20Event%20Loader" target="_blank" class="btn btn-primary" style="font-size: 0.88rem; font-weight: 700; padding: 10px 14px; text-align: center;">
+              Book Full Day →
+            </a>
+          </div>
+        </div>
+
+        <!-- Fleet Card 4: Passenger Auto & E-Rickshaw -->
+        <div class="ab-fleet-card">
+          <div class="ab-fleet-img-wrap">
+            <img src="images/products/prod_aut_013.jpg" alt="Passenger Auto Booking" onerror="this.onerror=null; this.src='images/1autobooking.jpg';">
+            <span style="position: absolute; top: 10px; right: 10px; background: #9333EA; color: #FFF; font-size: 0.72rem; font-weight: 700; padding: 3px 8px; border-radius: 9999px;">
+              PASSENGER RIDE
+            </span>
+          </div>
+          <div class="ab-fleet-body">
+            <h3 style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin-bottom: 2px;">Passenger Auto (3-4 Seater)</h3>
+            <div style="font-size: 0.82rem; color: #2563EB; font-weight: 600; margin-bottom: 8px;">सवारी ऑटो व ई-रिक्शा (3-4 सीटर)</div>
+            <p style="font-size: 0.85rem; color: #64748B; line-height: 1.5; margin-bottom: 12px;">
+              Safe travel for families, railway station drops, hospital visits, and local Chandauli visits.
+            </p>
+            <div style="margin-top: auto; padding-top: 12px; border-top: 1px solid #F1F5F9; display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px;">
+              <span style="font-size: 0.82rem; color: #64748B;">Starting From</span>
+              <span style="font-size: 1.25rem; font-weight: 800; color: #0F172A;">₹150 <small style="font-size: 0.75rem; color: #64748B; font-weight: normal;">/ trip</small></span>
+            </div>
+            <a href="https://wa.me/919616932589?text=Hello%20Ayush%20Service%20Center,%20I%20want%20to%20book%20Passenger%20Auto" target="_blank" class="btn btn-primary" style="font-size: 0.88rem; font-weight: 700; padding: 10px 14px; text-align: center;">
+              Book Ride →
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 3. POPULAR LOCAL ROUTES & TRANSPARENT FARES ================= -->
+  <section style="padding: 44px 0; background: #FFFFFF; border-top: 1px solid #E2E8F0;">
+    <div class="container" style="max-width: 900px;">
+      <div style="text-align: center; margin-bottom: 28px;">
+        <span class="badge badge-primary" style="margin-bottom: 6px;">TRANSPARENT TARIFF</span>
+        <h2 style="font-size: 1.7rem; font-weight: 800; color: #0F172A; margin: 0;">Popular Routes & Rate Card</h2>
+        <p style="font-size: 0.92rem; color: #64748B; margin-top: 4px;">Honest local village rates with zero hidden charges. Both Passenger and Goods options available.</p>
       </div>
 
-      <!-- Booking Form Card -->
-      <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 24px; padding: 36px 28px; max-width: 800px; margin: 0 auto; box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
-        <h2 style="font-size: 1.45rem; font-weight: 800; color: #0F172A; margin-bottom: 6px;">Reserve Your Auto Online</h2>
-        <p style="font-size: 0.9rem; color: #64748B; margin-bottom: 24px;">Fill in your travel details below and our team will immediately arrange your ride.</p>
+      <div style="overflow-x: auto; border: 1px solid #E2E8F0; border-radius: 16px;">
+        <table class="ab-rates-table">
+          <thead>
+            <tr>
+              <th>From ↔ Destination</th>
+              <th>Distance</th>
+              <th>Passenger Auto</th>
+              <th>Goods Loader</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Tarajeevanpur ↔ Chandauli Station / Court</strong></td>
+              <td>~8 KM</td>
+              <td><strong style="color: #2563EB;">₹150 – ₹200</strong></td>
+              <td><strong>₹350</strong></td>
+              <td><a href="tel:+919616932589" class="btn btn-sm btn-outline" style="padding: 4px 10px;">Book</a></td>
+            </tr>
+            <tr>
+              <td><strong>Tarajeevanpur ↔ Baburi Market</strong></td>
+              <td>~6 KM</td>
+              <td><strong style="color: #2563EB;">₹100 – ₹150</strong></td>
+              <td><strong>₹250</strong></td>
+              <td><a href="tel:+919616932589" class="btn btn-sm btn-outline" style="padding: 4px 10px;">Book</a></td>
+            </tr>
+            <tr>
+              <td><strong>Tarajeevanpur ↔ Sakaldiha Market</strong></td>
+              <td>~12 KM</td>
+              <td><strong style="color: #2563EB;">₹200 – ₹250</strong></td>
+              <td><strong>₹400</strong></td>
+              <td><a href="tel:+919616932589" class="btn btn-sm btn-outline" style="padding: 4px 10px;">Book</a></td>
+            </tr>
+            <tr>
+              <td><strong>Tarajeevanpur ↔ Pt. Deen Dayal Upadhyaya Jn (Mughal Sarai)</strong></td>
+              <td>~22 KM</td>
+              <td><strong style="color: #2563EB;">₹450 – ₹550</strong></td>
+              <td><strong>₹750</strong></td>
+              <td><a href="tel:+919616932589" class="btn btn-sm btn-outline" style="padding: 4px 10px;">Book</a></td>
+            </tr>
+            <tr>
+              <td><strong>Tarajeevanpur ↔ Varanasi Cantt Station / BHU</strong></td>
+              <td>~35 KM</td>
+              <td><strong style="color: #2563EB;">₹750 – ₹950</strong></td>
+              <td><strong>₹1,200</strong></td>
+              <td><a href="tel:+919616932589" class="btn btn-sm btn-outline" style="padding: 4px 10px;">Book</a></td>
+            </tr>
+            <tr>
+              <td><strong>Tarajeevanpur ↔ Dhanapur Bazaar</strong></td>
+              <td>~15 KM</td>
+              <td><strong style="color: #2563EB;">₹250 – ₹320</strong></td>
+              <td><strong>₹500</strong></td>
+              <td><a href="tel:+919616932589" class="btn btn-sm btn-outline" style="padding: 4px 10px;">Book</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size: 0.8rem; color: #64748B; margin-top: 10px; text-align: right;">
+        * Night trips (10:00 PM – 5:00 AM) or heavy luggage may have slight standard nominal adjustment.
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 4. CLASSIC ONLINE RESERVATION FORM ================= -->
+  <main style="padding: 44px 0 60px; background: #F8FAFC; border-top: 1px solid #E2E8F0;">
+    <div class="container" id="booking-container" style="max-width: 820px;">
+      
+      <div style="background: #FFFFFF; border: 1px solid #CBD5E1; border-radius: 24px; padding: 36px 32px; box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <span class="badge badge-primary" style="margin-bottom: 4px;">FAST DISPATCH FORM</span>
+            <h2 style="font-size: 1.5rem; font-weight: 800; color: #0F172A; margin: 0;">Online Auto Reservation</h2>
+          </div>
+          <a href="tel:+919616932589" class="btn btn-sm btn-outline" style="color: #16A34A; border-color: #16A34A; font-weight: 700;">
+            📞 Urgent? Call Now
+          </a>
+        </div>
+        <p style="font-size: 0.9rem; color: #64748B; margin-bottom: 24px; line-height: 1.5;">
+          Fill in your pickup, drop and time details. Our team immediately dispatches the driver and notifies you via phone and WhatsApp.
+        </p>
 
         <form id="auto-booking-form">
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;" class="form-row-2">
             <div class="form-group">
               <label class="form-label">Full Name *</label>
-              <input type="text" id="ab-name" class="form-control" placeholder="Enter your name" required>
+              <input type="text" id="ab-name" class="form-control" placeholder="Enter your full name" required>
             </div>
             <div class="form-group">
               <label class="form-label">Contact Mobile Number *</label>
@@ -151,7 +414,7 @@
               <input type="text" id="ab-pickup" class="form-control" placeholder="e.g. Tarajeevanpur Chauraha or Village name" required>
             </div>
             <div class="form-group">
-              <label class="form-label">Destination *</label>
+              <label class="form-label">Destination Location *</label>
               <input type="text" id="ab-destination" class="form-control" placeholder="e.g. Chandauli Station, Baburi, Sakaldiha" required>
             </div>
           </div>
@@ -172,17 +435,20 @@
               <label class="form-label">Vehicle Type Preference</label>
               <select id="ab-vehicle" class="form-select">
                 <option value="Passenger Auto (3-4 Seater)">Passenger Auto (3-4 Seater)</option>
-                <option value="E-Rickshaw">E-Rickshaw (Eco Friendly Local)</option>
-                <option value="Commercial Goods Loader">Commercial Goods Loader (Chhota Hathi)</option>
+                <option value="Mahindra Alfa Cargo Loader (500 KG)">Mahindra Alfa Cargo Loader (500 KG)</option>
+                <option value="Piaggio Ape City Loader (350 KG)">Piaggio Ape City Loader (350 KG)</option>
+                <option value="Wedding / Event Full Day Loader">Wedding / Event Full Day Loader</option>
+                <option value="E-Rickshaw (Local Village Trip)">E-Rickshaw (Local Village Trip)</option>
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label">Passenger Count</label>
+              <label class="form-label">Passenger / Load Count</label>
               <select id="ab-passengers" class="form-select">
                 <option value="1">1 Passenger</option>
                 <option value="2">2 Passengers</option>
-                <option value="3">3 Passengers</option>
-                <option value="4+">4 or More Passengers</option>
+                <option value="3-4">3 to 4 Passengers</option>
+                <option value="Goods/Bags Only">Goods/Bags Only (No Passengers)</option>
+                <option value="Goods + 1 Person">Goods + 1 Person Accompanying</option>
               </select>
             </div>
           </div>
@@ -192,8 +458,8 @@
             <input type="text" id="ab-notes" class="form-control" placeholder="e.g. Heavy luggage, return trip required, flight/train timing...">
           </div>
 
-          <button type="submit" class="btn btn-primary btn-lg btn-full" id="ab-submit-btn" style="margin-top: 16px; font-size: 1.05rem;">
-            Submit Auto Booking Request →
+          <button type="submit" class="btn btn-primary btn-lg btn-full" id="ab-submit-btn" style="margin-top: 16px; font-size: 1.05rem; font-weight: 700; padding: 14px; background: #2563EB;">
+            Confirm & Reserve Auto Ride →
           </button>
         </form>
       </div>
@@ -201,7 +467,22 @@
     </div>
   </main>
 
-  <!-- Footer -->
+  <!-- ================= 5. EMERGENCY 24/7 CALL STRIP ================= -->
+  <section style="padding: 36px 0; background: #0F172A; color: #FFFFFF;">
+    <div class="container" style="max-width: 860px; text-align: center;">
+      <h3 style="font-size: 1.35rem; font-weight: 800; color: #FFFFFF; margin-bottom: 6px;">
+        Need Immediate Emergency Transport at Night?
+      </h3>
+      <p style="font-size: 0.92rem; color: #CBD5E1; margin-bottom: 18px;">
+        For hospital emergencies, railway connection pickups, or late night goods arrivals, call us directly without hesitation.
+      </p>
+      <a href="tel:+919616932589" class="btn btn-primary btn-lg" style="background: #16A34A; border: none; font-weight: 800; font-size: 1.1rem; padding: 12px 28px;">
+        📞 Call Driver Now: +91 96169 32589
+      </a>
+    </div>
+  </section>
+
+  <!-- Professional Footer -->
   <footer class="main-footer">
     <div class="container footer-top">
       <div class="footer-grid">
@@ -210,14 +491,23 @@
           <p style="font-size: 0.9rem; line-height: 1.6;">Budhiya Mai Mandir Ke Paas, Tarajeevanpur Chauraha, Chandauli • Call: +91 96169 32589</p>
         </div>
         <div class="footer-col">
-          <h4>24/7 Availability</h4>
-          <p style="font-size: 0.88rem; color: #CBD5E1;">Our autos and drivers are available on pre-booking and emergency calls anytime.</p>
+          <h4>24/7 Transport Services</h4>
+          <ul class="footer-links">
+            <li><a href="autobooking.html">Passenger Auto (3-4 Seater)</a></li>
+            <li><a href="autobooking.html">Commercial Goods Loader</a></li>
+            <li><a href="autobooking.html">Wedding Event Transport</a></li>
+            <li><a href="autobooking.html">Railway Station Drop</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Availability</h4>
+          <p style="font-size: 0.88rem; color: #CBD5E1;">Our autos and drivers are available round-the-clock for local and outstation trips across Chandauli & Varanasi.</p>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
       <div class="container footer-bottom-inner">
-        <div>© 2026 Ayush Service Center. All rights reserved.</div>
+        <div>© 2026 Ayush Service Center. All rights reserved. Celebrating 25+ Years of Excellence.</div>
         <div>Developed by Ayush Gupta (T.WILL) • 9519099011</div>
       </div>
     </div>
