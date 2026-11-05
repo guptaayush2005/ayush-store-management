@@ -15,23 +15,28 @@
   <link rel="stylesheet" href="../css/admin.css">
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       background: radial-gradient(circle at 50% 20%, #1E293B 0%, #0F172A 100%);
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 16px;
       font-family: 'Inter', sans-serif;
+      margin: 0;
     }
 
     .login-card {
       background: #FFFFFF;
-      border-radius: 24px;
-      max-width: 440px;
+      border-radius: 20px;
+      max-width: 420px;
       width: 100%;
-      padding: 38px 32px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+      padding: 32px 24px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
       position: relative;
       overflow: hidden;
     }
@@ -45,59 +50,81 @@
       height: 6px;
       background: linear-gradient(90deg, #2563EB, #06B6D4);
     }
+
+    .login-form-input {
+      font-size: 16px !important;
+      min-height: 46px;
+      border: 1px solid #CBD5E1;
+      border-radius: 10px;
+      padding: 10px 14px;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .login-form-input:focus {
+      border-color: #2563EB;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    @media (max-width: 480px) {
+      .login-card {
+        padding: 24px 18px;
+        border-radius: 16px;
+      }
+    }
   </style>
 </head>
 <body>
 
   <div class="login-card">
-    <div style="text-align: center; margin-bottom: 28px;">
-      <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #2563EB, #06B6D4); color: #FFF; border-radius: 16px; display: inline-flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 800; margin-bottom: 12px; box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);">
+    <div style="text-align: center; margin-bottom: 26px;">
+      <div style="width: 52px; height: 52px; background: linear-gradient(135deg, #2563EB, #06B6D4); color: #FFF; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800; margin-bottom: 12px; box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);">
         ASC
       </div>
-      <h1 style="font-size: 1.45rem; font-weight: 800; color: #0F172A; margin-bottom: 4px;">Ayush Service Center</h1>
-      <p style="font-size: 0.85rem; color: #64748B;">Staff & Management Dashboard Portal</p>
+      <h1 style="font-size: 1.4rem; font-weight: 800; color: #0F172A; margin: 0 0 4px;">Ayush Service Center</h1>
+      <p style="font-size: 0.85rem; color: #64748B; margin: 0;">Staff & Management Portal Login</p>
     </div>
 
     <!-- Alert Message Area -->
-    <div id="login-alert" style="display: none; padding: 12px 14px; border-radius: 10px; font-size: 0.85rem; margin-bottom: 20px; line-height: 1.5;"></div>
+    <div id="login-alert" style="display: none; padding: 12px 14px; border-radius: 10px; font-size: 0.85rem; margin-bottom: 18px; line-height: 1.5;"></div>
 
     <form id="admin-login-form">
-      <div class="form-group">
-        <label class="form-label" for="login-email">Admin Email Address</label>
-        <input type="email" id="login-email" class="form-control" placeholder="Enter admin email" required autocomplete="email">
+      <div class="form-group" style="margin-bottom: 16px;">
+        <label class="form-label" for="login-email" style="font-size: 0.85rem; font-weight: 600; color: #334155; margin-bottom: 6px; display: block;">Admin Email Address</label>
+        <input type="email" id="login-email" class="login-form-input" placeholder="Enter registered admin email" required autocomplete="email">
       </div>
 
-      <div class="form-group">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-          <label class="form-label" for="login-password" style="margin: 0;">Password</label>
-        </div>
+      <div class="form-group" style="margin-bottom: 20px;">
+        <label class="form-label" for="login-password" style="font-size: 0.85rem; font-weight: 600; color: #334155; margin-bottom: 6px; display: block;">Password</label>
         <div style="position: relative;">
-          <input type="password" id="login-password" class="form-control" placeholder="••••••••" required autocomplete="current-password" style="padding-right: 44px;">
+          <input type="password" id="login-password" class="login-form-input" placeholder="••••••••" required autocomplete="current-password" style="padding-right: 44px;">
           <button type="button" id="toggle-password-btn" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #64748B; cursor: pointer; font-size: 16px;" title="Show/Hide">
             👁️
           </button>
         </div>
       </div>
 
-      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 24px;">
-        <input type="checkbox" id="remember-me" checked style="accent-color: #2563EB; width: 16px; height: 16px;">
-        <label for="remember-me" style="font-size: 0.85rem; color: #475569; cursor: pointer;">Keep me signed in</label>
-      </div>
-
-      <button type="submit" class="btn btn-primary btn-lg btn-full" id="login-submit-btn">
+      <button type="submit" class="btn btn-primary btn-lg btn-full" id="login-submit-btn" style="min-height: 48px; font-weight: 700; font-size: 0.95rem; border-radius: 10px;">
         Sign In to Dashboard →
       </button>
     </form>
 
-    <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid #E2E8F0; text-align: center;">
-      <a href="../index.html" style="font-size: 0.85rem; color: #64748B; font-weight: 500; display: inline-flex; align-items: center; gap: 6px;">
+    <div style="margin-top: 22px; padding-top: 18px; border-top: 1px solid #E2E8F0; text-align: center;">
+      <a href="../index.html" style="font-size: 0.85rem; color: #64748B; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; text-decoration: none;">
         ← Back to Customer Website
       </a>
     </div>
   </div>
 
   <script type="module">
-    import { auth, signInWithEmailAndPassword, onAuthStateChanged } from "../js/firebase-config.js";
+    import { auth, signInWithEmailAndPassword, signOut } from "../js/firebase-config.js";
+
+    // Strictly clear any stale session so login is always required
+    sessionStorage.removeItem("asc_admin_session");
+    try {
+      await signOut(auth);
+    } catch(e) {}
 
     const AUTHORIZED_ADMINS = [
       "ayush44129@gmail.com",
@@ -106,25 +133,6 @@
       "ayushgupta2005@gmail.com",
       "admin@ayushservicecenter.com"
     ];
-
-    // Auto-redirect if already signed in
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const tokenResult = await user.getIdTokenResult().catch(() => null);
-        const isAdminClaim = tokenResult && tokenResult.claims && tokenResult.claims.admin;
-        if (isAdminClaim || AUTHORIZED_ADMINS.includes((user.email || "").toLowerCase())) {
-          window.location.href = "dashboard.html";
-        }
-      }
-    });
-
-    // Check active local session
-    try {
-      const s = JSON.parse(sessionStorage.getItem("asc_admin_session") || "null");
-      if (s && s.email && AUTHORIZED_ADMINS.includes(s.email.toLowerCase())) {
-        window.location.href = "dashboard.html";
-      }
-    } catch(e) {}
 
     const form = document.getElementById("admin-login-form");
     const emailInput = document.getElementById("login-email");
@@ -155,7 +163,15 @@
       const email = rawEmail.replace("gamil.com", "gmail.com");
       const password = passwordInput.value.trim();
 
-      // Check store administrator credentials
+      if (!email || !password) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Sign In to Dashboard →";
+        alertBox.style.cssText = "display: block; background: #FEE2E2; color: #991B1B; padding: 12px; border-radius: 8px; margin-bottom: 18px;";
+        alertBox.textContent = "Please enter both Email and Password.";
+        return;
+      }
+
+      // Check configured administrator credentials
       const isConfiguredAdmin = (
         (email === "ayush44129@gmail.com" || 
          email === "vinodkumargupta290@gmail.com" || 
@@ -169,10 +185,11 @@
         sessionStorage.setItem("asc_admin_session", JSON.stringify({
           email: email,
           name: adminName,
-          uid: "admin_" + Date.now()
+          uid: "admin_" + Date.now(),
+          authTime: Date.now()
         }));
 
-        alertBox.style.cssText = "display: block; background: #DCFCE7; color: #166534; padding: 12px; border-radius: 8px; margin-bottom: 20px;";
+        alertBox.style.cssText = "display: block; background: #DCFCE7; color: #166534; padding: 12px; border-radius: 8px; margin-bottom: 18px;";
         alertBox.textContent = `✓ Authentication successful! Welcome, ${adminName}. Opening dashboard...`;
 
         setTimeout(() => {
@@ -181,7 +198,7 @@
         return;
       }
 
-      // Fallback to Firebase Authentication
+      // Fallback: Check Firebase Authentication
       try {
         const userCred = await signInWithEmailAndPassword(auth, email, password);
         const user = userCred.user;
@@ -196,10 +213,11 @@
         sessionStorage.setItem("asc_admin_session", JSON.stringify({
           email: user.email,
           name: user.displayName || (user.email.includes("ayush") ? "Ayush Gupta" : "Vinod Kumar Gupta"),
-          uid: user.uid
+          uid: user.uid,
+          authTime: Date.now()
         }));
 
-        alertBox.style.cssText = "display: block; background: #DCFCE7; color: #166534; padding: 12px; border-radius: 8px; margin-bottom: 20px;";
+        alertBox.style.cssText = "display: block; background: #DCFCE7; color: #166534; padding: 12px; border-radius: 8px; margin-bottom: 18px;";
         alertBox.textContent = "✓ Authentication successful! Opening dashboard...";
 
         setTimeout(() => {
@@ -209,8 +227,8 @@
       } catch (error) {
         submitBtn.disabled = false;
         submitBtn.textContent = "Sign In to Dashboard →";
-        alertBox.style.cssText = "display: block; background: #FEE2E2; color: #991B1B; padding: 12px; border-radius: 8px; margin-bottom: 20px;";
-        alertBox.textContent = "Invalid email or password. Please verify your credentials.";
+        alertBox.style.cssText = "display: block; background: #FEE2E2; color: #991B1B; padding: 12px; border-radius: 8px; margin-bottom: 18px;";
+        alertBox.textContent = "Invalid email or password. Please verify your admin credentials.";
       }
     });
   </script>

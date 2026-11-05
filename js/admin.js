@@ -56,47 +56,34 @@ const AUTHORIZED_ADMIN_EMAILS = [
   "admin@ayushservicecenter.com"
 ];
 
-onAuthStateChanged(auth, async (user) => {
-  let activeUser = user;
-
-  // Check local verified session fallback
-  if (!activeUser) {
-    try {
-      const rawSession = sessionStorage.getItem("asc_admin_session");
-      if (rawSession) {
-        const s = JSON.parse(rawSession);
-        if (s && s.email && AUTHORIZED_ADMIN_EMAILS.includes(s.email.toLowerCase())) {
-          activeUser = {
-            email: s.email,
-            displayName: s.name || (s.email.includes("ayush") ? "Ayush Gupta" : "Vinod Kumar Gupta"),
-            uid: s.uid || "owner_session"
-          };
-        }
-      }
-    } catch(e) {}
-  }
-
-  if (!activeUser) {
-    window.location.href = "login.html";
-    return;
-  }
-
-  // Check custom claim or whitelist
-  let isAuthorized = AUTHORIZED_ADMIN_EMAILS.includes((activeUser.email || "").toLowerCase());
-  if (user && user.getIdTokenResult) {
-    const tokenResult = await user.getIdTokenResult().catch(() => null);
-    if (tokenResult && tokenResult.claims && tokenResult.claims.admin) {
-      isAuthorized = true;
+// Strict requirement: User MUST have authenticated with ID/Password in login.html
+let verifiedSession = null;
+try {
+  const rawSession = sessionStorage.getItem("asc_admin_session");
+  if (rawSession) {
+    const s = JSON.parse(rawSession);
+    if (s && s.email && AUTHORIZED_ADMIN_EMAILS.includes(s.email.toLowerCase())) {
+      verifiedSession = s;
     }
   }
+} catch(e) {}
 
-  if (!isAuthorized) {
-    alert("Access Denied: You do not have administrator permissions.");
-    try { await signOut(auth); } catch(e) {}
-    sessionStorage.removeItem("asc_admin_session");
+if (!verifiedSession) {
+  // No active validated login session! Redirect to login immediately.
+  window.location.href = "login.html";
+}
+
+onAuthStateChanged(auth, async (user) => {
+  if (!verifiedSession) {
     window.location.href = "login.html";
     return;
   }
+
+  let activeUser = {
+    email: verifiedSession.email,
+    displayName: verifiedSession.name || (verifiedSession.email.includes("ayush") ? "Ayush Gupta" : "Vinod Kumar Gupta"),
+    uid: (user && user.uid) || verifiedSession.uid || "owner_session"
+  };
 
   currentUser = activeUser;
   const userEmail = activeUser.email || "admin@ayushservicecenter.com";
@@ -108,7 +95,7 @@ onAuthStateChanged(auth, async (user) => {
 
   if (avatarEl) avatarEl.textContent = userInitials;
   if (emailEl) emailEl.textContent = userEmail;
-  if (nameEl) nameEl.textContent = activeUser.displayName || (userEmail.includes("ayush") ? "Ayush Gupta" : "Vinod Kumar Gupta");
+  if (nameEl) nameEl.textContent = activeUser.displayName;
 
   // Load all operational data
   await loadAllAdminData();
@@ -136,6 +123,19 @@ const pageTitle = document.getElementById("topbar-page-title");
 const sidebar = document.getElementById("admin-sidebar");
 const sidebarOpenBtn = document.getElementById("sidebar-open-btn");
 const sidebarCloseBtn = document.getElementById("sidebar-close-btn");
+const sidebarBackdrop = document.getElementById("admin-sidebar-backdrop");
+
+function openSidebar() {
+  if (sidebar) sidebar.classList.add("open");
+  if (sidebarBackdrop) sidebarBackdrop.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closeSidebar() {
+  if (sidebar) sidebar.classList.remove("open");
+  if (sidebarBackdrop) sidebarBackdrop.classList.remove("active");
+  document.body.style.overflow = "";
+}
 
 navItems.forEach(item => {
   item.addEventListener("click", () => {
@@ -152,16 +152,19 @@ navItems.forEach(item => {
 
     // Auto-close sidebar on mobile
     if (window.innerWidth < 1024) {
-      sidebar.classList.remove("open");
+      closeSidebar();
     }
   });
 });
 
 if (sidebarOpenBtn) {
-  sidebarOpenBtn.addEventListener("click", () => sidebar.classList.add("open"));
+  sidebarOpenBtn.addEventListener("click", openSidebar);
 }
 if (sidebarCloseBtn) {
-  sidebarCloseBtn.addEventListener("click", () => sidebar.classList.remove("open"));
+  sidebarCloseBtn.addEventListener("click", closeSidebar);
+}
+if (sidebarBackdrop) {
+  sidebarBackdrop.addEventListener("click", closeSidebar);
 }
 
 // Quick action buttons in topbar/overview
