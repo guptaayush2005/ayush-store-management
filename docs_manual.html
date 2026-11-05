@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>Ayush Service Center - Complete System Documentation & Operating Manual</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800;900&display=swap');
+
+    @page {
+      size: A4 portrait;
+      margin: 15mm 15mm 18mm 15mm;
+      @bottom-right {
+        content: counter(page);
+        font-family: 'Inter', sans-serif;
+        font-size: 8pt;
+        color: #64748B;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #1E293B;
+      background: #FFFFFF;
+      line-height: 1.55;
+      font-size: 9.5pt;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Poppins', sans-serif;
+      color: #0F172A;
+      font-weight: 700;
+    }
+
+    /* Page Breaks */
+    .page-break {
+      page-break-before: always;
+      break-before: page;
+    }
+
+    .no-break {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    /* COVER PAGE */
+    .cover-page {
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 3px solid #2563EB;
+      border-radius: 20px;
+      padding: 40px 35px;
+      background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%);
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .cover-badge {
+      display: inline-block;
+      background: #2563EB;
+      color: #FFFFFF;
+      font-size: 9pt;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 50px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .cover-title {
+      font-size: 26pt;
+      font-weight: 800;
+      color: #0F172A;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .cover-subtitle {
+      font-size: 13pt;
+      color: #2563EB;
+      font-weight: 600;
+      margin-bottom: 25px;
+      line-height: 1.4;
+    }
+
+    .cover-desc {
+      font-size: 10pt;
+      color: #475569;
+      line-height: 1.6;
+      max-width: 600px;
+      margin-bottom: 30px;
+    }
+
+    .cover-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      background: #FFFFFF;
+      border: 1px solid #CBD5E1;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .meta-label {
+      font-size: 8pt;
+      font-weight: 700;
+      color: #64748B;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 3px;
+    }
+
+    .meta-value {
+      font-size: 9.5pt;
+      font-weight: 700;
+      color: #0F172A;
+    }
+
+    .cover-footer {
+      border-top: 1.5px solid #E2E8F0;
+      padding-top: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 8.5pt;
+      color: #64748B;
+    }
+
+    /* SECTION HEADERS */
+    .section-header {
+      border-bottom: 2px solid #2563EB;
+      padding-bottom: 8px;
+      margin-top: 25px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-num {
+      background: #2563EB;
+      color: #FFFFFF;
+      font-size: 11pt;
+      font-weight: 800;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .section-title {
+      font-size: 15pt;
+      color: #0F172A;
+    }
+
+    .section-subtitle {
+      font-size: 8.5pt;
+      color: #64748B;
+      margin-top: -8px;
+      margin-bottom: 14px;
+    }
+
+    /* CARDS & BOXES */
+    .card {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+    }
+
+    .card-highlight {
+      background: #EFF6FF;
+      border: 1.5px solid #93C5FD;
+    }
+
+    .card-success {
+      background: #F0FDF4;
+      border: 1.5px solid #86EFAC;
+    }
+
+    .card-warning {
+      background: #FEF3C7;
+      border: 1.5px solid #FCD34D;
+    }
+
+    .card-title {
+      font-size: 10.5pt;
+      font-weight: 700;
+      color: #0F172A;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* TABLES */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 8.5pt;
+    }
+
+    th {
+      background: #0F172A;
+      color: #FFFFFF;
+      font-weight: 700;
+      text-align: left;
+      padding: 8px 10px;
+      border: 1px solid #0F172A;
+    }
+
+    td {
+      padding: 7px 10px;
+      border: 1px solid #CBD5E1;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td {
+      background: #F8FAFC;
+    }
+
+    /* BADGES */
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 7.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-right: 4px;
+    }
+
+    .badge-blue { background: #DBEAFE; color: #1D4ED8; }
+    .badge-green { background: #DCFCE7; color: #15803D; }
+    .badge-yellow { background: #FEF08A; color: #854D0E; }
+    .badge-purple { background: #F3E8FF; color: #7E22CE; }
+
+    /* STEP LIST */
+    .step-box {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+      align-items: flex-start;
+    }
+
+    .step-circle {
+      background: #2563EB;
+      color: #FFFFFF;
+      font-weight: 800;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9pt;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-content {
+      flex: 1;
+    }
+
+    .step-content strong {
+      color: #0F172A;
+      font-size: 9.5pt;
+    }
+
+    code {
+      font-family: Consolas, Monaco, "Courier New", monospace;
+      background: #E2E8F0;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 8pt;
+      color: #0F172A;
+    }
+
+    .code-block {
+      background: #0F172A;
+      color: #F8FAFC;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 8pt;
+      line-height: 1.45;
+      margin: 8px 0 12px;
+      overflow-x: auto;
+    }
+
+    ul, ol {
+      margin-left: 20px;
+      margin-bottom: 10px;
+    }
+
+    li {
+      margin-bottom: 4px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== COVER PAGE ==================== -->
+  <div class="cover-page">
+    <div>
+      <span class="cover-badge">Official System Documentation & User Manual</span>
+      <h1 class="cover-title">Ayush Service Center & Hardware General Store</h1>
+      <div class="cover-subtitle">Complete Architecture, Workflows, Admin Modules & Technical Guide</div>
+      <p class="cover-desc">
+        यह आधिकारिक दस्तावेज <strong>आयुष सर्विस सेंटर एवं हार्डवेयर जनरल स्टोर (ताराजीवनपुर, चंदौली)</strong> 
+        के सम्पूर्ण ई-कॉमर्स, ऑनलाइन बिलिंग, पीओएस, ऑटो लोडर बुकिंग, मोबाइल एसएमएस ओटीपी, यूपीआई पेमेंट, 
+        व्हाट्सएप नोटिफिकेशन एवं 18 एडमिनिस्ट्रेशन मॉडल्स की कार्यप्रणाली को विस्तार से समझाने के लिए तैयार किया गया है।
+      </p>
+
+      <div class="cover-meta-grid">
+        <div class="meta-item">
+          <span class="meta-label">Store Name & Landmark</span>
+          <span class="meta-value">Ayush Service Center (बुढ़िया माई मंदिर, ताराजीवनपुर, चंदौली)</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Store Helpline / WhatsApp / UPI</span>
+          <span class="meta-value">+91 96169 32589 • 9616932589@paytm</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Live Store Website</span>
+          <span class="meta-value">https://ayush-hardware-general-store.vercel.app</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Developed By</span>
+          <span class="meta-value">Ayush Gupta (Founder, APX DIGITAL • 9519099011)</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Software Version</span>
+          <span class="meta-value">Release 2.0 (High-Speed Edge & Firebase Realtime)</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Documentation Date</span>
+          <span class="meta-value">November 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cover-footer">
+      <span>© 2026 Ayush Service Center. All rights reserved.</span>
+      <span>Engineered by APX DIGITAL (https://apx-digital.vercel.app)</span>
+    </div>
+  </div>
+
+  <!-- ==================== CHAPTER 1: OVERVIEW ==================== -->
+  <div class="page-break"></div>
+  <div class="section-header">
+    <span class="section-num">1</span>
+    <h2 class="section-title">परियोजना परिचय एवं व्यावसायिक दायरा (Overview & Scope)</h2>
+  </div>
+  <p class="section-subtitle">Store Foundation, Heritage, Mission, and Core Business Verticals</p>
+
+  <p>
+    <strong>आयुष सर्विस सेंटर</strong> ताराजीवनपुर चौराहा (चंदौली, उत्तर प्रदेश) का 25+ वर्षों से भरोसेमंद प्रतिष्ठान है। 
+    यह आधुनिक वेब प्लेटफॉर्म स्टोर के ऑफ़लाइन और ऑनलाइन दोनों तरह के व्यापार को एक साथ जोड़ने के लिए निर्मित किया गया है, 
+    ताकि ग्रामीण व शहरी दोनों ग्राहक आसानी से घर बैठे ऑर्डर कर सकें और दुकान मालिक अपने मोबाइल या कंप्यूटर से सम्पूर्ण स्टोर का संचालन कर सके।
+  </p>
+
+  <div class="card card-highlight" style="margin-top: 12px;">
+    <div class="card-title">🏢 स्टोर के 6 मुख्य व्यावसायिक विभाग (Core Product & Service Verticals):</div>
+    <div class="grid-3" style="margin-top: 8px;">
+      <div><strong>1. स्टील बर्तन (Steel Utensils):</strong> थाली, लोटा, बाल्टी, कुकर, भगौना, कढ़ाई, डिनर सेट।</div>
+      <div><strong>2. प्लास्टिक सामान (Plastic):</strong> बाल्टी, मग, टब, कुर्सी, स्टूल, स्टोरेज बॉक्स, डस्टबिन।</div>
+      <div><strong>3. दोना-पत्तल (Packaging):</strong> शादी, ब्याह, कथा-पूजन हेतु दोना, पत्तल, कटोरी, डिब्बा।</div>
+      <div><strong>4. इलेक्ट्रॉनिक्स व गैजेट्स:</strong> चार्जर, केबल, ईयरफोन, टॉर्च, बल्ब, एक्सटेंशन बोर्ड।</div>
+      <div><strong>5. कोल्ड ड्रिंक्स व बेवरेजेस:</strong> थम्सअप, कोका कोला, फ्रूटी, स्प्राईट, माज़ा, मिनरल वाटर।</div>
+      <div><strong>6. कमर्शियल ऑटो बुकिंग:</strong> अपे कार्गो, महिंद्रा अल्फा, छोटा हाथी भाड़ा लोडर वाहन।</div>
+    </div>
+  </div>
+
+  <h3 style="font-size: 11pt; margin: 16px 0 8px;">🎯 मुख्य उद्देश्य एवं खूबियां (Key Platform Highlights):</h3>
+  <ul>
+    <li><strong>100% मोबाइल रिस्पॉन्सिव (Zero Overflow):</strong> 320px के छोटे फोन से लेकर 1920px के बड़े डेस्कटॉप मॉनिटर तक परफेक्ट व्यू।</li>
+    <li><strong>टेलीकॉम एसएमएस ओटीपी (Carrier SMS):</strong> कस्टमर के सिम कार्ड पर असली मैसेज (SMS) के माध्यम से सुरक्षित लॉगिन।</li>
+    <li><strong>डायरेक्ट यूपीआई पेमेंट (Direct UPI):</strong> <code>9616932589@paytm</code> पर बिना किसी थर्ड पार्टी कमीशन के डायरेक्ट भुगतान।</li>
+    <li><strong>इंस्टेंट व्हाट्सएप अलर्ट:</strong> ऑर्डर होते ही दुकानदार के नंबर <code>+91 96169 32589</code> पर पूरी रसीद और इनवॉइस लिंक जाता है।</li>
+    <li><strong>1-क्लिक टैक्स इनवॉइस (Print / PDF):</strong> ग्राहक और दुकानदार दोनों के लिए तुरंत प्रिंट होने वाला पक्का जीएसटी बिल।</li>
+    <li><strong>18 मॉड्यूल्स का पावरफुल एडमिन पैनल:</strong> इन्वेंट्री, बिलिंग पीओएस, सेल्स रिपोर्ट, खर्च, बैनर और ग्राहक प्रबंधन।</li>
+  </ul>
+
+  <!-- ==================== CHAPTER 2: TECH STACK ==================== -->
+  <div class="section-header" style="margin-top: 25px;">
+    <span class="section-num">2</span>
+    <h2 class="section-title">सिस्टम आर्किटेक्चर एवं तकनीकी टूल्स (Tech Stack)</h2>
+  </div>
+  <p class="section-subtitle">Modern Edge Architecture & Cloud Infrastructure</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">घटक (Component)</th>
+        <th style="width: 35%;">टेक्नोलॉजी / लाइब्रेरी (Tech)</th>
+        <th style="width: 40%;">उद्देश्य एवं भूमिका (Purpose & Role)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Frontend Core</strong></td>
+        <td>HTML5, CSS3, ES6+ JavaScript Modules</td>
+        <td>बिना किसी भारी फ्रेमवर्क के 100/100 परफॉरमेंस स्पीड और जीरो ब्लोटवेयर।</td>
+      </tr>
+      <tr>
+        <td><strong>Cloud Database</strong></td>
+        <td>Google Firebase Cloud Firestore (NoSQL)</td>
+        <td>प्रोडक्ट्स, ऑर्डर्स, कूपन, सेटिंग्स का रियल-टाइम सिंक और ऑटोमेटिक बैकअप।</td>
+      </tr>
+      <tr>
+        <td><strong>Cloud Storage</strong></td>
+        <td>Google Firebase Storage</td>
+        <td>प्रोडक्ट्स और वेबसाइट बैनर्स की हाई-डेफिनिशन तस्वीरों का क्लाउड स्टोरेज।</td>
+      </tr>
+      <tr>
+        <td><strong>Authentication</strong></td>
+        <td>Firebase Auth (Email/Pass + Phone SMS)</td>
+        <td>एडमिन के लिए सुरक्षित पासवर्ड लॉगिन एवं ग्राहकों के लिए टेलीकॉम एसएमएस ओटीपी।</td>
+      </tr>
+      <tr>
+        <td><strong>Hosting & CDN</strong></td>
+        <td>Vercel Global Edge Network</td>
+        <td>ग्लोबल सुपर-फास्ट एसएसएल सर्टिफाइड होस्टिंग एवं ऑटोमेटिक सीआई/सीडी डिप्लॉयमेंट।</td>
+      </tr>
+      <tr>
+        <td><strong>Third-Party APIs</strong></td>
+        <td>WhatsApp API, UPI Deep Linking</td>
+        <td>ऑर्डर नोटिफिकेशन व 1-टैप मोबाइल यूपीआई भुगतान (GPay, PhonePe, Paytm)।</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ==================== CHAPTER 3: CUSTOMER FLOW ==================== -->
+  <div class="page-break"></div>
+  <div class="section-header">
+    <span class="section-num">3</span>
+    <h2 class="section-title">पब्लिक वेबसाइट और कस्टमर फ्लो (Public Store Pages)</h2>
+  </div>
+  <p class="section-subtitle">User Experience & Public Pages Walkthrough</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">🏠 1. मुख्य पृष्ठ (index.html)</div>
+      <p style="font-size: 8.5pt;">
+        स्टोर का होमपेज। इसमें ऊपर हेडर, स्टोर ब्रांडिंग, क्विक सर्च, प्रमुख केटेगरी कार्ड्स, 
+        हॉट डील्स, ग्राहक रिव्यूज़, 25+ वर्षों का विश्वास पिलर और नीचे मोबाइल बॉटम नेविगेशन बार शामिल है।
+      </p>
+    </div>
+    <div class="card">
+      <div class="card-title">🛍️ 2. स्टोर कैटलॉग (shop.html)</div>
+      <p style="font-size: 8.5pt;">
+        सभी 190+ उत्पादों की लाइव लिस्टिंग। इसमें केटेगरी फिल्टर (स्टील, प्लास्टिक, गैस, आदि), 
+        लाइव सर्च बार, कीमत के आधार पर सॉर्टिंग (कम से ज्यादा, नया), और 2-कॉलम मोबाइल ग्रिड है।
+      </p>
+    </div>
+    <div class="card">
+      <div class="card-title">📦 3. प्रोडक्ट डिटेल (product.html)</div>
+      <p style="font-size: 8.5pt;">
+        चुने गए सामान की बड़ी फोटो, छूट प्रतिशत, वास्तविक कीमत, स्टॉक स्टेटस (उपलब्ध / समाप्त), 
+        क्वांटिटी सेलेक्टर, स्पेसिफिकेशन टेबल और 1-क्लिक "Add to Cart" व "Buy Now" बटन।
+      </p>
+    </div>
+    <div class="card">
+      <div class="card-title">🚚 4. ऑटो लोडर बुकिंग (autobooking.html)</div>
+      <p style="font-size: 8.5pt;">
+        सामान ढोने हेतु 3 वाहनों (पियाजियो अपे, महिंद्रा अल्फा, टाटा एस) का लाइव किराया कैलकुलेटर। 
+        दूरी (किमी) और लेबर हेल्पर चुनने पर तुरंत किराया दिखाता है और व्हाट्सएप पर बुक करता है।
+      </p>
+    </div>
+    <div class="card">
+      <div class="card-title">🎟️ 5. ऑफर्स एवं कूपन (offers.html)</div>
+      <p style="font-size: 8.5pt;">
+        सक्रिय डिस्काउंट कूपन (उदा. WELCOME50, FESTIVE100) की सूची। ग्राहक 1-क्लिक में कूपन कोड 
+        कॉपी करके कार्ट में तुरंत डिस्काउंट प्राप्त कर सकता है।
+      </p>
+    </div>
+    <div class="card">
+      <div class="card-title">📜 6. अबाउट व कॉन्टैक्ट (about / contact)</div>
+      <p style="font-size: 8.5pt;">
+        स्टोर की 25+ वर्षों की कहानी, बुढ़िया माई मंदिर ताराजीवनपुर का लैंडमार्क, गूगल मैप दिशा निर्देश, 
+        हेल्पलाइन नंबर और डेवलपर आयुष गुप्ता (फाउंडर, APX DIGITAL) का परिचय।
+      </p>
+    </div>
+  </div>
+
+  <!-- ==================== CHAPTER 4: OTP SYSTEM ==================== -->
+  <div class="section-header" style="margin-top: 20px;">
+    <span class="section-num">4</span>
+    <h2 class="section-title">मोबाइल टेलीकॉम एसएमएस ओटीपी सिस्टम (Telecom SMS OTP)</h2>
+  </div>
+  <p class="section-subtitle">Real Carrier SMS Authentication Architecture</p>
+
+  <p>
+    ग्राहक जब कार्ट से चेकआउट करने जाता है, तो उसे फोन नंबर से सत्यापित (Verify) करना अनिवार्य होता है। 
+    यह सत्यापन किसी व्हाट्सएप मैसेज के जरिए नहीं, बल्कि <strong>ग्राहक के सिम कार्ड (Jio, Airtel, Vi, BSNL) के आधिकारिक Messages ऐप</strong> 
+    में आने वाले 6-अंकों के टेलीकॉम कैरियर SMS द्वारा होता है।
+  </p>
+
+  <div class="step-box" style="margin-top: 14px;">
+    <div class="step-circle">1</div>
+    <div class="step-content">
+      <strong>नंबर दर्ज करना (Phone Input):</strong> ग्राहक अपना 10-अंकों का वैध मोबाइल नंबर दर्ज करता है (उदा. <code>9616932589</code>)।
+    </div>
+  </div>
+  <div class="step-box">
+    <div class="step-circle">2</div>
+    <div class="step-content">
+      <strong>अदृश्य कैप्चा व गेटवे डिस्पैच (RecaptchaVerifier):</strong> बैकग्राउंड में गूगल का इनविजिबल reCAPTCHA इंसान की पुष्टि करता है और 
+      <code>signInWithPhoneNumber(auth, "+91" + phone, verifier)</code> सीधे भारतीय टेलीकॉम गेटवे पर 6-डिजिट का कोड डिस्पैच करता है।
+    </div>
+  </div>
+  <div class="step-box">
+    <div class="step-circle">3</div>
+    <div class="step-content">
+      <strong>सुरक्षित ब्लैंक इनपुट (No Screen Leak):</strong> स्क्रीन पर कोई ओटीपी नहीं दिखता। ग्राहक को अपने फोन का Messages इनबॉक्स खोलकर 
+      प्राप्त 6 अंकों का कोड स्क्रीन पर भरना होता है।
+    </div>
+  </div>
+  <div class="step-box">
+    <div class="step-circle">4</div>
+    <div class="step-content">
+      <strong>सत्यापन व ऑटो-लॉगिन (Session Persistence):</strong> कोड भरते ही <code>confirmationResult.confirm(code)</code> रन होता है। 
+      सत्यापन होते ही ग्राहक का सेशन <code>localStorage</code> में सुरक्षित हो जाता है और वह तुरंत ऑर्डर पूरा कर सकता है।
+    </div>
+  </div>
+
+  <div class="card card-warning" style="margin-top: 10px;">
+    <div class="card-title">⚙️ फायरबेस कंसोल सेटिंग एवं टेस्ट फॉलबैक (Console Setup & Fallback):</div>
+    <p style="font-size: 8.5pt;">
+      1. लाइव एसएमएस के लिए फायरबेस कंसोल (<a href="https://console.firebase.google.com/project/ayush-service-center/authentication/providers">Firebase Providers</a>) 
+      में जाकर <strong>Phone</strong> प्रोवाइडर को <strong>ON</strong> रखें।<br>
+      2. यदि कंसोल में टॉगल पेंडिंग भी हो या टेस्टिंग करनी हो, तो सिस्टम में सेफ टेस्ट कोड <code>123456</code> इनबिल्ट है, 
+      ताकि कभी भी टेस्टिंग न रुके।
+    </p>
+  </div>
+
+  <!-- ==================== CHAPTER 5: CHECKOUT & PAYMENT ==================== -->
+  <div class="page-break"></div>
+  <div class="section-header">
+    <span class="section-num">5</span>
+    <h2 class="section-title">चेकआउट, यूपीआई पेमेंट एवं व्हाट्सएप अलर्ट (Order & Billing Flow)</h2>
+  </div>
+  <p class="section-subtitle">Complete End-to-End Ordering & Payment Pipeline</p>
+
+  <div class="card card-highlight">
+    <div class="card-title">💳 1. पेमेंट के 3 विकल्प (Payment Methods):</div>
+    <ul>
+      <li><strong>Cash on Delivery (COD) / Pay on Pickup:</strong> सामान डिलीवरी होने पर या दुकान से उठाते समय नकद भुगतान।</li>
+      <li><strong>Online UPI (9616932589@paytm):</strong> 1-टैप में मोबाइल से PhonePe, Google Pay या Paytm खोलकर डायरेक्ट भुगतान। ग्राहक यूटीआर / ट्रांजैक्शन नंबर दर्ज करता है।</li>
+      <li><strong>UPI on Delivery:</strong> सामान घर पहुंचने पर डिलीवरी बॉय के क्यूआर स्कैनर पर ऑनलाइन भुगतान।</li>
+    </ul>
+  </div>
+
+  <div class="card card-success" style="margin-top: 12px;">
+    <div class="card-title">📲 2. दुकानदार को इंस्टेंट व्हाट्सएप अलर्ट (+91 96169 32589):</div>
+    <p style="font-size: 8.5pt;">
+      जैसे ही ग्राहक "Place Order" बटन दबाता है, फायरबेस डेटाबेस में ऑर्डर सेव होते ही 
+      स्टोर के नंबर <code>+91 96169 32589</code> पर व्हाट्सएप मैसेज स्वतः तैयार होकर ओपन होता है जिसमें निम्न जानकारी होती है:
+    </p>
+    <div class="code-block">
+🛍️ *NEW ORDER RECEIVED - AYUSH SERVICE CENTER* 🛍️
+━━━━━━━━━━━━━━━━━━━━━━
+Order ID: #ASC-20261105-8942
+Customer: Rakesh Kumar (Phone: +91 9876543210 - VERIFIED)
+Delivery Address: Tarajeevanpur Chauraha (Landmark: Budhiya Mai Mandir)
+
+ITEMS ORDERED:
+1. Stainless Steel Dinner Set (6 pcs) x 1 = ₹1,250
+2. Milton Plastic Bucket (20L) x 2 = ₹480
+━━━━━━━━━━━━━━━━━━━━━━
+Subtotal: ₹1,730
+Coupon Discount (WELCOME50): -₹50
+Delivery Fee: ₹0 (FREE)
+*GRAND TOTAL: ₹1,680*
+Payment Method: Online UPI (9616932589@paytm)
+UTR / Trans ID: 412356789012
+Status: Paid Online via UPI
+━━━━━━━━━━━━━━━━━━━━━━
+📄 View & Print Tax Invoice:
+https://ayush-hardware-general-store.vercel.app/invoice.html?id=ASC-20261105-8942
+    </div>
+  </div>
+
+  <div class="card" style="margin-top: 12px;">
+    <div class="card-title">🧾 3. 1-क्लिक टैक्स इनवॉइस (invoice.html):</div>
+    <p style="font-size: 8.5pt;">
+      प्रत्येक ऑर्डर की एक वैध पक्की रसीद (Tax Invoice) तैयार होती है। इसमें दुकान का नाम, पता, फोन, जीएसटी नंबर, 
+      ग्राहक का नाम, पता, वस्तुओं की लिस्ट, रेट, टैक्स, छूट और कुल जोड़ शामिल होता है। 
+      इसमें दिया गया <strong>"Download PDF / Print Invoice"</strong> बटन दबाते ही ऑटोमेटिक प्रिंट डायलॉग खुल जाता है।
+    </p>
+  </div>
+
+  <!-- ==================== CHAPTER 6: ADMIN PORTAL ==================== -->
+  <div class="page-break"></div>
+  <div class="section-header">
+    <span class="section-num">6</span>
+    <h2 class="section-title">एडमिन पोर्टल: 18 सम्पूर्ण मॉडल्स (Admin Management Portal)</h2>
+  </div>
+  <p class="section-subtitle">Full Administration Dashboard Walkthrough (admin/dashboard.html)</p>
+
+  <p>
+    एडमिन पोर्टल को एक्सेस करने के लिए <code>/admin/login.html</code> पर फायरबेस ऑथेंटिकेशन का उपयोग किया गया है। 
+    बिना सही ईमेल व पासवर्ड के कोई भी व्यक्ति एडमिन पोर्टल नहीं खोल सकता।
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 8%;">मॉड्यूल</th>
+        <th style="width: 25%;">मॉड्यूल का नाम</th>
+        <th style="width: 67%;">कार्यप्रणाली एवं विशेषताएं (Features & How it Works)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>01</strong></td>
+        <td><strong>Overview Dashboard</strong></td>
+        <td>कुल बिक्री (Total Revenue), आज के ऑर्डर्स, पेंडिंग डिलीवरी, कम स्टॉक वाले सामान और क्विक एक्शन बटन का लाइव विहंगावलोकन।</td>
+      </tr>
+      <tr>
+        <td><strong>02</strong></td>
+        <td><strong>Billing / POS (दुकान बिलिंग)</strong></td>
+        <td>दुकान पर आए ग्राहक के लिए ऑफलाइन कंप्यूटर बिलिंग। प्रोडक्ट सर्च करें, कार्ट में जोड़ें, कैश/यूपीआई रसीद निकालें।</td>
+      </tr>
+      <tr>
+        <td><strong>03</strong></td>
+        <td><strong>Customer Orders (ऑर्डर्स)</strong></td>
+        <td>वेबसाइट से आए सभी ऑर्डर्स की टेबल। स्टेटस अपडेट करें (Pending, Confirmed, Shipped, Delivered), पेमेंट चेक करें और इनवॉइस प्रिंट करें।</td>
+      </tr>
+      <tr>
+        <td><strong>04</strong></td>
+        <td><strong>Auto Bookings (ऑटो बुकिंग)</strong></td>
+        <td>अपे, महिंद्रा या छोटा हाथी की बुकिंग्स। पिकअप/ड्रॉप पता, किलोमीटर, भाड़ा और ड्राइवर असाइनमेंट मैनेज करें।</td>
+      </tr>
+      <tr>
+        <td><strong>05</strong></td>
+        <td><strong>Products Management (उत्पाद)</strong></td>
+        <td>नया सामान जोड़ें (Title, Category, Price, Discount, Stock, Description) और फायरबेस स्टोरेज में फोटो अपलोड करें।</td>
+      </tr>
+      <tr>
+        <td><strong>06</strong></td>
+        <td><strong>Categories (श्रेणियां)</strong></td>
+        <td>नई केटेगरी बनाएं, नाम बदलें, डिलीट करें और होमपेज पर दिखने का क्रम सेट करें।</td>
+      </tr>
+      <tr>
+        <td><strong>07</strong></td>
+        <td><strong>Inventory & Alerts (स्टॉक)</strong></td>
+        <td>सामान की स्टॉक मात्रा (Stock Count)। जब कोई सामान 5 पीस से कम होता है तो तुरंत लाल अलर्ट दिखाता है।</td>
+      </tr>
+      <tr>
+        <td><strong>08</strong></td>
+        <td><strong>Sales Reports (बिक्री रिपोर्ट)</strong></td>
+        <td>दैनिक, साप्ताहिक और मासिक बिक्री का हिसाब। कौन सा सामान सबसे ज्यादा बिका उसका विश्लेषण।</td>
+      </tr>
+      <tr>
+        <td><strong>09</strong></td>
+        <td><strong>Expense Tracker (खर्चे)</strong></td>
+        <td>दुकान के रोजाना के खर्चे (बिजली, गाड़ी का डीजल, चाय-नाश्ता, मरम्मत) दर्ज करें और शुद्ध मुनाफा (Net Profit) निकालें।</td>
+      </tr>
+      <tr>
+        <td><strong>10</strong></td>
+        <td><strong>Customers Directory</strong></td>
+        <td>सभी सत्यापित ग्राहकों की डायरेक्टरी, मोबाइल नंबर, कुल खरीदे गए ऑर्डर्स और लाइफटाइम वैल्यू।</td>
+      </tr>
+      <tr>
+        <td><strong>11</strong></td>
+        <td><strong>Offers & Coupons (कूपन)</strong></td>
+        <td>नए डिस्काउंट कोड बनाएं (उदा. HOLI2026), छूट प्रतिशत तय करें, न्यूनतम ऑर्डर राशि और एक्सपायरी डेट सेट करें।</td>
+      </tr>
+      <tr>
+        <td><strong>12</strong></td>
+        <td><strong>Banners & Hero CMS</strong></td>
+        <td>होमपेज का मुख्य बैनर, प्रोमो टेक्स्ट और ऑफर नोटिस को बिना कोडिंग बदले सीधे एडमिन पैनल से बदलें।</td>
+      </tr>
+      <tr>
+        <td><strong>13</strong></td>
+        <td><strong>Media Library (तस्वीरें)</strong></td>
+        <td>स्टोर की सभी तस्वीरों का केंद्रीय क्लाउड संग्रह। किसी भी समय नई फोटो अपलोड करें या पुरानी डिलीट करें।</td>
+      </tr>
+      <tr>
+        <td><strong>14</strong></td>
+        <td><strong>Website Content CMS</strong></td>
+        <td>स्टोर का पता, लैंडमार्क, दुकान खुलने का समय, फोन नंबर और संस्थापक का संदेश सीधे एडिट करें।</td>
+      </tr>
+      <tr>
+        <td><strong>15</strong></td>
+        <td><strong>Store Settings (नियम व दरें)</strong></td>
+        <td>डिलीवरी चार्ज के नियम, फ्री डिलीवरी की न्यूनतम सीमा, जीएसटी प्रतिशत और यूपीआई आईडी (9616932589@paytm) सेट करें।</td>
+      </tr>
+      <tr>
+        <td><strong>16</strong></td>
+        <td><strong>Staff Management (कर्मचारी)</strong></td>
+        <td>स्टोर कर्मचारियों के लिए अलग खाता बनाना और उनकी भूमिका (Manager, Cashier, Delivery Staff) तय करना।</td>
+      </tr>
+      <tr>
+        <td><strong>17</strong></td>
+        <td><strong>Activity Logs (ऑडिट ट्रेल)</strong></td>
+        <td>एडमिन पैनल में किसने, कब और क्या बदलाव किया (कीमत बदली, ऑर्डर स्टेटस बदला) का टाइमस्टैम्प ऑडिट रिकॉर्ड।</td>
+      </tr>
+      <tr>
+        <td><strong>18</strong></td>
+        <td><strong>Admin Logout (लॉगआउट)</strong></td>
+        <td>सत्र को सुरक्षित रूप से समाप्त करके लॉगिन स्क्रीन पर वापस भेजना।</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ==================== CHAPTER 7: DATABASE SCHEMA ==================== -->
+  <div class="page-break"></div>
+  <div class="section-header">
+    <span class="section-num">7</span>
+    <h2 class="section-title">क्लाउड फायरबेस डेटाबेस संरचना (Database Schemas)</h2>
+  </div>
+  <p class="section-subtitle">Google Cloud Firestore Collections & Document Structures</p>
+
+  <div class="card card-highlight">
+    <div class="card-title">📁 प्रमुख कलेक्शंस (Firestore Collections):</div>
+    <ul>
+      <li><code>products</code>: सभी वस्तुओं की जानकारी, कीमतें, स्टॉक और तस्वीरें।</li>
+      <li><code>orders</code>: ग्राहकों द्वारा किए गए सभी ऑनलाइन व ऑफलाइन ऑर्डर्स।</li>
+      <li><code>autoBookings</code>: सभी लोडर वाहन बुकिंग्स, दूरी, और भाड़ा।</li>
+      <li><code>coupons</code>: डिस्काउंट कोड, नियम और छूट दरें।</li>
+      <li><code>settings</code>: स्टोर की ग्लोबल सेटिंग्स (दुकान का नाम, फोन, डिलीवरी चार्ज, यूपीआई आईडी)।</li>
+      <li><code>expenses</code>: दुकान के दैनिक खर्चों का रिकॉर्ड।</li>
+    </ul>
+  </div>
+
+  <h3 style="font-size: 10pt; margin: 12px 0 6px;">📄 Orders कलेक्शन का डेटा फॉर्मेट (Sample Document):</h3>
+  <div class="code-block">
+{
+  "orderId": "ASC-20261105-8942",
+  "orderNumber": "#ASC-8942",
+  "createdAt": "2026-11-05T20:45:00Z",
+  "customerName": "Rakesh Kumar",
+  "customerPhone": "9876543210",
+  "fulfillmentType": "delivery", // "delivery" ya "pickup"
+  "deliveryAddress": "Tarajeevanpur Chauraha (Landmark: Budhiya Mai Mandir)",
+  "paymentMethod": "Online UPI", // "COD", "Online UPI", "UPI on Delivery"
+  "paymentStatus": "Paid Online via UPI (UTR: 412356789012)",
+  "utrNumber": "412356789012",
+  "items": [
+    { "id": "prod_101", "name": "Steel Thali 6-pcs", "price": 450, "qty": 1, "total": 450 }
+  ],
+  "subtotal": 450,
+  "discountAmount": 50,
+  "deliveryFee": 0,
+  "grandTotal": 400,
+  "status": "Confirmed" // "Pending", "Confirmed", "Shipped", "Delivered", "Cancelled"
+}
+  </div>
+
+  <!-- ==================== CHAPTER 8: SOP & MAINTENANCE ==================== -->
+  <div class="section-header" style="margin-top: 15px;">
+    <span class="section-num">8</span>
+    <h2 class="section-title">डिप्लॉयमेंट, मेंटेनेंस एवं सुरक्षा नियम (SOP & Guidelines)</h2>
+  </div>
+  <p class="section-subtitle">Operational Guidelines & Production Security</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">🚀 Vercel प्रोडक्शन डिप्लॉयमेंट कमांड:</div>
+      <p style="font-size: 8.5pt;">जब भी कोई नया फीचर या कोड में बदलाव किया जाए, तो टर्मिनल में निम्न कमांड चलाएं:</p>
+      <div class="code-block" style="margin: 6px 0;">
+git add -A
+git commit -m "update: store features"
+git push origin main
+npx vercel --prod
+      </div>
+      <p style="font-size: 8pt; color: #64748B;">यह कमांड कोड को सीधे GitHub और Vercel की लाइव वेबसाइट पर डिप्लॉय कर देती है।</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔒 सुरक्षा व डेटा प्राइवेसी (Security Rules):</div>
+      <ul style="font-size: 8.5pt; margin-left: 15px;">
+        <li>एडमिन पैनल का कोई भी पासवर्ड पब्लिक फाइलों में सेव नहीं है।</li>
+        <li>फायरबेस सिक्योरिटी रूल्स (<code>firestore.rules</code>) डेटाबेस में अनधिकृत बदलाव को ब्लॉक करते हैं।</li>
+        <li>कस्टमर का पासवर्ड नहीं लिया जाता, जिससे पासवर्ड चोरी होने का कोई जोखिम नहीं है।</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-success" style="margin-top: 14px; text-align: center; padding: 18px;">
+    <div style="font-size: 13pt; font-weight: 800; color: #0F172A; margin-bottom: 6px;">
+      Ayush Service Center • 25+ Years of Trust & Quality
+    </div>
+    <div style="font-size: 9.5pt; color: #2563EB; font-weight: 700; margin-bottom: 8px;">
+      Budhiya Mai Mandir Ke Paas, Tarajeevanpur Chauraha, Chandauli • Call: +91 96169 32589
+    </div>
+    <p style="font-size: 8.5pt; color: #64748B;">
+      Website Platform Developed & Maintained by: <strong>Ayush Gupta</strong> (Founder, APX DIGITAL) • Contact: 9519099011<br>
+      Live Website: <a href="https://ayush-hardware-general-store.vercel.app">https://ayush-hardware-general-store.vercel.app</a>
+    </p>
+  </div>
+
+</body>
+</html>
