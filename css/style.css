@@ -349,12 +349,14 @@ button, input, select, textarea {
   box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
 }
 
-.brand-text h1 {
+.brand-text h1,
+.brand-text .brand-title {
   font-size: 1.25rem;
   font-weight: 800;
   color: var(--navy);
   letter-spacing: -0.5px;
   margin: 0;
+  display: block;
 }
 
 .brand-text p {
@@ -1330,7 +1332,8 @@ button, input, select, textarea {
     overflow: hidden;
   }
 
-  .brand-text h1 {
+  .brand-text h1,
+  .brand-text .brand-title {
     font-size: 0.95rem;
     white-space: nowrap;
     overflow: hidden;
